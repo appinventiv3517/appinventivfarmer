@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kisani Urjaa · App importer</title>
+    <style>
+/*__UI_CSS__*/
+    </style>
+  </head>
+  <body>
+    <header class="head">
+      <img class="logo" src="/*__LOGO_SRC__*/" alt="" />
+      <div>
+        <h1>Kisani Urjaa · App importer</h1>
+        <p class="sub" id="summary">Loading…</p>
+      </div>
+    </header>
+
+    <main id="setup">
+      <section class="block">
+        <div class="row-between">
+          <h2>Pages to build</h2>
+          <div class="links">
+            <button type="button" class="link" id="all">All</button>
+            <button type="button" class="link" id="none">None</button>
+          </div>
+        </div>
+        <ul class="pages" id="pages"></ul>
+      </section>
+
+      <section class="block">
+        <h2>Options</h2>
+        <label class="opt"><input type="checkbox" id="opt-bind" checked /> <span><b>Link to tokens</b> Colours bind to variables (Light/Dark), text to text styles, shadows to effect styles.</span></label>
+        <label class="opt"><input type="checkbox" id="opt-components" checked /> <span><b>Use components</b> Icons, status bar, tab bar and home indicator become components; screens use instances.</span></label>
+        <label class="opt"><input type="checkbox" id="opt-proto" checked /> <span><b>Prototype links</b> Links and back buttons navigate between screens in Present mode.</span></label>
+        <label class="opt"><input type="checkbox" id="opt-bitmap" /> <span><b>Bitmap illustrations</b> Place animated illustrations as images instead of vectors (lighter file).</span></label>
+        <label class="opt"><input type="checkbox" id="opt-replace" checked /> <span><b>Replace earlier import</b> Remove pages this plugin made before.</span></label>
+      </section>
+    </main>
+
+    <section id="run" hidden>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="bar"></span></div>
+      <p class="status" id="status">Starting…</p>
+      <ol class="log" id="log"></ol>
+    </section>
+
+    <footer class="foot">
+      <button type="button" class="ghost" id="cancel">Close</button>
+      <button type="button" class="primary" id="build" disabled>Build in Figma</button>
+    </footer>
+
+    <script id="ku-data" type="application/json">/*__DATA__*/</script>
+    <script>
+/*__UI_JS__*/
+    </script>
+  </body>
+</html>

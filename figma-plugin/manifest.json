@@ -1,0 +1,13 @@
+{
+  "name": "Kisani Urjaa · App importer",
+  "id": "kisani-urjaa-app-importer",
+  "api": "1.0.0",
+  "main": "main.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "reasoning": "All screens, images and fonts ship inside the plugin; it never goes online."
+  }
+}

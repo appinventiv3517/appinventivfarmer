@@ -80,6 +80,7 @@ export function Lottie({ name, size = 160, loop = true, label, className, onComp
     <div
       ref={ref}
       className={className}
+      data-lottie={name}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}

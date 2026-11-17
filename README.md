@@ -38,6 +38,10 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | Notifications | Grouped by day, unread markers, categories, mark all read with undo |
 | Account | Profile, language, display (large text, dark mode, reduce animations), password, farm machinery, help, contact, legal, verification |
 
+## Figma plugin
+
+`figma-plugin/` holds a Figma plugin that rebuilds the whole app in Figma as editable layers: every screen and flow; empty, loading, error, offline, success and permission states; dark mode; colour variables (Light/Dark), text and effect styles; and icon, button, chip, status-bar and tab-bar components with prototype links. Import `figma-plugin/manifest.json` in the Figma desktop app (Plugins → Development → Import plugin from manifest). See [`figma-plugin/README.md`](figma-plugin/README.md) and [`figma-plugin/INVENTORY.md`](figma-plugin/INVENTORY.md).
+
 ## Architecture
 
 ```

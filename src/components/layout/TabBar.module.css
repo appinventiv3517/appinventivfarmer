@@ -59,7 +59,7 @@
 .active {
   color: var(--primary);
 }
-.pill {
+.tab .pill {
   position: absolute;
   inset: 4px 6px;
   border-radius: 18px;
