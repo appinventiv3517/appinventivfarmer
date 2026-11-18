@@ -4,7 +4,7 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 
 ## 01 · Illustrated
 
-48 screens, 156 further states and flow steps, 34 component sets (121 variants), 104 tokens, 13 text styles, 4 effect styles.
+57 screens, 176 further states and flow steps, 34 component sets (121 variants), 104 tokens, 13 text styles, 4 effect styles.
 
 ### Onboarding
 
@@ -21,7 +21,7 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 
 | Screen | Route | States |
 |---|---|---|
-| Home | `/home` | Default · Loading · Empty · Offline · Hindi · Marathi · Sheet · Ask Kisani Didi · Sheet · Choose your language · Sheet · Contact Sumita · Sheet · Weather · Ratanpur, Buldhana · Unverified account |
+| Home | `/home` | Default · Loading · Empty · Offline · Hindi · Location denied · Marathi · Sheet · Ask Kisani Didi · Sheet · Choose your language · Sheet · Contact Sumita · Sheet · Weather · Ratanpur, Buldhana · Unverified account |
 | Notifications | `/notifications` | Default · Loading · Empty · Offline · After tapping · Bookings · After tapping · Events · After tapping · Forms · After tapping · Orders · All read · Toast · All caught up Undo |
 
 ### Learn
@@ -30,8 +30,12 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 |---|---|---|
 | Learn · Journal | `/learn` | Default · Loading · Empty · Offline · Sheet · Filter news stories by date · No search results · Search results |
 | Saved | `/bookmarks` | Default · No saved items · Tab · Articles 1 · Tab · Videos 1 · Toast · Removed from bookmarks Undo |
-| News story · Paddy straw collection opens across Buldhana vil | `/news/n-straw-collection` | Default · Loading · Offline · Sheet · Share · Toast · Saved to bookmarks View |
-| News story · Why burning stubble costs your next crop | `/news/n-stubble-cost` | Default · Sheet · Share |
+| News story · Paddy straw collection opens across Buldhana vil | `/news/n-straw-collection` | Default · Sheet · Share · Toast · Saved to bookmarks View |
+| News story · Why burning stubble costs your next crop | `/news/n-stubble-cost` | Default · Loading · Offline · Sheet · Share |
+| Guide · Drip irrigation for cotton: a practical start | `/articles/a-drip-cotton` | Default · Sheet · Share · Toast · Saved to bookmarks View |
+| Guide · How to read your Soil Health Card | `/articles/a-soil-health-card` | Default · Loading · Offline · Sheet · Share |
+| Video · Baling paddy straw: one field, start to finish | `/videos/v-baling` | Default · Loading · Offline · Sheet · Share |
+| Video · Taking a soil sample the right way | `/videos/v-soil-sample` | Default · Sheet · Share · Toast · Saved to bookmarks View |
 
 ### Events
 
@@ -40,7 +44,7 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 | Events | `/events` | Default · Loading · Empty · Offline · After tapping · Friday, 20 November 2026, has events · After tapping · Friday, 27 November 2026, no events · After tapping · Monday, 23 November 2026, no events · After tapping · Monday, 30 November 2026, no events · After tapping · Saturday, 21 November 2026, no events · After tapping · Saturday, 28 November 2026, no events · After tapping · Sunday, 22 November 2026, no events · After tapping · Sunday, 29 November 2026, no events · After tapping · Thursday, 19 November 2026, no events · After tapping · Thursday, 26 November 2026, has events · After tapping · Tuesday, 1 December 2026, no events · After tapping · Tuesday, 24 November 2026, no events · After tapping · Wednesday, 18 November 2026, has events · After tapping · Wednesday, 25 November 2026, no events · Location denied |
 | Event · Crop health awareness session | `/events/e-crop-health` | Default · Sheet · Contact Sumita · Sheet · Share · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
 | Event · Farmer training workshop: organic inputs | `/events/e-training` | Default · Sheet · Contact Sumita · Sheet · Share · Toast · Marked as not interested Undo |
-| Event · Paddy straw baling demonstration | `/events/e-baling-demo` | Default · Loading · Empty · Offline · Sheet · Contact Sumita · Sheet · Share · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
+| Event · Paddy straw baling demonstration | `/events/e-baling-demo` | Default · Loading · Offline · Sheet · Contact Sumita · Sheet · Share · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
 
 ### Orders & bookings
 
@@ -54,17 +58,22 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 | FOM order · Order #FOM2610021 | `/orders/fom/FOM2610021` | Default · Sheet · Contact Sumita |
 | FOM order · Order #FOM2611009 | `/orders/fom/FOM2611009` | Default · Sheet · Contact Sumita |
 | FOM order · Order #FOM2611014 | `/orders/fom/FOM2611014` | Default · Loading · Offline · Sheet · Contact Sumita |
+| Booking requested · Booking requested | `/bookings/4581/requested` | Default · Loading · Offline |
+| Booking · Booking #4581 | `/bookings/4581` | Default · Loading · Empty · Offline · Sheet · Contact Sumita |
+| Booking · Booking #4589 | `/bookings/4589` | Default · Sheet · Contact Sumita |
+| Booking · Booking #5848 | `/bookings/5848` | Default · Sheet · Contact Sumita |
+| Booking · Booking #8458 | `/bookings/8458` | Default · Sheet · Contact Arpit · Sheet · Contact Sumita |
 
 ### Season records
 
 | Screen | Route | States |
 |---|---|---|
 | Season records | `/forms` | Default · Loading · Empty · Offline · After tapping · Completed 1 · After tapping · In progress 1 |
-| Season step · Intercultivation | `/forms/fc-wheat/steps/intercultivation` | Default |
-| Season step · Land preparation | `/forms/fc-wheat/steps/land-preparation` | Default |
-| Season step · Sowing & transplantation | `/forms/fc-wheat/steps/sowing` | Default · Loading · Offline |
-| Season record · Form cycle #1 | `/forms/fc-wheat` | Default · Loading · Offline · Sheet · Contact Sumita |
-| Season record · Form cycle #2 | `/forms/fc-cotton` | Default · Sheet · Contact Sumita |
+| Season step · Intercultivation | `/forms/fc-cotton/steps/intercultivation` | Default · Loading · Offline · After tapping · Visit 1 Saturday, 19 September 2026 · After tapping · Visit 2 Wednesday, 14 October 2026 |
+| Season step · Land preparation | `/forms/fc-cotton/steps/land-preparation` | Default |
+| Season step · Sowing & transplantation | `/forms/fc-cotton/steps/sowing` | Default |
+| Season record · Form cycle #1 | `/forms/fc-wheat` | Default · Sheet · Contact Sumita |
+| Season record · Form cycle #2 | `/forms/fc-cotton` | Default · Loading · Offline · Sheet · Contact Sumita |
 
 ### Fields
 
@@ -75,7 +84,7 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 | Field · Cotton Field | `/lands/l-cotton` | Default · Sheet · Add a crop · Sheet · Edit crop · Sheet · Edit field |
 | Field · Paddy Field | `/lands/l-paddy` | Default · Sheet · Add a crop · Sheet · Edit crop · Sheet · Edit field |
 | Field · Riverside Plot | `/lands/l-riverside` | Default · Sheet · Add a crop · Sheet · Edit field · Toast · Riverside Plot is active Undo |
-| Field · Wheat Field | `/lands/l-wheat` | Default · Loading · Offline · Sheet · Add a crop · Sheet · Edit crop · Sheet · Edit field |
+| Field · Wheat Field | `/lands/l-wheat` | Default · Sheet · Add a crop · Sheet · Edit crop · Sheet · Edit field |
 
 ### Account
 
@@ -142,7 +151,7 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 
 ## 02 · Field Journal
 
-47 screens, 160 further states and flow steps, 36 component sets (108 variants), 67 tokens, 13 text styles, 3 effect styles.
+58 screens, 189 further states and flow steps, 36 component sets (108 variants), 67 tokens, 13 text styles, 3 effect styles.
 
 ### Onboarding
 
@@ -169,15 +178,21 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 | Learn · Journal | `/d2/learn` | Default · Loading · Empty · Offline · Sheet · News stories published between |
 | Search | `/d2/search` | Default · No search results · After tapping · Crop care · After tapping · drip · After tapping · fom · After tapping · Machinery · After tapping · Market & storage · After tapping · soil · After tapping · spray · After tapping · straw · After tapping · Weather · After tapping · wheat |
 | Saved | `/d2/bookmarks` | Default · No saved items · Tab · Articles 1 · Tab · Videos 1 · Toast · Removed from bookmarks Undo |
-| News story · Paddy straw collection opens across Buldhana vil | `/d2/news/n-straw-collection` | Default · Loading · Offline · Sheet · Paddy straw collection opens across Buld · Toast · Saved to bookmarks View |
-| News story · Why burning stubble costs your next crop | `/d2/news/n-stubble-cost` | Default · Sheet · Why burning stubble costs your next crop |
+| News story · Paddy straw collection opens across Buldhana vil | `/d2/news/n-straw-collection` | Default · Sheet · Paddy straw collection opens across Buld · Toast · Saved to bookmarks View |
+| News story · Why burning stubble costs your next crop | `/d2/news/n-stubble-cost` | Default · Loading · Offline · Sheet · Why burning stubble costs your next crop |
+| Guide · Drip irrigation for cotton: a practical start | `/d2/articles/a-drip-cotton` | Default · Sheet · Drip irrigation for cotton: a practical  · Toast · Saved to bookmarks View |
+| Guide · How to read your Soil Health Card | `/d2/articles/a-soil-health-card` | Default · Loading · Offline · Sheet · How to read your Soil Health Card |
+| Video · Baling paddy straw: one field, start to finish | `/d2/videos/v-baling` | Default · Loading · Offline · After tapping · Play Baling paddy straw: one field, star · After tapping · Read the notes · Sheet · Baling paddy straw: one field, start to  |
+| Video · Taking a soil sample the right way | `/d2/videos/v-soil-sample` | Default · After tapping · Play Taking a soil sample the right way · After tapping · Read the notes · Sheet · Taking a soil sample the right way · Toast · Saved to bookmarks View |
 
 ### Events
 
 | Screen | Route | States |
 |---|---|---|
 | Events | `/d2/events` | Default · Loading · Empty · Offline · After tapping · Friday, 20 November 2026, has events · After tapping · Friday, 27 November 2026, no events · After tapping · Monday, 23 November 2026, no events · After tapping · Monday, 30 November 2026, no events · After tapping · Saturday, 21 November 2026, no events · After tapping · Saturday, 28 November 2026, no events · After tapping · Sunday, 22 November 2026, no events · After tapping · Sunday, 29 November 2026, no events · After tapping · Thursday, 19 November 2026, no events · After tapping · Thursday, 26 November 2026, has events · After tapping · Tuesday, 1 December 2026, no events · After tapping · Tuesday, 24 November 2026, no events · After tapping · Wednesday, 18 November 2026, has events · After tapping · Wednesday, 25 November 2026, no events · Location denied |
-| Event · Paddy straw baling demonstration | `/d2/events/e-baling-demo` | Default · Loading · Empty · Offline · Sheet · Contact Sumita Kumari · Sheet · Paddy straw baling demonstration · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
+| Event · Crop health awareness session | `/d2/events/e-crop-health` | Default · Loading · Offline · Sheet · Contact Sumita Kumari · Sheet · Crop health awareness session · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
+| Event · Farmer training workshop: organic inputs | `/d2/events/e-training` | Default · Sheet · Contact Sumita Kumari · Sheet · Farmer training workshop: organic inputs · Toast · Marked as not interested Undo |
+| Event · Paddy straw baling demonstration | `/d2/events/e-baling-demo` | Default · Sheet · Contact Sumita Kumari · Sheet · Paddy straw baling demonstration · Toast · Marked as interested. See you there! · Toast · Marked as not interested |
 
 ### Orders & bookings
 
@@ -191,6 +206,11 @@ Generated from the data pack captured on 2026-11-18. This is everything the plug
 | FOM order · Order #FOM2610021 | `/d2/orders/fom/FOM2610021` | Default · Sheet · Contact Sumita Kumari |
 | FOM order · Order #FOM2611009 | `/d2/orders/fom/FOM2611009` | Default · Sheet · Contact Sumita Kumari |
 | FOM order · Order #FOM2611014 | `/d2/orders/fom/FOM2611014` | Default · Loading · Offline · Sheet · Contact Sumita Kumari |
+| Booking requested · Request sent | `/d2/bookings/4581/requested` | Default · Loading · Offline |
+| Booking · Booking #4581 | `/d2/bookings/4581` | Default · Loading · Offline · Sheet · Contact Sumita Kumari |
+| Booking · Booking #4589 | `/d2/bookings/4589` | Default · Sheet · Contact Sumita Kumari |
+| Booking · Booking #5848 | `/d2/bookings/5848` | Default · Sheet · Contact Sumita Kumari |
+| Booking · Booking #8458 | `/d2/bookings/8458` | Default · Sheet · Contact Arpit Verma · Sheet · Contact Sumita Kumari |
 
 ### Season records
 
