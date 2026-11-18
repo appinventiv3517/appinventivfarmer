@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kisani Urjaa → Figma</title>
+    <style>
+      /*__UI_CSS__*/
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="plate"><img id="logo" alt="Kisani Urjaa" /></div>
+      <div>
+        <h1>Kisani Urjaa → Figma</h1>
+        <p class="sub" id="captured">Farmer app · editable screens, states and components</p>
+      </div>
+    </header>
+
+    <main id="setup">
+      <section class="card" id="summary" aria-live="polite">
+        <p class="muted">Reading the data pack…</p>
+      </section>
+
+      <section class="card">
+        <h2>Design directions</h2>
+        <div id="dirs" class="checks"></div>
+      </section>
+
+      <section class="card">
+        <h2>What to build</h2>
+        <div class="checks">
+          <label><input type="checkbox" id="p-foundations" checked /> <span><b>Foundations</b> · colour, radius and spacing variables, text and effect styles</span></label>
+          <label><input type="checkbox" id="p-components" checked /> <span><b>Components</b> · component sets with variant properties</span></label>
+          <label><input type="checkbox" id="p-screens" checked /> <span><b>Screens</b> · every screen as an editable frame</span></label>
+          <label class="indent"><input type="checkbox" id="o-states" checked /> <span>Include every state (loading, empty, error, offline, sheets, validation, success…)</span></label>
+          <label class="indent"><input type="checkbox" id="o-prototype" checked /> <span>Add prototype links between screens</span></label>
+          <label><input type="checkbox" id="o-cover" checked /> <span>Cover page</span></label>
+          <label><input type="checkbox" id="o-replace" checked /> <span>Replace pages from an earlier import (same names)</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <h2>Sections</h2>
+          <button class="link" id="all-groups" type="button">All</button>
+        </div>
+        <div id="groups" class="chips" role="group" aria-label="Screen sections"></div>
+        <p class="muted small" id="estimate"></p>
+      </section>
+    </main>
+
+    <main id="running" hidden>
+      <section class="card">
+        <h2 id="run-title">Building in Figma…</h2>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="bar"><span id="bar-fill"></span></div>
+        <p id="run-text" class="muted">Starting</p>
+      </section>
+      <section class="card" id="result" hidden></section>
+      <section class="card">
+        <h2>Log</h2>
+        <ul id="log" class="log"></ul>
+      </section>
+    </main>
+
+    <footer class="actions">
+      <button class="secondary" id="close" type="button">Close</button>
+      <button class="secondary" id="cancel" type="button" hidden>Stop</button>
+      <button class="primary" id="start" type="button" disabled>Import into this file</button>
+    </footer>
+
+    <script id="pack" type="text/plain">/*__PACK__*/</script>
+    <script id="pack-images" type="text/plain">/*__IMAGES__*/</script>
+    <script>
+      /*__UI_JS__*/
+    </script>
+  </body>
+</html>

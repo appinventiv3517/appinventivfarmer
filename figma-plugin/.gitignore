@@ -1,0 +1,4 @@
+# Raw capture output; tools/build.mjs moves it into assets/
+data/images.json
+data/svgs.json
+tools/validate/.tmp-main.js
