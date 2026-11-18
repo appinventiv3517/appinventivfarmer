@@ -12,7 +12,7 @@ const list = ids.map((id) => { if (id.startsWith('comp:')) { const [, d, i] = id
 const need = new Set(); const walk = (n) => { (n.f || []).forEach((p) => p.k === 'I' && need.add(p.id)); (n.ch || []).forEach(walk); }; list.forEach((s) => walk(s.root));
 const imgs = Object.fromEntries([...need].map((k) => [k, images[k]]));
 const srv = await startServer(); const { chromium } = playwright(); const b = await chromium.launch();
-const p = await b.newPage({ viewport: { width: list.reduce((a, s) => a + s.root.w + 20, 20), height: Math.max(...list.map((s) => s.root.h)) + 40 } });
+const p = await b.newPage({ viewport: { width: Math.ceil(list.reduce((a, s) => a + s.root.w + 20, 20)), height: Math.ceil(Math.max(...list.map((s) => s.root.h)) + 40) } });
 await p.goto(BASE + 'figma-plugin/tools/preview/index.html'); await p.waitForFunction(() => window.__ready);
 await p.evaluate(([l, i, s]) => window.__renderScreens(l, i, s), [list, imgs, svgs]); await p.waitForTimeout(800);
 await p.screenshot({ path: out, fullPage: true }); await b.close(); stopServer(srv); console.log('ok', list.length);

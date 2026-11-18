@@ -86,6 +86,7 @@ const DYNAMIC = [
   [/^\/forms\/[^/]+$/, 'Season record', 'Season records', 2],
   [/^\/lands\/(?!new$)[^/]+$/, 'Field', 'Fields', 4],
 ];
+const SEEDS = ['/articles/a-soil-health-card', '/articles/a-drip-cotton', '/videos/v-baling', '/videos/v-soil-sample', '/events/e-baling-demo', '/events/e-training', '/events/e-crop-health', '/bookings/4581', '/bookings/8458', '/bookings/5848', '/bookings/4589'];
 const GROUP_ORDER = ['Onboarding', 'Home', 'Learn', 'Events', 'Orders & bookings', 'Season records', 'Fields', 'Account', 'System'];
 
 function sessionState(kind, extra = {}) {
@@ -235,6 +236,9 @@ async function runDirection(browser, dir) {
   };
   await pool(statics, CONC, captureBase);
   log('  static routes', bases.length);
+  // Detail screens linked only from inside tabs (bookings, videos, guides, events list):
+  // seed them with the sample data's stable ids so every detail type is captured.
+  discover(SEEDS.map((p) => ({ href: '#' + P(p) })));
 
   /* 2. Dynamic routes found through links (two hops). */
   for (let hop = 0; hop < 2; hop++) {
