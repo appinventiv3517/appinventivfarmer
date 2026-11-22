@@ -36,7 +36,7 @@ export function WeatherPanel({ weather, loading, onOpen, t }: { weather?: Weathe
           <Skel h={80} night r="var(--r-md)" />
         </div>
         <div className={s.full}>
-          <Skel h={92} night r="var(--r-md)" />
+          <Skel h={44} night r="var(--r-md)" />
         </div>
       </div>
     );
@@ -89,17 +89,6 @@ export function WeatherPanel({ weather, loading, onOpen, t }: { weather?: Weathe
           <small>{t.wind}</small>
           <b>{t.kph(weather.current.windKph)}</b>
         </span>
-      </span>
-      <span className={`${s.full} ${s.days5}`} aria-hidden>
-        {weather.daily.slice(0, 5).map((d, i) => (
-          <span key={d.date} className={s.day5}>
-            <span className={s.day5Name}>{t.dayLabel(d.date, i, true)}</span>
-            <WeatherGlyph code={d.code} className={s.day5Icon} />
-            <strong>{d.maxC}°</strong>
-            <span>{d.minC}°</span>
-            <span className={`${s.rain} ${d.rainChance >= 60 ? s.wet : ''}`}>{d.rainChance}%</span>
-          </span>
-        ))}
       </span>
       <span className={`${s.source} ${weather.source === 'sample' ? s.sourceSample : ''}`}>{weather.source === 'live' ? `${t.live} · Open-Meteo` : t.sample}</span>
     </motion.button>
