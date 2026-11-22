@@ -11,16 +11,19 @@ import { useStore } from '@/services/store';
 import { useReducedMotion } from '@/lib/theme';
 import { readSession, writeSession } from '@/lib/storage';
 import { isD2Path } from '@/d2/paths';
+import { isD3Path } from '@/d3/paths';
 import { DirectionSwitcher } from './DirectionSwitcher';
 
 /** Direction 02 (/d2/*) is a separate, lazily loaded app with its own visual layer. */
 const D2App = lazy(() => import('@/d2/D2App'));
+/** Ver 3 (/d3/*): an independent copy of Direction 02, for the Ver 3 design changes. */
+const D3App = lazy(() => import('@/d3/D3App'));
 
 const IS_DEMO = import.meta.env.MODE.startsWith('demo');
 /** Phone preview build (npm run build:mobile): opened straight in a phone's browser. */
 const IS_MOBILE = import.meta.env.VITE_MOBILE === '1';
-/** The Direction 02 demo build opens on Direction 02. */
-const START = import.meta.env.MODE === 'demo2' ? '/d2' : '/';
+/** The Direction 02 demo build opens on Direction 02; the demo3 build on Ver 3. */
+const START = import.meta.env.MODE === 'demo2' ? '/d2' : import.meta.env.MODE === 'demo3' ? '/d3' : '/';
 const ROUTE_KEY = 'kisani-urjaa:route';
 
 /** Applies display preferences to <html> so CSS tokens respond. */
@@ -129,6 +132,12 @@ function DirectionRoot() {
     return (
       <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#0a1128' }} />}>
         <D2App />
+      </Suspense>
+    );
+  if (isD3Path(pathname))
+    return (
+      <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#0a1128' }} />}>
+        <D3App />
       </Suspense>
     );
   return <D1App />;

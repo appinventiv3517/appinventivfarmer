@@ -1,0 +1,149 @@
+/*
+ * Direction 02 · "Field Journal" tokens · warm light edition.
+ *
+ * Scoped to `.fj3` so Direction 01 (tokens on :root) is untouched. Shared with
+ * Direction 01 and referenced, not copied: the typeface (var(--font)) and the
+ * corner radii (var(--r-*)).
+ *
+ * Palette idea: sunlit paper. Warm ivory pages and soft sand panels, espresso
+ * ink, a clay accent for actions and a pale apricot for highlights. Photos carry
+ * the colour; the interface stays light and calm. Pairs checked against WCAG
+ * 2.2 AA (docs/direction-02.md). Token names from the first edition are kept
+ * (night, lime, midnight) so components did not need renaming:
+ *   night    → sand panels (light), with ink text
+ *   lime     → apricot highlight fill (and light accent text on photos)
+ *   midnight → espresso, for small dark elements (toasts, chips on photos)
+ */
+
+.fj3 {
+  /* ---------- Raw palette ---------- */
+  --fj3-espresso: #3a2e28;
+  --fj3-clay-700: #8a4327;
+  --fj3-clay-600: #a8573a;
+  --fj3-clay-100: #f7e6da;
+  --fj3-apricot: #f2c79b;
+  --fj3-apricot-300: #f6d8b6;
+  --fj3-sage: #9aa88a;
+  --fj3-ivory: #fbf7f1;
+  --fj3-sand-100: #f3eadf;
+  --fj3-sand-200: #eadfd1;
+  --fj3-sand-300: #dfd1c0;
+  --fj3-white: #ffffff;
+
+  /* Legacy names, remapped (see header). */
+  --fj3-midnight: var(--fj3-espresso);
+  --fj3-lime-400: var(--fj3-apricot);
+  --fj3-lime-300: var(--fj3-apricot-300);
+  --fj3-sky-300: #c9dbe4;
+  --fj3-cobalt-500: var(--fj3-clay-600);
+
+  /* ---------- Surfaces & text ---------- */
+  --fj3-bg: var(--fj3-ivory);
+  --fj3-desk: #efe6da;
+  --fj3-surface: var(--fj3-white);
+  --fj3-surface-2: var(--fj3-sand-100);
+  --fj3-surface-3: var(--fj3-sand-200);
+  --fj3-fg: var(--fj3-espresso);
+  --fj3-fg-2: #62544b;
+  --fj3-fg-3: #76665b;
+  --fj3-line: rgba(58, 46, 40, 0.1);
+  --fj3-line-strong: rgba(58, 46, 40, 0.2);
+  --fj3-scrim: rgba(40, 28, 20, 0.42);
+
+  /* Sand panels (formerly night spreads). */
+  --fj3-night: var(--fj3-sand-100);
+  --fj3-night-2: var(--fj3-sand-200);
+  --fj3-night-3: var(--fj3-sand-300);
+  --fj3-on-night: var(--fj3-espresso);
+  --fj3-on-night-2: #6b5c52;
+  --fj3-night-line: rgba(58, 46, 40, 0.12);
+
+  /* Accent text on light panels (formerly lime text on night). */
+  --fj3-hl-ink: #94492c;
+
+  /* ---------- Actions ---------- */
+  --fj3-primary: var(--fj3-clay-600);
+  --fj3-primary-pressed: var(--fj3-clay-700);
+  --fj3-on-primary: #ffffff;
+  --fj3-accent: var(--fj3-apricot);
+  --fj3-accent-pressed: #ecb984;
+  --fj3-on-accent: var(--fj3-espresso);
+  --fj3-tonal: var(--fj3-clay-100);
+  --fj3-on-tonal: var(--fj3-clay-700);
+  --fj3-link: var(--fj3-hl-ink);
+  --fj3-focus: var(--fj3-clay-600);
+  --fj3-disabled-bg: var(--fj3-sand-200);
+  --fj3-disabled-fg: #8f8076;
+
+  /* ---------- Semantic status (muted) ---------- */
+  --fj3-success-fg: #3f6b3a;
+  --fj3-success-bg: #e8efdf;
+  --fj3-success-solid: #5d8a55;
+  --fj3-warning-fg: #87561a;
+  --fj3-warning-bg: #faeed8;
+  --fj3-warning-solid: #e0a548;
+  --fj3-danger-fg: #a63a2c;
+  --fj3-danger-bg: #f8e2dc;
+  --fj3-danger-solid: #c0503d;
+  --fj3-info-fg: #3e6278;
+  --fj3-info-bg: #e4ecf0;
+  --fj3-info-solid: #6f93a8;
+  --fj3-live: #b8432f;
+  --fj3-unread: var(--fj3-clay-600);
+
+  /* ---------- Glass (warm, on photography only) ---------- */
+  --fj3-glass: rgba(42, 30, 24, 0.38);
+  --fj3-glass-strong: rgba(42, 30, 24, 0.7);
+  --fj3-glass-line: rgba(255, 255, 255, 0.22);
+  --fj3-glass-blur: blur(16px) saturate(130%);
+
+  /* ---------- Elevation (soft, warm) ---------- */
+  --fj3-shadow-1: 0 1px 2px rgba(58, 46, 40, 0.05), 0 4px 14px rgba(58, 46, 40, 0.05);
+  --fj3-shadow-2: 0 2px 6px rgba(58, 46, 40, 0.06), 0 16px 36px rgba(58, 46, 40, 0.1);
+  --fj3-shadow-3: 0 22px 60px rgba(58, 40, 28, 0.18);
+
+  /* ---------- Type: editorial hierarchy on the shared typeface ---------- */
+  --fj3-display: 780 2.75rem/0.98 var(--font);
+  --fj3-title: 760 2rem/1.04 var(--font);
+  --fj3-headline: 720 1.5rem/1.14 var(--font);
+  --fj3-heading: 700 1.25rem/1.2 var(--font);
+  --fj3-sub: 650 1.0625rem/1.3 var(--font);
+  --fj3-lede: 380 1.1875rem/1.5 var(--font);
+  --fj3-read: 430 1.0625rem/1.7 var(--font);
+  --fj3-body: 500 1rem/1.5 var(--font);
+  --fj3-label: 650 0.9375rem/1.25 var(--font);
+  --fj3-small: 500 0.875rem/1.45 var(--font);
+  --fj3-caption: 600 0.8125rem/1.35 var(--font);
+  --fj3-kicker: 740 0.75rem/1.1 var(--font);
+  --fj3-numeral: 220 4rem/0.86 var(--font);
+  --fj3-track-display: -0.035em;
+  --fj3-track-title: -0.028em;
+  --fj3-track-kicker: 0.14em;
+
+  /* ---------- Space ---------- */
+  --fj3-gutter: 20px;
+  --fj3-section: 40px;
+
+  /* ---------- Motion ---------- */
+  --fj3-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --fj3-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --fj3-dur-1: 140ms;
+  --fj3-dur-2: 240ms;
+  --fj3-dur-3: 420ms;
+
+  /* ---------- Layout ---------- */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --fj3-header-h: 56px;
+  --fj3-dock-h: 64px;
+  --fj3-dock-clearance: calc(var(--fj3-dock-h) + var(--safe-bottom) + 24px);
+
+  color-scheme: only light;
+}
+
+:root[data-host='artifact'] .fj3 {
+  --safe-top: 0px;
+  --safe-bottom: 0px;
+}
+
+

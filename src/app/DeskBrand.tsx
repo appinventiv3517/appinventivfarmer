@@ -5,6 +5,7 @@ import { Logo } from '@/components/brand/Logo';
 import { actions } from '@/services/store';
 import { clearQueryCache } from '@/services/query';
 import { isD2Path } from '@/d2/paths';
+import { isD3Path } from '@/d3/paths';
 import s from './DeskBrand.module.css';
 
 /**
@@ -29,7 +30,7 @@ export function DeskBrand() {
     setConfirming(false);
     actions.resetAll();
     clearQueryCache();
-    navigate(isD2Path(pathname) ? '/d2' : '/', { replace: true });
+    navigate(isD2Path(pathname) ? '/d2' : isD3Path(pathname) ? '/d3' : '/', { replace: true });
   };
 
   return (

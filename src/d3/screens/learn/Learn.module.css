@@ -1,0 +1,70 @@
+.mastActions {
+  display: flex;
+  gap: 8px;
+}
+.tools {
+  padding: 16px var(--fj3-gutter) 12px;
+}
+.chips {
+  margin-bottom: 8px;
+}
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px var(--fj3-gutter) 4px;
+  font: var(--fj3-label);
+}
+.summary button {
+  min-height: 44px;
+  color: var(--fj3-link);
+  font: var(--fj3-label);
+}
+.body {
+  padding-top: 14px;
+}
+.mag {
+  display: flex;
+  flex-direction: column;
+  padding: 4px var(--fj3-gutter) 0;
+}
+.mag > * + * {
+  border-top: 1px solid var(--fj3-line);
+}
+.indexBlock {
+  margin: 32px var(--fj3-gutter) 0;
+}
+.indexBlock > * + * + * {
+  border-top: 1px solid var(--fj3-line);
+}
+/* ---------- Cinema (videos) ---------- */
+.cinema {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.cinemaLead {
+  padding: 0 var(--fj3-gutter);
+}
+.collection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.collectionSolo {
+  padding: 0 var(--fj3-gutter);
+}
+
+/* ---------- Guides ---------- */
+.guideLead {
+  padding: 0 var(--fj3-gutter);
+}
+.guidePair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 24px var(--fj3-gutter) 8px;
+}
+.guidePairSolo {
+  grid-template-columns: minmax(0, 1fr);
+}

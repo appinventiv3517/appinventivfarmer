@@ -1,0 +1,178 @@
+/* Direction 02 base layer. Everything is scoped under .fj3. */
+
+.fj3 {
+  font: var(--fj3-body);
+  color: var(--fj3-fg);
+  background: var(--fj3-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.fj3) a {
+  color: var(--fj3-link);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+:where(.fj3) ::selection {
+  background: var(--fj3-lime-300);
+  color: var(--fj3-midnight);
+}
+
+:where(.fj3) :focus-visible {
+  outline: 3px solid var(--fj3-focus);
+  outline-offset: 2px;
+  box-shadow: none;
+  border-radius: var(--r-sm);
+}
+
+/* ---------- Type helpers ---------- */
+.fj3 .fj3-display {
+  font: var(--fj3-display);
+  letter-spacing: var(--fj3-track-display);
+}
+.fj3 .fj3-title {
+  font: var(--fj3-title);
+  letter-spacing: var(--fj3-track-title);
+}
+.fj3 .fj3-headline {
+  font: var(--fj3-headline);
+  letter-spacing: -0.022em;
+}
+.fj3 .fj3-heading {
+  font: var(--fj3-heading);
+  letter-spacing: -0.016em;
+}
+.fj3 .fj3-sub {
+  font: var(--fj3-sub);
+  letter-spacing: -0.008em;
+}
+.fj3 .fj3-lede {
+  font: var(--fj3-lede);
+}
+.fj3 .fj3-body {
+  font: var(--fj3-body);
+}
+.fj3 .fj3-small {
+  font: var(--fj3-small);
+}
+.fj3 .fj3-caption {
+  font: var(--fj3-caption);
+}
+.fj3 .fj3-kicker {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+}
+.fj3 .fj3-c2 {
+  color: var(--fj3-fg-2);
+}
+.fj3 .fj3-c3 {
+  color: var(--fj3-fg-3);
+}
+.fj3 .fj3-tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Layout helpers ---------- */
+.fj3 .fj3-gutter {
+  padding-inline: var(--fj3-gutter);
+}
+.fj3 .fj3-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap, 16px);
+  min-width: 0;
+}
+.fj3 .fj3-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap, 12px);
+  min-width: 0;
+}
+.fj3 .fj3-rail {
+  display: flex;
+  gap: var(--gap, 14px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--fj3-gutter);
+  padding-inline: var(--fj3-gutter);
+  padding-block: 2px 10px;
+  scrollbar-width: none;
+}
+.fj3 .fj3-rail::-webkit-scrollbar {
+  display: none;
+}
+.fj3 .fj3-rail > * {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+.fj3 .fj3-clamp-2,
+.fj3 .fj3-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fj3 .fj3-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+.fj3 .fj3-clamp-3 {
+  -webkit-line-clamp: 3;
+}
+
+/* A hairline rule, used as the journal's section divider. */
+.fj3 .fj3-rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--fj3-line);
+}
+
+/* ---------- Skeleton: a cool sweep, not a shimmer ---------- */
+.fj3 .fj3-skel {
+  position: relative;
+  overflow: hidden;
+  background: var(--fj3-surface-2);
+  border-radius: var(--r-sm);
+}
+.fj3 .fj3-skel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, color-mix(in srgb, var(--fj3-surface) 75%, transparent) 50%, transparent 80%);
+  transform: translateX(-100%);
+  animation: fj3-sweep 1.6s var(--fj3-ease) infinite;
+}
+.fj3 .fj3-skel-night {
+  background: var(--fj3-night-2);
+}
+.fj3 .fj3-skel-night::after {
+  background: linear-gradient(100deg, transparent 20%, rgba(58, 46, 40, 0.12) 50%, transparent 80%);
+}
+
+@keyframes fj3-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fj3-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes fj3-drift {
+  from {
+    transform: scale(1.06) translate3d(-1.2%, 0.6%, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(1.2%, -0.8%, 0);
+  }
+}

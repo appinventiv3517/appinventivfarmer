@@ -1,0 +1,469 @@
+/*
+ * Home · Direction 02. A fresher, natural layer scoped to Home through --hm-*
+ * tokens: field green for actions and the Ask Didi voice entry, monsoon blue
+ * for rain and advice, with the journal's clay and apricot kept for the frame.
+ * Severity always pairs colour with an icon and a word.
+ */
+.tokens {
+  --hm-surface: var(--fj3-surface);
+  --hm-surface-2: var(--fj3-sand-100);
+  --hm-fg: var(--fj3-fg);
+  --hm-fg-2: var(--fj3-fg-2);
+  --hm-line: var(--fj3-line);
+  --hm-brand: #3d6a3a;
+  --hm-on-brand: #ffffff;
+  --hm-brand-soft: #e3edd9;
+  --hm-on-brand-soft: #2c4f2a;
+  --hm-mic: #3d6a3a;
+  --hm-on-mic: #ffffff;
+  --hm-mic-soft: #e3edd9;
+  --hm-sky: #3b6177;
+  --hm-sky-soft: #e2ecf1;
+  --hm-urgent-fg: #9e3324;
+  --hm-urgent-bg: #f8e1da;
+  --hm-urgent-solid: #b23f2b;
+  --hm-on-urgent-solid: #ffffff;
+  --hm-warn-fg: #7f4f12;
+  --hm-warn-bg: #f9ecd3;
+  --hm-warn-solid: #e0a548;
+  --hm-on-warn-solid: #3a2e28;
+  --hm-ok-fg: #355a70;
+  --hm-ok-bg: #e2ecf1;
+  --hm-ok-solid: #46708a;
+  --hm-on-ok-solid: #ffffff;
+  --hm-glass: rgba(42, 30, 24, 0.42);
+  --hm-glass-line: rgba(255, 255, 255, 0.26);
+  --hm-on-glass: #ffffff;
+  --hm-lang-on: var(--fj3-apricot);
+  --hm-on-lang-on: #3a2e28;
+  --hm-focus: var(--fj3-clay-600);
+  color: var(--hm-fg);
+}
+
+.home {
+  /* Plus Jakarta Sans has no Devanagari; the system Devanagari face takes over for Hindi and Marathi. */
+  font-family: var(--font), 'Noto Sans Devanagari', 'Nirmala UI', 'Kohinoor Devanagari', 'Mangal', sans-serif;
+}
+.home :is(h1, h2, h3, p, span, strong, b, small, button) {
+  overflow-wrap: break-word;
+}
+.reviewNote {
+  margin-top: 12px;
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-3);
+  text-align: center;
+}
+
+.gutter {
+  padding-inline: var(--fj3-gutter);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+  background: var(--fj3-night);
+}
+.heroMedia {
+  position: absolute;
+  inset: 0 0 -60px;
+}
+.heroTop {
+  position: absolute;
+  top: calc(var(--safe-top) + 8px);
+  left: var(--fj3-gutter);
+  right: 14px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: #fff;
+}
+.brand img {
+  height: 34px;
+  width: auto;
+}
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.heroText {
+  position: absolute;
+  left: var(--fj3-gutter);
+  right: var(--fj3-gutter);
+  bottom: 92px;
+  z-index: 3;
+  color: #fff;
+}
+.dateline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+.dateline span {
+  padding: 5px 8px;
+  border-radius: var(--r-xs);
+  background: var(--fj3-lime-400);
+  color: var(--fj3-midnight);
+}
+.hello {
+  font: var(--fj3-display);
+  font-size: 2.875rem;
+  letter-spacing: var(--fj3-track-display);
+  text-wrap: balance;
+}
+
+/* ---------- Weather instrument overlaps the hero ---------- */
+.instrument {
+  position: relative;
+  z-index: 4;
+  margin: -72px 12px 0;
+}
+
+/* ---------- Verify ---------- */
+.verify {
+  display: flex;
+  gap: 12px;
+  margin: 20px var(--fj3-gutter) 0;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-warning-bg);
+  color: var(--fj3-warning-fg);
+}
+.verifyIcon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.verifyText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.verifyText strong {
+  font: var(--fj3-sub);
+  color: var(--fj3-fg);
+}
+.verifyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  margin-top: var(--fj3-section);
+}
+/* ---------- At a glance: an index, not tiles ---------- */
+.glance {
+  margin: 4px var(--fj3-gutter) 0;
+}
+.glanceRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 88px;
+  text-align: left;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.glanceBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 2px;
+}
+.glanceTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--fj3-sub);
+  font-family: inherit;
+  font-size: 1.1875rem;
+}
+.glanceIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-xs);
+  background: var(--hm-brand-soft);
+  color: var(--hm-on-brand-soft);
+}
+.glanceIcon svg {
+  width: 17px;
+  height: 17px;
+}
+.glanceBadge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-unread);
+  color: #fff;
+  font: 750 0.75rem/22px var(--font);
+  text-align: center;
+}
+
+.glanceLocked {
+  color: var(--hm-warn-fg) !important;
+}
+.glanceStat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--fj3-small);
+  font-family: inherit;
+  color: var(--fj3-fg-2);
+}
+.glanceLive .glanceStat {
+  color: var(--fj3-live);
+  font-weight: 700;
+}
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fj3-live);
+  animation: fj3-pulse 1.4s var(--fj3-ease) infinite;
+}
+.glanceArrow {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--fj3-primary);
+}
+
+/* ---------- Kisani Didi: split composition ---------- */
+.didi {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  margin: var(--fj3-section) var(--fj3-gutter) 0;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--fj3-night);
+}
+.didiPhoto {
+  height: 100%;
+}
+.didiPanel {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px;
+  color: var(--fj3-on-night);
+}
+.didiKicker {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-hl-ink);
+}
+.didiName {
+  margin-top: 8px;
+  font: var(--fj3-headline);
+  letter-spacing: -0.024em;
+}
+.didiArea {
+  margin-top: 8px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-on-night-2);
+}
+.didiFoot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-top: 1px solid var(--fj3-night-line);
+}
+.didiActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.didiActions > * {
+  min-height: 44px;
+  justify-content: center;
+}
+.askDidi {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 8px 18px 8px 8px;
+  border-radius: var(--r-lg);
+  background: var(--hm-mic);
+  color: var(--hm-on-mic);
+  text-align: left;
+}
+.askDidi:focus-visible {
+  outline: 3px solid var(--hm-focus);
+  outline-offset: 3px;
+}
+.askMic {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.18);
+}
+.askMic::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--r-md) + 3px);
+  border: 2px solid currentColor;
+  opacity: 0;
+  animation: askPulse 2.6s ease-out infinite;
+}
+@keyframes askPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.5;
+  }
+  70%,
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+.askMic svg {
+  width: 24px;
+  height: 24px;
+}
+.askText {
+  display: flex;
+  flex-direction: column;
+}
+.askText strong {
+  font: 740 1.0625rem/1.25 var(--font);
+  font-family: inherit;
+}
+.askText span {
+  font: 600 0.8125rem/1.3 var(--font);
+  font-family: inherit;
+  opacity: 0.92;
+}
+@media (prefers-reduced-motion: reduce) {
+  .askMic::after {
+    animation: none;
+  }
+}
+:root[data-motion='reduce'] .askMic::after {
+  animation: none;
+}
+
+/* ---------- News ---------- */
+.coverWrap {
+  margin-top: 18px;
+}
+.magazine {
+  display: flex;
+  flex-direction: column;
+}
+.magazine > * + * {
+  border-top: 1px solid var(--fj3-line);
+}
+
+/* ---------- Night band for video ---------- */
+.nightBand {
+  margin-top: var(--fj3-section);
+  padding: 32px 0 20px;
+  background: var(--fj3-night);
+  color: var(--fj3-on-night);
+}
+.nightBand :global(.fj3-rail) span {
+  color: inherit;
+}
+
+/* ---------- Fields ---------- */
+.addField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 150px;
+  min-height: 300px;
+  border-radius: var(--r-xl);
+  box-shadow: inset 0 0 0 1.5px var(--fj3-line-strong);
+  color: var(--fj3-fg);
+  font: var(--fj3-label);
+  text-decoration: none;
+}
+.addPlus {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  background: var(--fj3-primary);
+  color: #fff;
+  font: 300 2rem/1 var(--font);
+}
+
+/* ---------- End ---------- */
+.endLink {
+  font-family: inherit !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: var(--fj3-section);
+  padding: 22px 20px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-primary);
+  color: #fff;
+  font: var(--fj3-headline);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.endLink > span {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.endKicker {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+.endLink svg {
+  flex: none;
+  width: 30px;
+  height: 30px;
+}
+
+.glanceThumb {
+  flex: none;
+  width: 64px !important;
+  border-radius: var(--r-md);
+}

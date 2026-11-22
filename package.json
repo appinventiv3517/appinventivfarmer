@@ -9,11 +9,13 @@
     "build": "tsc --noEmit && vite build",
     "build:demo": "tsc --noEmit && vite build --mode demo",
     "build:demo2": "tsc --noEmit && vite build --mode demo2",
+    "build:demo3": "tsc --noEmit && vite build --mode demo3",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build:standalone": "tsc --noEmit && STANDALONE=1 vite build --mode demo2 && node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-app.html",
-    "build:mobile": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-01-illustrated.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo2 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-02-field-journal.html"
+    "build:standalone3": "tsc --noEmit && STANDALONE=1 vite build --mode demo3 && node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-app-v3.html",
+    "build:mobile": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-01-illustrated.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo2 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-02-field-journal.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-03-field-journal-v3.html"
   },
   "dependencies": {
     "@fontsource-variable/plus-jakarta-sans": "5.1.1",

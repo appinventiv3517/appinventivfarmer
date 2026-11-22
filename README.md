@@ -3,6 +3,7 @@
 A working, mobile-first rebuild of the Kisani Urjaa farmer app: React 18, TypeScript and Vite. Every feature from the 80 original design frames is kept. Missing screens and states (OTP, bookings list, add land, profile, help, loading, empty, offline and error) were added.
 
 - **Two design directions:** Direction 01 (illustrated, at `#/`) and **Direction 02 “Field Journal”** (editorial, photography-led, at `#/d2`). They share data and logic; only the typeface and corner radii are common to both visual layers. See [`docs/direction-02.md`](docs/direction-02.md).
+- **Ver 3** (at `#/d3`): an independent copy of Direction 02, for the next round of design changes. See [Ver 3](#ver-3).
 - **Audit of the original designs:** [`docs/audit.md`](docs/audit.md)
 - **Living design system:** in the app at Account → Design system (`#/design-system`)
 
@@ -18,6 +19,10 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | `npm run build` | Type-check, then production build to `dist/` (hash routing, static hosting) |
 | `npm run build:demo` | Self-contained build to `dist-demo/` with in-memory routing, for embedding in hosts that don't allow URL routing |
 | `npm run build:demo2` | The same, to `dist-demo2/`, opening on Direction 02 |
+| `npm run build:demo3` | The same, to `dist-demo3/`, opening on Ver 3 |
+| `npm run build:standalone` | One self-contained HTML file, `dist-standalone/kisani-urjaa-app.html`, opening on Direction 02 |
+| `npm run build:standalone3` | The same for Ver 3: `dist-standalone/kisani-urjaa-app-v3.html` |
+| `npm run build:mobile` | Phone preview files in `dist-mobile/`, one per direction (01, 02 and Ver 3) |
 | `npm run typecheck` | TypeScript only |
 | `npm test` | Unit tests for pricing, validation, formatting, weather advice, filtering, season-record totals |
 
@@ -38,6 +43,16 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | Notifications | Grouped by day, unread markers, categories, mark all read with undo |
 | Account | Profile, language, password, farm machinery, help, contact, legal, verification |
 
+## Ver 3
+
+Ver 3 starts as an exact copy of Direction 02 “Field Journal” and is where the Ver 3 design changes go. It lives in `src/d3/` and is mounted at `#/d3/...`; Direction 01 (`src/features`, `src/components`) and Direction 02 (`src/d2`) are not affected by changes there.
+
+- **Its own copy:** screens, UI kit, layout, motion, Lottie, styles, routes (`src/d3/routes.tsx`), paths (`src/d3/paths.ts`, `isD3Path`) and tests (`src/d3/__tests__`). Global styles are scoped to `.fj3` and `--fj3-*` tokens so the two Field Journal layers never collide.
+- **Shared, not forked:** store, services, i18n, `src/lib`, `src/data` and `src/components/home`.
+- **Photos:** Ver 3 shows Direction 02's AI concept images (with their credit lines) from `src/d2/photo/files`; a file dropped into `src/d3/photo/files` with the same slot id replaces it for Ver 3 only.
+- **Review chrome:** the desktop switcher has a third option, “03 · Field Journal v3”; Reset prototype returns to `#/d3`; the OTP is `123456`; prototype controls are at Me → Prototype controls.
+- **Demo:** `npm run build:standalone3` writes `dist-standalone/kisani-urjaa-app-v3.html`, which opens on Ver 3.
+
 ## Architecture
 
 ```
@@ -45,7 +60,9 @@ src/
   app/             router, page transitions, app frame, shared sheets (create, verify gate, contact)
   components/ui/   design-system components (Button, fields, Sheet, Toast, badges, lists, timeline…)
   components/      layout (Screen, TabBar), media (Scene, Lottie, VideoPlayer), content cards
-  features/        one folder per module
+  features/        one folder per module (Direction 01)
+  d2/              Direction 02 “Field Journal”, mounted at /d2
+  d3/              Ver 3, a copy of Direction 02, mounted at /d3
   services/        api.ts (the only backend seam), store.ts (persisted state), query.ts (cache)
   data/            sample data, dated relative to today
   lib/             formatting, pricing, validation, weather, dates
