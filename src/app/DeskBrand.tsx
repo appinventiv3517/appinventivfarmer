@@ -35,7 +35,7 @@ export function DeskBrand() {
 
   return (
     <aside className={s.aside} aria-label="Kisani Urjaa">
-      <div className={s.plate}>
+      <div className={isD3Path(pathname) ? s.bare : s.plate}>
         <Logo height={120} />
       </div>
       <p className={s.name}>Kisani Urjaa</p>

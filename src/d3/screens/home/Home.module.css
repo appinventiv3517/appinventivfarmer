@@ -79,17 +79,17 @@
   align-items: center;
   justify-content: space-between;
 }
+/* The mark sits straight on the photo: no tile; a soft ivory glow that follows its outline keeps it readable on any photo. */
 .brand {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--r-sm);
-  background: #fff;
+  width: 48px;
+  height: 48px;
 }
 .brand img {
-  height: 34px;
+  height: 40px;
   width: auto;
+  filter: drop-shadow(0 0 1.5px rgba(255, 246, 232, 0.85)) drop-shadow(0 0 8px rgba(255, 236, 210, 0.45)) drop-shadow(0 2px 6px rgba(30, 20, 12, 0.25));
 }
 .heroActions {
   display: flex;
