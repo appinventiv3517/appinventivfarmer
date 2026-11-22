@@ -61,7 +61,7 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  height: 520px;
+  height: 420px;
   overflow: hidden;
   background: var(--fj3-night);
 }

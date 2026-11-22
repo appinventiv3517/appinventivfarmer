@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateConfirmPassword, validateDob, validateEmail, validateIdNumber, validatePassword, validateUserId } from '@/lib/validation';
+import { validateConfirmPassword, validateDob, validateEmail, validateIdNumber, validatePassword, validatePersonName, validatePlaceName, validateUserId } from '@/lib/validation';
 import { hashPassword, checkPassword, maskPhone } from '@/lib/password';
 import { DISTRICTS, MANDALS, STATES, stateForPincode } from '@/data/places';
 import { completion } from '../screens/profile-setup/ProfileSetup';
@@ -50,6 +50,15 @@ describe('Ver 3 profile setup rules', () => {
     expect(validateDob('1980-05-01', today)).toBeNull();
     expect(validateDob('2027-01-01', today)).toMatch(/future/);
     expect(validateDob('2010-01-01', today)).toMatch(/18/);
+  });
+  it('names need letters; places cannot be only numbers', () => {
+    expect(validatePersonName('Ram Prasad Yadav', 'full name')).toBeNull();
+    expect(validatePersonName('राम प्रसाद', 'full name')).toBeNull();
+    expect(validatePersonName('Ansh 2', 'full name')).toMatch(/numbers/);
+    expect(validatePlaceName('Ratanpur', 'village')).toBeNull();
+    expect(validatePlaceName('रतनपुर', 'village')).toBeNull();
+    expect(validatePlaceName('312312', 'village')).toMatch(/letters/);
+    expect(validatePlaceName('', 'village')).toMatch(/Enter/);
   });
   it('email is optional but checked', () => {
     expect(validateEmail('')).toBeNull();

@@ -146,7 +146,7 @@ export default function Home() {
     });
 
   return (
-    <Screen title="Home" variant="bare" tabRoot lightTop heroHeight={520}>
+    <Screen title="Home" variant="bare" tabRoot lightTop heroHeight={420}>
       <div className={`${s.tokens} ${s.home}`} lang={t.contentLang}>
         <Hero slot={slot} greeting={t.greeting(dayPart(), firstName)} unread={unread} village={profile.village} t={t} onLang={() => setLangOpen(true)} />
 

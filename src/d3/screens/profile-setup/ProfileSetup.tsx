@@ -5,7 +5,7 @@ import { Calendar, Camera, FileText, GraduationCap, Home as HomeIcon, Landmark, 
 import { actions, getState, useStore, type ProfileDetails } from '@/services/store';
 import { KISANI_DIDI } from '@/data/people';
 import { DISTRICTS, MANDALS, STATES, stateForPincode } from '@/data/places';
-import { validateDob, validateEmail, validateIdNumber, validatePhone, validatePincode } from '@/lib/validation';
+import { validateDob, validateEmail, validateIdNumber, validatePersonName, validatePhone, validatePincode, validatePlaceName } from '@/lib/validation';
 import { formatPhone } from '@/lib/format';
 import { Screen } from '../../layout/Screen';
 import { Button } from '../../ui/Button';
@@ -200,6 +200,9 @@ export default function ProfileSetup() {
   // Steps open in order.
   if (step > saved.completed + 1) return <Navigate to={to(`/profile/setup/${saved.completed + 1}`)} replace />;
 
+  const districts = DISTRICTS[d.state];
+  const mandals = MANDALS[d.district];
+
   const validate = (): Errors => {
     const e: Errors = {};
     if (step === 1) {
@@ -208,20 +211,20 @@ export default function ProfileSetup() {
         if (!scans.get(`${d.docType}:front`)) e.scan = 'Scan or upload the front side.';
         e.idNumber = validateIdNumber(d.docType, d.idNumber);
       }
-      if (!d.fullName.trim()) e.fullName = 'Enter your full name.';
-      else if (d.fullName.trim().length < 2) e.fullName = 'Name is too short.';
+      e.fullName = validatePersonName(d.fullName, 'full name');
       e.dob = validateDob(d.dob);
     }
     if (step === 2) {
       if (d.address.trim().length < 6) e.address = d.address.trim() ? 'Add a little more: house, street or landmark.' : 'Enter your complete address.';
       e.pincode = validatePincode(d.pincode);
       if (!d.state) e.state = 'Choose your state.';
-      if (!d.district.trim()) e.district = 'Choose your district.';
-      if (!d.mandal.trim()) e.mandal = 'Choose your mandal.';
-      if (d.mandal === 'Other' && !d.otherMandal.trim()) e.otherMandal = 'Enter the mandal name.';
-      if (!d.village.trim()) e.village = 'Enter your village.';
+      e.district = districts ? (d.district ? null : 'Choose your district.') : validatePlaceName(d.district, 'district');
+      e.mandal = mandals ? (d.mandal ? null : 'Choose your mandal.') : validatePlaceName(d.mandal, 'mandal');
+      if (d.mandal === 'Other') e.otherMandal = validatePlaceName(d.otherMandal, 'mandal');
+      e.village = validatePlaceName(d.village, 'village');
     }
     if (step === 3) {
+      if (d.relationName.trim()) e.relationName = validatePersonName(d.relationName, 'name');
       if (d.altPhone) e.altPhone = validatePhone(d.altPhone) ?? (d.altPhone.replace(/\D/g, '') === getState().account?.phone ? 'Use a different number from your own.' : null);
       e.email = validateEmail(d.email);
       if (!d.education) e.education = 'Choose your highest education.';
@@ -255,9 +258,6 @@ export default function ProfileSetup() {
     });
     setDone(true);
   };
-
-  const districts = DISTRICTS[d.state];
-  const mandals = MANDALS[d.district];
 
   return (
     <Screen
@@ -391,7 +391,7 @@ export default function ProfileSetup() {
                       ))}
                     </div>
                   </fieldset>
-                  <TextField label={d.relation === 'father' ? 'Father’s name' : 'Spouse’s name'} optional prefix={<Ico><User aria-hidden /></Ico>} placeholder={d.relation === 'father' ? 'Enter father’s name' : 'Enter spouse’s name'} value={d.relationName} onChange={(e) => set('relationName', e.target.value)} />
+                  <TextField label={d.relation === 'father' ? 'Father’s name' : 'Spouse’s name'} optional prefix={<Ico><User aria-hidden /></Ico>} placeholder={d.relation === 'father' ? 'Enter father’s name' : 'Enter spouse’s name'} value={d.relationName} onChange={(e) => set('relationName', e.target.value)} error={errors.relationName} />
                   <div>
                     <TextField aside={<InfoTip label="About alternate mobile number" text="You can also add a family member’s mobile number" />} label="Alternate mobile number" optional type="tel" inputMode="numeric" prefix={<Ico><Phone aria-hidden /></Ico>} placeholder="Enter mobile number" value={d.altPhone} onChange={(e) => set('altPhone', formatMobile(e.target.value))} error={errors.altPhone} />
                   </div>

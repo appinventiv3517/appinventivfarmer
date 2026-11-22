@@ -108,3 +108,22 @@ export function validateDob(iso: string, today = new Date()): string | null {
   if (today.getFullYear() - d.getFullYear() > 110) return 'Check the year of birth.';
   return null;
 }
+
+/** Person names: letters in any script, spaces, dot, apostrophe or hyphen; no digits. */
+export function validatePersonName(raw: string, label = 'name'): string | null {
+  const v = raw.trim();
+  if (!v) return `Enter your ${label}.`;
+  if (/\d/.test(v)) return `A ${label} cannot contain numbers.`;
+  if (!/^[\p{L}\p{M}][\p{L}\p{M} .'’-]*$/u.test(v)) return `Use letters only in the ${label}.`;
+  if (v.replace(/[^\p{L}]/gu, '').length < 2) return `${label[0].toUpperCase()}${label.slice(1)} is too short.`;
+  return null;
+}
+
+/** Place names (village, mandal, district): must contain letters, not only numbers or symbols. */
+export function validatePlaceName(raw: string, label: string): string | null {
+  const v = raw.trim();
+  if (!v) return `Enter the ${label} name.`;
+  if (!/\p{L}/u.test(v)) return `Enter the ${label} name in letters, not a number.`;
+  if (v.replace(/[^\p{L}]/gu, '').length < 2) return `${label[0].toUpperCase()}${label.slice(1)} name is too short.`;
+  return null;
+}
