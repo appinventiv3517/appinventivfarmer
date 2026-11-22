@@ -75,7 +75,8 @@
   isolation: isolate;
   --safe-top: 54px;
   --safe-bottom: 24px;
-  --fj3-dock-clearance: calc(var(--fj3-dock-h) + var(--safe-bottom) + 24px);
+  --fj3-dock-bottom: calc(var(--safe-bottom) * 0.5 + 10px);
+  --fj3-dock-clearance: calc(var(--fj3-dock-h) + 12px + var(--fj3-dock-bottom) + 16px);
 }
 
 .status {
