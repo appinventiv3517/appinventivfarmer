@@ -113,10 +113,10 @@ export function Loading({ label = 'Loading', night }: { label?: string; night?: 
 
 /* ---------- Avatar: a monogram tile ---------- */
 
-export function Avatar({ name, size = 48, verified, night }: { name: string; size?: number; verified?: boolean; night?: boolean }) {
+export function Avatar({ name, size = 48, verified, night, photo }: { name: string; size?: number; verified?: boolean; night?: boolean; photo?: string }) {
   return (
     <span className={`${s.avatar} ${night ? s.avatarNight : ''}`} style={{ width: size, height: size, fontSize: size * 0.36, borderRadius: size > 60 ? 'var(--r-lg)' : 'var(--r-md)' }} aria-hidden>
-      {initials(name)}
+      {photo ? <img src={photo} alt="" className={s.avatarImg} /> : initials(name)}
       {verified && (
         <span className={s.verified} style={{ width: size * 0.36, height: size * 0.36 }}>
           <Check strokeWidth={3.5} />

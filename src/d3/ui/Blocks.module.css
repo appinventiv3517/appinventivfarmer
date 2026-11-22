@@ -221,6 +221,12 @@
   font-weight: 760;
   letter-spacing: -0.02em;
 }
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
 .avatarNight {
   background: var(--fj3-lime-400);
   color: var(--fj3-midnight);

@@ -258,7 +258,7 @@ export const actions = {
       account,
       profileDetails: EMPTY_PROFILE_DETAILS,
       session: { ...s.session, onboarded: true, signedIn: true, verified: true, phone: account.phone },
-      profile: { ...s.profile, phone: account.phone, username: account.userId },
+      profile: { ...s.profile, phone: account.phone, username: account.userId, memberSince: new Date().toISOString().slice(0, 10) },
     }));
   },
   setPasswordHash(passwordHash: string) {

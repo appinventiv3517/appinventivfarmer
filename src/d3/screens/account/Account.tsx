@@ -6,11 +6,10 @@ import { formatPhone, monthYear } from '@/lib/format';
 import { counterpartPath } from '@/app/DirectionSwitcher';
 import { Screen } from '../../layout/Screen';
 import { Avatar, Row, RowGroup, StatusTag } from '../../ui/Blocks';
-import { Button } from '../../ui/Button';
+import { Button, IconButton } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
 import { Cascade, Rise } from '../../motion/Reveal';
 import { useNav } from '../../nav';
-import { Photo } from '../../photo/Photo';
 import s from './Account.module.css';
 
 export default function Account() {
@@ -23,6 +22,7 @@ export default function Account() {
   const bookmarks = useStore((st) => st.bookmarks.length);
   const unread = useStore((st) => st.unreadNotifications.length);
   const lands = useStore((st) => st.lands);
+  const photo = useStore((st) => st.profileDetails.photo);
   const [logout, setLogout] = useState(false);
   const acres = lands.reduce((a, l) => a + l.areaAcres, 0);
 
@@ -30,51 +30,45 @@ export default function Account() {
     <Screen title="Me" variant="masthead" kicker="Your account" tabRoot>
       <Cascade className={s.page}>
         <Rise>
-          <div className={s.cover}>
-            <Photo id="farmer-portrait" ratio="16/9" shade="bottom" />
-          </div>
-          <section className={`${s.profile} ${s.profileOnCover}`} aria-label="Profile">
+          <section className={s.profile} aria-label="Profile">
             <div className={s.profileTop}>
-              <Avatar name={profile.name} size={76} verified={session.verified} night />
-              <Button size="sm" variant="secondary" icon={<Pencil aria-hidden />} to="/account/profile">
-                Edit
-              </Button>
+              <Avatar name={profile.name} size={56} verified={session.verified} night photo={photo || undefined} />
+              <div className={s.who}>
+                <h2 className={s.name}>{profile.name}</h2>
+                <p className={s.phone}>{formatPhone(session.phone || profile.phone)}</p>
+                <p className={s.since}>
+                  @{profile.username} · {profile.village}, {profile.district} · since {monthYear(profile.memberSince)}
+                </p>
+              </div>
+              <IconButton label="Edit profile" to="/account/profile" className={s.edit}>
+                <Pencil />
+              </IconButton>
             </div>
-            <h2 className={s.name}>{profile.name}</h2>
-            <p className={s.phone}>{formatPhone(session.phone || profile.phone)}</p>
-            <p className={s.since}>
-              @{profile.username} · {profile.village}, {profile.district} · since {monthYear(profile.memberSince)}
-            </p>
-            <div className={s.verifyRow}>
+            <div className={s.profileFoot}>
               {session.verified ? (
                 <StatusTag tone="success" icon={<ShieldCheck aria-hidden />}>
-                  Verified number
+                  Verified
                 </StatusTag>
               ) : (
-                <>
-                  <StatusTag tone="warning">
-                    Verification pending
-                  </StatusTag>
-                  <Button size="sm" variant="accent" onClick={() => nav('/account/verify')}>
-                    Verify now
-                  </Button>
-                </>
+                <Button size="sm" variant="accent" onClick={() => nav('/account/verify')}>
+                  Verify number
+                </Button>
               )}
+              <dl className={s.stats}>
+                <div>
+                  <dd>{lands.length}</dd>
+                  <dt>Fields</dt>
+                </div>
+                <div>
+                  <dd>{acres}</dd>
+                  <dt>Acres</dt>
+                </div>
+                <div>
+                  <dd>{bookmarks}</dd>
+                  <dt>Saved</dt>
+                </div>
+              </dl>
             </div>
-            <dl className={s.stats}>
-              <div>
-                <dt>Fields</dt>
-                <dd>{lands.length}</dd>
-              </div>
-              <div>
-                <dt>Acres</dt>
-                <dd>{acres}</dd>
-              </div>
-              <div>
-                <dt>Saved</dt>
-                <dd>{bookmarks}</dd>
-              </div>
-            </dl>
           </section>
         </Rise>
 
