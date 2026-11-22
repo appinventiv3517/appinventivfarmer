@@ -47,3 +47,64 @@ export function validateAcres(raw: string, maxAcres?: number): string | null {
 export function validateRequired(raw: string, label: string): string | null {
   return raw.trim() ? null : `Enter ${label}.`;
 }
+
+/** User IDs: English letters and numbers (dot or underscore allowed inside), 4–20 characters, starting with a letter. */
+export function validateUserId(raw: string): string | null {
+  const v = raw.trim();
+  if (!v) return 'Enter a User ID.';
+  if (/[^\x00-\x7F]/.test(v)) return 'User ID can only use English letters and numbers.';
+  if (/\s/.test(v)) return 'User ID cannot contain spaces.';
+  if (!/^[A-Za-z]/.test(v)) return 'User ID should start with a letter.';
+  if (!/^[A-Za-z][A-Za-z0-9._]*$/.test(v)) return 'Use letters, numbers, dot (.) or underscore (_) only.';
+  if (/[._]$/.test(v)) return 'User ID cannot end with a dot or underscore.';
+  if (v.length < 4) return 'User ID should be at least 4 characters.';
+  if (v.length > 20) return 'User ID can be at most 20 characters.';
+  return null;
+}
+
+/** Passwords: 8–20 characters with at least one letter and one number. */
+export function validatePassword(raw: string): string | null {
+  if (!raw) return 'Enter a password.';
+  if (raw.length < 8) return 'Password should be at least 8 characters.';
+  if (raw.length > 20) return 'Password can be at most 20 characters.';
+  if (!/[A-Za-z]/.test(raw)) return 'Add at least 1 letter.';
+  if (!/\d/.test(raw)) return 'Add at least 1 number.';
+  return null;
+}
+
+export function validateConfirmPassword(password: string, confirm: string): string | null {
+  if (!confirm) return 'Re-enter the password.';
+  if (confirm !== password) return 'Passwords do not match.';
+  return null;
+}
+
+/** Optional email: checked only when something is typed. */
+export function validateEmail(raw: string): string | null {
+  const v = raw.trim();
+  if (!v) return null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Enter an email like name@example.com.';
+  return null;
+}
+
+/** ID number for the chosen identity document. */
+export function validateIdNumber(docType: string, raw: string): string | null {
+  const v = raw.replace(/[\s-]/g, '').toUpperCase();
+  if (!v) return 'Enter the ID number.';
+  if (docType === 'voter-id' && !/^[A-Z]{3}\d{7}$/.test(v)) return 'Voter ID (EPIC) numbers have 3 letters and 7 digits, like ABC1234567.';
+  if (docType === 'driving-licence' && !/^[A-Z]{2}\d{2}[A-Z0-9]{8,12}$/.test(v)) return 'Driving licence numbers start with the state code, like MH28 20210006753.';
+  if (!/^[A-Z0-9/]{4,20}$/.test(v)) return 'Check the ID number: 4–20 letters and numbers.';
+  return null;
+}
+
+/** Date of birth (yyyy-mm-dd): optional, but must be a past date and age 18 or older. */
+export function validateDob(iso: string, today = new Date()): string | null {
+  if (!iso) return null;
+  const d = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return 'Enter a valid date.';
+  if (d > today) return 'Date of birth cannot be in the future.';
+  const adult = new Date(d);
+  adult.setFullYear(d.getFullYear() + 18);
+  if (adult > today) return 'You need to be 18 or older to register.';
+  if (today.getFullYear() - d.getFullYear() > 110) return 'Check the year of birth.';
+  return null;
+}

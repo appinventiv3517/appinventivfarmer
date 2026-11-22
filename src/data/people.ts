@@ -14,6 +14,7 @@ export const DEFAULT_PROFILE: Profile = {
 };
 
 export const KISANI_DIDI: KisaniDidi = {
+  id: 'KD00001',
   name: 'Sumita Kumari',
   phone: '9000000001',
   area: 'Ratanpur cluster',

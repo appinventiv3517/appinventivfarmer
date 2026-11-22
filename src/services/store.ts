@@ -56,6 +56,66 @@ export function normalizeLanguage(value: unknown): Language {
   return LANGUAGES.includes(value as Language) ? (value as Language) : 'en';
 }
 
+/**
+ * Sign-in details created in the Ver 3 sign-up flow. Prototype only: kept on
+ * this device, and the password is stored as a salted SHA-256 hash, never as
+ * typed. A real backend owns these.
+ */
+export interface Account {
+  userId: string;
+  phone: string;
+  passwordHash: string;
+}
+
+/** Profile set up after sign-up (Ver 3, three steps). Saved step by step. */
+export interface ProfileDetails {
+  didiId: string;
+  docType: string;
+  idNumber: string;
+  fullName: string;
+  gender: '' | 'male' | 'female';
+  dob: string;
+  address: string;
+  pincode: string;
+  state: string;
+  district: string;
+  mandal: string;
+  otherMandal: string;
+  village: string;
+  /** Small JPEG data URL, resized on the device. */
+  photo: string;
+  relation: 'father' | 'spouse';
+  relationName: string;
+  altPhone: string;
+  email: string;
+  education: string;
+  /** Steps finished: 0 to 3. */
+  completed: number;
+}
+
+export const EMPTY_PROFILE_DETAILS: ProfileDetails = {
+  didiId: '',
+  docType: '',
+  idNumber: '',
+  fullName: '',
+  gender: '',
+  dob: '',
+  address: '',
+  pincode: '',
+  state: '',
+  district: '',
+  mandal: '',
+  otherMandal: '',
+  village: '',
+  photo: '',
+  relation: 'father',
+  relationName: '',
+  altPhone: '',
+  email: '',
+  education: '',
+  completed: 0,
+};
+
 export interface DemoSettings {
   network: 'normal' | 'slow' | 'offline';
   emptyData: boolean;
@@ -77,6 +137,9 @@ export interface AppState {
   lands: Land[];
   machinery: Machinery;
   coords: { latitude: number; longitude: number } | null;
+  /** Ver 3 sign-up (null until an account is created on this device). */
+  account: Account | null;
+  profileDetails: ProfileDetails;
 }
 
 const STORAGE_KEY = 'kisani-urjaa:state';
@@ -108,6 +171,8 @@ export function initialState(): AppState {
     lands: buildLands(),
     machinery: DEFAULT_MACHINERY,
     coords: null,
+    account: null,
+    profileDetails: EMPTY_PROFILE_DETAILS,
   };
 }
 
@@ -120,7 +185,7 @@ function load(): AppState {
   prefs.language = normalizeLanguage(prefs.language);
   // The app is light only; drop a theme saved by older versions.
   delete (prefs as Partial<Prefs> & { theme?: unknown }).theme;
-  return { ...base, ...saved, session: { ...base.session, ...saved.session }, prefs, demo: { ...base.demo, ...saved.demo } };
+  return { ...base, ...saved, session: { ...base.session, ...saved.session }, prefs, demo: { ...base.demo, ...saved.demo }, profileDetails: { ...base.profileDetails, ...saved.profileDetails } };
 }
 
 /* ------------------------------------------------------------------ */
@@ -186,6 +251,21 @@ export const actions = {
   },
   setLocation(location: Session['location'], coords?: { latitude: number; longitude: number }) {
     setState((s) => ({ ...s, session: { ...s.session, location }, coords: coords ?? s.coords }));
+  },
+  createAccount(account: Account) {
+    setState((s) => ({
+      ...s,
+      account,
+      profileDetails: EMPTY_PROFILE_DETAILS,
+      session: { ...s.session, onboarded: true, signedIn: true, verified: true, phone: account.phone },
+      profile: { ...s.profile, phone: account.phone, username: account.userId },
+    }));
+  },
+  setPasswordHash(passwordHash: string) {
+    setState((s) => (s.account ? { ...s, account: { ...s.account, passwordHash } } : s));
+  },
+  saveProfileDetails(patch: Partial<ProfileDetails>) {
+    setState((s) => ({ ...s, profileDetails: { ...s.profileDetails, ...patch } }));
   },
   signOut() {
     setState((s) => ({ ...s, session: { ...s.session, signedIn: false } }));

@@ -137,7 +137,7 @@ export default function Account() {
               onClick={() => {
                 setLogout(false);
                 actions.signOut();
-                nav('/auth', { replace: true });
+                nav('/login', { replace: true });
               }}
             >
               Log out

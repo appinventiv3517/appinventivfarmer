@@ -242,6 +242,8 @@ export interface Profile {
 }
 
 export interface KisaniDidi {
+  /** Kisani Didi registration ID, shown as #KD00001. */
+  id?: string;
   name: string;
   phone: string;
   area: string;

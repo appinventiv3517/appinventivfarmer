@@ -26,12 +26,27 @@ function Message({ id, error, hint }: { id: string; error?: string | null; hint?
   );
 }
 
-function Label({ htmlFor, label, optional }: { htmlFor: string; label: string; optional?: boolean }) {
-  return (
+function Label({ htmlFor, label, optional, required, aside }: { htmlFor: string; label: string; optional?: boolean; required?: boolean; aside?: ReactNode }) {
+  const el = (
     <label htmlFor={htmlFor} className={s.label}>
-      {label}
-      {optional && <span className={s.optional}>Optional</span>}
+      <span>
+        {label}
+        {/* The input itself carries `required`, so screen readers announce it; the star is visual. */}
+        {required && (
+          <span className={s.req} aria-hidden>
+            {' '}*
+          </span>
+        )}
+      </span>
+      {optional && <span className={s.optional}>{' '}Optional</span>}
     </label>
+  );
+  if (!aside) return el;
+  return (
+    <div className={s.labelLine}>
+      {el}
+      {aside}
+    </div>
   );
 }
 
@@ -40,15 +55,17 @@ interface TextFieldProps extends Common, Omit<InputHTMLAttributes<HTMLInputEleme
   suffix?: ReactNode;
   /** Large numeric entry (quantities, phone). */
   big?: boolean;
+  /** Shown at the end of the label line, e.g. an info button. */
+  aside?: ReactNode;
 }
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ label, hint, error, optional, prefix, suffix, big, id, className, ...rest }, ref) {
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField({ label, hint, error, optional, prefix, suffix, big, aside, id, className, ...rest }, ref) {
   const auto = useId();
   const fid = id ?? auto;
   const msg = `${fid}-msg`;
   return (
     <div className={`${s.field} ${className ?? ''}`}>
-      <Label htmlFor={fid} label={label} optional={optional} />
+      <Label htmlFor={fid} label={label} optional={optional} required={rest.required} aside={aside} />
       <div className={`${s.box} ${big ? s.big : ''} ${error ? s.invalid : ''} ${rest.readOnly ? s.readOnly : ''}`}>
         {prefix && <span className={s.affix}>{prefix}</span>}
         <input ref={ref} id={fid} className={s.input} aria-invalid={!!error || undefined} aria-describedby={error || hint ? msg : undefined} {...rest} />
@@ -68,7 +85,7 @@ export function TextArea({ label, hint, error, optional, id, maxLength, value, .
   const length = typeof value === 'string' ? value.length : 0;
   return (
     <div className={s.field}>
-      <Label htmlFor={fid} label={label} optional={optional} />
+      <Label htmlFor={fid} label={label} optional={optional} required={rest.required} />
       <div className={`${s.box} ${s.area} ${error ? s.invalid : ''}`}>
         <textarea id={fid} className={s.textarea} rows={3} maxLength={maxLength} value={value} aria-describedby={msg} {...rest} />
       </div>

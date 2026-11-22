@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, Check, Info } from 'lucide-react';
 import s from './Toast.module.css';
@@ -17,6 +18,9 @@ interface Item extends ToastOptions {
 
 const Ctx = createContext<(t: ToastOptions) => void>(() => {});
 export const useToast = () => useContext(Ctx);
+const ClearCtx = createContext<() => void>(() => {});
+/** Clears every toast, e.g. when a success card replaces the form that raised an error. */
+export const useClearToasts = () => useContext(ClearCtx);
 
 const ICON = { success: Check, error: AlertTriangle, info: Info };
 
@@ -27,6 +31,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const timers = useRef(new Map<number, ReturnType<typeof setTimeout>>());
   const [root, setRoot] = useState<HTMLElement | null>(null);
   useEffect(() => setRoot(document.getElementById('fj3-overlay')), []);
+
+  // A toast belongs to the screen that raised it: clear it when the screen changes.
+  const { pathname } = useLocation();
+  const clear = useCallback(() => {
+    setItems([]);
+    timers.current.forEach((t) => clearTimeout(t));
+    timers.current.clear();
+  }, []);
+  useEffect(clear, [pathname, clear]);
 
   const dismiss = useCallback((id: number) => {
     setItems((l) => l.filter((t) => t.id !== id));
@@ -47,7 +60,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   return (
     <Ctx.Provider value={value}>
-      {children}
+      <ClearCtx.Provider value={clear}>{children}</ClearCtx.Provider>
       {root &&
         createPortal(
           <div className={s.region} role="status" aria-live="polite">

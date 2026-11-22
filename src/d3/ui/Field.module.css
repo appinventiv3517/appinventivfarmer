@@ -13,6 +13,17 @@
   font: var(--fj3-label);
   color: var(--fj3-fg);
 }
+.req {
+  color: var(--fj3-danger-fg);
+}
+.labelLine {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.labelLine .label {
+  flex: 1;
+}
 .optional {
   font: var(--fj3-caption);
   color: var(--fj3-fg-3);

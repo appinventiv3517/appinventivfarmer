@@ -16,8 +16,16 @@ export function prefetchD3() {
 
 const Welcome = page(() => import('./screens/onboarding/Welcome'));
 const ChooseLanguage = page(() => import('./screens/onboarding/ChooseLanguage'));
-const Auth = page(() => import('./screens/onboarding/Auth'));
+const SignUp = page(() => import('./screens/onboarding/SignUp'));
 const Otp = page(() => import('./screens/onboarding/Otp'));
+const CreateUserId = page(() => import('./screens/onboarding/CreateUserId'));
+const CreatePassword = page(() => import('./screens/onboarding/CreatePassword'));
+const Login = page(() => import('./screens/onboarding/Login'));
+const ForgotPassword = page(() => import('./screens/onboarding/ForgotMobile').then((m) => ({ default: m.ForgotPassword })));
+const ForgotUserId = page(() => import('./screens/onboarding/ForgotMobile').then((m) => ({ default: m.ForgotUserId })));
+const ResetPassword = page(() => import('./screens/onboarding/ResetPassword'));
+const EnterPassword = page(() => import('./screens/onboarding/EnterPassword'));
+const ProfileSetup = page(() => import('./screens/profile-setup/ProfileSetup'));
 const LocationAccess = page(() => import('./screens/onboarding/LocationAccess'));
 const Learn = page(() => import('./screens/learn/Learn'));
 const Story = page(() => import('./screens/learn/Story'));
@@ -56,8 +64,11 @@ const NotFound = page(() => import('./screens/NotFound'));
 
 function RootRedirect() {
   const session = useStore((st) => st.session);
+  const account = useStore((st) => st.account);
+  const profileDone = useStore((st) => st.profileDetails.completed);
   if (!session.onboarded) return <Navigate to={to('/welcome')} replace />;
-  if (!session.signedIn) return <Navigate to={to('/auth')} replace />;
+  if (!session.signedIn) return <Navigate to={to(account ? '/login' : '/auth')} replace />;
+  if (account && profileDone < 3) return <Navigate to={to(`/profile/setup/${profileDone + 1}`)} replace />;
   return <Navigate to={to('/home')} replace />;
 }
 
@@ -75,8 +86,16 @@ export function D3Routes({ location }: { location: Location }) {
         <Route index element={<RootRedirect />} />
         <Route path="welcome" element={<Welcome />} />
         <Route path="welcome/language" element={<ChooseLanguage />} />
-        <Route path="auth" element={<Auth />} />
+        <Route path="auth" element={<SignUp />} />
         <Route path="auth/otp" element={<Otp />} />
+        <Route path="auth/user-id" element={<CreateUserId />} />
+        <Route path="auth/password" element={<CreatePassword />} />
+        <Route path="auth/forgot-password" element={<ForgotPassword />} />
+        <Route path="auth/forgot-user-id" element={<ForgotUserId />} />
+        <Route path="auth/reset-password" element={<ResetPassword />} />
+        <Route path="auth/enter-password" element={<EnterPassword />} />
+        <Route path="login" element={<Login />} />
+        <Route path="profile/setup/:step" element={authed(<ProfileSetup />)} />
         <Route path="auth/location" element={<LocationAccess />} />
 
         <Route path="home" element={authed(<Home />)} />

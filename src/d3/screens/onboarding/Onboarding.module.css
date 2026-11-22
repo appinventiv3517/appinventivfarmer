@@ -421,3 +421,199 @@
 .cover .section {
   color: var(--fj3-apricot);
 }
+
+/* ---------- Ver 3 sign-up and log-in ---------- */
+.splitShort {
+  height: 240px;
+}
+.splitBack {
+  position: absolute;
+  top: calc(var(--safe-top) + 8px);
+  left: 12px;
+  z-index: 4;
+}
+.switchLine {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+  text-align: center;
+}
+.switchLine a,
+.switchLine button {
+  margin-left: 4px;
+  font: var(--fj3-label);
+  color: var(--fj3-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.linkEnd {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+.linkEnd a,
+.linkEnd button {
+  min-height: 40px;
+  padding: 0 2px;
+  font: var(--fj3-label);
+  color: var(--fj3-link);
+}
+.reveal {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-right: -8px;
+  color: var(--fj3-fg-3);
+}
+.reveal svg {
+  width: 20px;
+  height: 20px;
+}
+.fieldIcon {
+  display: grid;
+  place-items: center;
+  color: var(--fj3-primary);
+}
+.fieldIcon svg {
+  width: 18px;
+  height: 18px;
+}
+.labelRow {
+  position: relative;
+}
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+}
+.infoBtn {
+  display: grid;
+  margin: -10px -8px -10px 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--fj3-fg-3);
+}
+.infoBtn svg {
+  width: 18px;
+  height: 18px;
+}
+.tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: -4px;
+  width: max-content;
+  z-index: 5;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: var(--fj3-midnight);
+  color: #fff;
+  font: var(--fj3-caption);
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(58, 46, 40, 0.25);
+}
+.tip::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+.otpBoxes .slot {
+  height: 60px;
+  /* #8f8178 on white is 3.6:1, so the empty boxes pass WCAG 1.4.11. */
+  border: 1.5px solid #8f8178;
+  border-radius: var(--r-sm);
+  background: var(--fj3-surface, #fff);
+  font: 500 1.625rem/1 var(--font);
+}
+.otpBoxes .slotFilled {
+  border-color: var(--fj3-fg-2);
+}
+.otpBoxes .slotActive {
+  border-color: var(--fj3-primary);
+  box-shadow: 0 0 0 3px var(--fj3-clay-100);
+}
+.otpBoxes.otpError .slot {
+  border-color: var(--fj3-danger-fg);
+}
+.timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--fj3-success-fg, #2f6b3f);
+  font-variant-numeric: tabular-nums;
+}
+.timer svg {
+  width: 15px;
+  height: 15px;
+}
+.resendEnd {
+  justify-content: flex-end;
+}
+
+/* Success card: ivory page, a warm glow and one card. */
+.done {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(70% 45% at 50% 44%, rgba(242, 199, 155, 0.4), transparent 70%),
+    radial-gradient(80% 50% at 50% 100%, rgba(95, 175, 122, 0.14), transparent 70%),
+    var(--fj3-bg);
+}
+.doneCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  padding: 28px 22px 22px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface, #fff);
+  box-shadow: 0 1px 2px rgba(58, 46, 40, 0.06), 0 24px 48px -20px rgba(58, 46, 40, 0.28);
+  text-align: center;
+}
+.doneIcon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+}
+.doneIcon svg {
+  width: 32px;
+  height: 32px;
+}
+.doneTitle {
+  font: var(--fj3-headline);
+  letter-spacing: -0.02em;
+}
+.doneText {
+  font: var(--fj3-body);
+  color: var(--fj3-fg-2);
+}
+.doneCard > :last-child {
+  margin-top: 10px;
+}
+.userIdNote {
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: var(--fj3-sand-100);
+  font: var(--fj3-body);
+  color: var(--fj3-fg-2);
+}
+.userIdNote strong {
+  color: var(--fj3-fg);
+}
