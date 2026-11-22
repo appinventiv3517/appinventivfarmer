@@ -1,3 +1,4 @@
+/* Ver 3 launch screen: warm ivory, a soft gold glow behind the logo and a hint of green at the foot. */
 .splash {
   position: absolute;
   inset: 0;
@@ -6,62 +7,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 36px;
   background:
-    radial-gradient(70% 40% at 50% 46%, rgba(242, 199, 155, 0.55), transparent 70%),
-    var(--fj3-bg);
+    radial-gradient(70% 45% at 50% 42%, rgba(244, 194, 77, 0.22), transparent 70%),
+    radial-gradient(80% 50% at 50% 100%, rgba(95, 175, 122, 0.18), transparent 70%),
+    #fbf9f3;
   cursor: pointer;
 }
-.horizon {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--fj3-primary) 20%, var(--fj3-primary) 80%, transparent);
-  opacity: 0.4 !important;
-  transform-origin: left center;
-  opacity: 0.7;
-}
-.plate {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 62%;
-  max-width: 250px;
-  aspect-ratio: 1;
-  padding: 26px;
-  border-radius: var(--r-2xl);
-  background: #ffffff;
-  box-shadow: 0 24px 60px rgba(120, 80, 50, 0.18);
-  overflow: hidden;
-}
 .logo {
-  width: 100%;
+  width: 68%;
+  max-width: 280px;
   height: auto;
 }
-.line {
-  font: var(--fj3-caption);
-  color: var(--fj3-on-night-2);
-  text-align: center;
-}
-.line span {
-  color: var(--fj3-hl-ink);
-  font-weight: 760;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.meter {
-  position: absolute;
-  bottom: calc(48px + var(--safe-bottom));
-  width: 96px;
-  height: 2px;
-  background: rgba(58, 46, 40, 0.25);
+.bar {
+  width: 120px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(91, 52, 26, 0.12);
   overflow: hidden;
 }
-.meter span {
+.fill {
   display: block;
   height: 100%;
-  background: var(--fj3-primary);
-  transform-origin: left center;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8a5a2f, #e0a43a);
+  transform-origin: left;
+}
+.foot {
+  position: absolute;
+  bottom: calc(28px + var(--safe-bottom));
+  font: var(--t-caption);
+  color: #7a6a58;
+  letter-spacing: 0.04em;
 }
