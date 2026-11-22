@@ -96,13 +96,12 @@ export default function Home() {
   };
   const recordsTo = d.activeCycle ? `/forms/${d.activeCycle.id}` : '/forms';
 
-  const quick: { key: QuickKey; icon: ReactNode; stat: string; onTap: () => void; locked?: boolean; photo: string; extra?: ReactNode; badge?: number }[] = [
+  const quick: { key: QuickKey; icon: ReactNode; stat: string; onTap: () => void; locked?: boolean; extra?: ReactNode; badge?: number }[] = [
     {
       key: 'records',
       icon: <ClipboardList aria-hidden />,
       stat: d.cycle && d.activeCycle ? `${t.crop(d.activeCycle.crop.name)} · ${t.quickHint.records(d.cycle.done, d.cycle.total)}` : d.forms.status === 'loading' ? '…' : d.forms.status === 'error' ? t.quickHint.unknown : t.quickHint.noRecords,
       onTap: () => nav(recordsTo),
-      photo: 'cotton-drip',
       extra: d.cycle && <Segments done={d.cycle.done} total={d.cycle.total} label={t.quickHint.records(d.cycle.done, d.cycle.total)} />,
     },
     {
@@ -111,7 +110,6 @@ export default function Home() {
       stat: !verified ? t.quickHint.verify : d.orders.status === 'loading' ? '…' : d.orders.status === 'error' ? t.quickHint.unknown : d.pendingOrders ? t.quickHint.pending(d.pendingOrders) : t.quickHint.upToDate,
       onTap: () => go('/orders/fom/new', true, t.verifyReasonOrder),
       locked: !verified,
-      photo: 'fom-product',
     },
     {
       key: 'bookings',
@@ -119,7 +117,6 @@ export default function Home() {
       stat: !verified ? t.quickHint.verify : d.bookings.status === 'loading' ? '…' : d.bookings.status === 'error' ? t.quickHint.unknown : d.pendingBookings ? t.quickHint.pending(d.pendingBookings) : t.quickHint.upToDate,
       onTap: () => go('/orders?tab=bookings', true, t.verifyReasonBooking),
       locked: !verified,
-      photo: 'harvest-baler',
     },
     {
       key: 'updates',
@@ -127,7 +124,6 @@ export default function Home() {
       stat: unread ? t.quickHint.unread(unread) : t.quickHint.noUpdates,
       onTap: () => nav('/notifications'),
       badge: unread,
-      photo: 'village-meeting',
     },
   ];
 
@@ -174,25 +170,21 @@ export default function Home() {
 
         <section className={s.section} aria-labelledby="quick-h">
           <SectionHead id="quick-h" title={t.quickTitle} />
-          <ol className={s.glance}>
+          <ul className={s.quickGrid}>
             {quick.map((q) => (
               <li key={q.key}>
-                <motion.button type="button" whileTap={{ scale: 0.985 }} className={s.glanceRow} onClick={q.onTap}>
-                  <span className={s.glanceBody}>
-                    <span className={s.glanceTitleRow}>
-                      <span className={s.glanceIcon}>{q.icon}</span>
-                      {t.quick[q.key]}
-                      {!!q.badge && <span className={s.glanceBadge}>{q.badge > 9 ? '9+' : q.badge}</span>}
-                    </span>
-                    <span className={`${s.glanceStat} ${q.locked ? s.glanceLocked : ''}`}>{q.stat}</span>
-                    {q.extra}
+                <motion.button type="button" whileTap={{ scale: 0.97 }} className={s.quickTile} onClick={q.onTap}>
+                  <span className={s.quickTop}>
+                    <span className={s.quickIcon}>{q.icon}</span>
+                    {q.badge ? <span className={s.quickBadge}>{q.badge > 9 ? '9+' : q.badge}</span> : <ChevronRight aria-hidden className={s.quickArrow} />}
                   </span>
-                  <Photo id={q.photo} ratio="1/1" className={s.glanceThumb} decorative />
-                  <ChevronRight aria-hidden className={s.glanceArrow} />
+                  <span className={s.quickTitle}>{t.quick[q.key]}</span>
+                  <span className={`${s.quickStat} ${q.locked ? s.quickLocked : ''}`}>{q.stat}</span>
+                  {q.extra}
                 </motion.button>
               </li>
             ))}
-          </ol>
+          </ul>
         </section>
 
         <InView className={s.didi}>

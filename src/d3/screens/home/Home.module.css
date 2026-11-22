@@ -186,53 +186,56 @@
 .section {
   margin-top: var(--fj3-section);
 }
-/* ---------- At a glance: an index, not tiles ---------- */
-.glance {
-  margin: 4px var(--fj3-gutter) 0;
+/* ---------- Quick actions: a compact 2 × 2 grid of tiles ---------- */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 6px var(--fj3-gutter) 0;
 }
-.glanceRow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-height: 88px;
-  text-align: left;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--fj3-line);
-  color: inherit;
-  text-decoration: none;
-}
-.glanceBody {
-  flex: 1;
+.quickTile {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-  padding-top: 2px;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  min-height: 104px;
+  padding: 12px 12px 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line), 0 1px 2px rgba(58, 46, 40, 0.05);
+  color: inherit;
+  text-align: left;
 }
-.glanceTitleRow {
+.quickTop {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font: var(--fj3-sub);
-  font-family: inherit;
-  font-size: 1.1875rem;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 4px;
 }
-.glanceIcon {
+.quickIcon {
   display: grid;
   place-items: center;
   flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--r-xs);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
   background: var(--hm-brand-soft);
   color: var(--hm-on-brand-soft);
 }
-.glanceIcon svg {
-  width: 17px;
-  height: 17px;
+.quickIcon svg {
+  width: 18px;
+  height: 18px;
 }
-.glanceBadge {
+.quickArrow {
+  width: 18px;
+  height: 18px;
+  color: var(--fj3-primary);
+}
+.quickBadge {
   min-width: 22px;
   height: 22px;
   padding: 0 6px;
@@ -242,21 +245,24 @@
   font: 750 0.75rem/22px var(--font);
   text-align: center;
 }
-
-.glanceLocked {
-  color: var(--hm-warn-fg) !important;
+.quickTitle {
+  font: var(--fj3-sub);
+  font-family: inherit;
+  line-height: 1.2;
 }
-.glanceStat {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font: var(--fj3-small);
+.quickStat {
+  font: var(--fj3-caption);
+  font-weight: 500;
   font-family: inherit;
   color: var(--fj3-fg-2);
 }
-.glanceLive .glanceStat {
-  color: var(--fj3-live);
-  font-weight: 700;
+.quickLocked {
+  color: var(--hm-warn-fg);
+}
+.quickTile > :last-child:not(.quickStat) {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 6px;
 }
 .liveDot {
   width: 8px;
@@ -264,12 +270,6 @@
   border-radius: 50%;
   background: var(--fj3-live);
   animation: fj3-pulse 1.4s var(--fj3-ease) infinite;
-}
-.glanceArrow {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  color: var(--fj3-primary);
 }
 
 /* ---------- Kisani Didi: split composition ---------- */
@@ -477,8 +477,3 @@
   height: 30px;
 }
 
-.glanceThumb {
-  flex: none;
-  width: 64px !important;
-  border-radius: var(--r-md);
-}
