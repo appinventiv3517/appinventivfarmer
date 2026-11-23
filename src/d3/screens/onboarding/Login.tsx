@@ -69,7 +69,7 @@ export default function Login() {
   };
 
   return (
-    <AuthShell title="Welcome back" text="Log in to your Kisani Urjaa account." back="/auth" onSubmit={submit}>
+    <AuthShell title="Welcome back" text="Log in to your Kisani Urjaa account." back="/start" onSubmit={submit}>
       <SectionTabs
         label="Log in with"
         size="md"

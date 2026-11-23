@@ -80,9 +80,11 @@ export default function PrototypeControls() {
           </div>
         </section>
         <div className="fj3-stack" style={{ ['--gap' as string]: '10px' }}>
-          <Button variant="secondary" icon={<Repeat aria-hidden />} onClick={() => navigate(counterpartPath(pathname))}>
-            Open this screen in Direction 01
-          </Button>
+          {import.meta.env.VITE_ONLY_D3 !== '1' && (
+            <Button variant="secondary" icon={<Repeat aria-hidden />} onClick={() => navigate(counterpartPath(pathname))}>
+              Open this screen in Direction 01
+            </Button>
+          )}
           <Button variant="secondary" icon={<LayoutTemplate aria-hidden />} to="/design-system">
             Open the design system
           </Button>

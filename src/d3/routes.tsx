@@ -16,6 +16,7 @@ export function prefetchD3() {
 
 const Welcome = page(() => import('./screens/onboarding/Welcome'));
 const ChooseLanguage = page(() => import('./screens/onboarding/ChooseLanguage'));
+const GetStarted = page(() => import('./screens/onboarding/GetStarted'));
 const SignUp = page(() => import('./screens/onboarding/SignUp'));
 const Otp = page(() => import('./screens/onboarding/Otp'));
 const CreateUserId = page(() => import('./screens/onboarding/CreateUserId'));
@@ -67,7 +68,7 @@ function RootRedirect() {
   const account = useStore((st) => st.account);
   const profileDone = useStore((st) => st.profileDetails.completed);
   if (!session.onboarded) return <Navigate to={to('/welcome')} replace />;
-  if (!session.signedIn) return <Navigate to={to(account ? '/login' : '/auth')} replace />;
+  if (!session.signedIn) return <Navigate to={to(account ? '/login' : '/start')} replace />;
   if (account && profileDone < 3) return <Navigate to={to(`/profile/setup/${profileDone + 1}`)} replace />;
   return <Navigate to={to('/home')} replace />;
 }
@@ -86,6 +87,7 @@ export function D3Routes({ location }: { location: Location }) {
         <Route index element={<RootRedirect />} />
         <Route path="welcome" element={<Welcome />} />
         <Route path="welcome/language" element={<ChooseLanguage />} />
+        <Route path="start" element={<GetStarted />} />
         <Route path="auth" element={<SignUp />} />
         <Route path="auth/otp" element={<Otp />} />
         <Route path="auth/user-id" element={<CreateUserId />} />

@@ -626,3 +626,17 @@
 .userIdNote strong {
   color: var(--fj3-fg);
 }
+.choiceHint {
+  margin: -4px 0 6px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+  text-align: center;
+}
+.inlineIcon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+  vertical-align: -3px;
+  color: var(--fj3-fg-3);
+}

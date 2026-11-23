@@ -48,7 +48,7 @@ export default function SignUp() {
   };
 
   return (
-    <AuthShell title="Set up account" text="Enter your mobile number and we’ll send you a one-time verification code." onSubmit={send}>
+    <AuthShell title="Set up account" text="Enter your mobile number and we’ll send you a one-time verification code." back="/start" onSubmit={send}>
       <PhoneField
         label="Mobile number"
         required

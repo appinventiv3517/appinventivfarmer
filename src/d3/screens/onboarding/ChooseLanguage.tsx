@@ -7,13 +7,13 @@ import { Button } from '../../ui/Button';
 import { useNav } from '../../nav';
 import homeS from '../home/Home.module.css';
 
-/** Onboarding step after the intro screens: pick the app language, then sign in. */
+/** Onboarding step after the intro screens: pick the app language, then Get started (sign up or log in). */
 export default function ChooseLanguage() {
   const nav = useNav();
   const t = useHomeT();
   const done = () => {
     actions.completeOnboarding();
-    nav('/auth', { replace: true });
+    nav('/start');
   };
   return (
     <Screen
