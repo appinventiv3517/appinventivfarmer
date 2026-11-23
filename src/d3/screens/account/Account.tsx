@@ -102,7 +102,7 @@ export default function Account() {
         </Rise>
         <Rise>
           <RowGroup title="Design review">
-            <Row icon={<Repeat />} title="Switch to Direction 01" subtitle="Same screen in the illustrated design" onClick={() => navigate(counterpartPath(pathname))} />
+            {import.meta.env.VITE_ONLY_D3 !== '1' && <Row icon={<Repeat />} title="Switch to Direction 01" subtitle="Same screen in the illustrated design" onClick={() => navigate(counterpartPath(pathname))} />}
             <Row icon={<FlaskConical />} title="Prototype controls" subtitle="Verification, offline, slow network, empty states" to="/account/prototype" />
             <Row icon={<LayoutTemplate />} title="Design system" subtitle="Field Journal colours, type, components, motion" to="/design-system" />
           </RowGroup>

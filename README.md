@@ -22,6 +22,7 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | `npm run build:demo3` | The same, to `dist-demo3/`, opening on Ver 3 |
 | `npm run build:standalone` | One self-contained HTML file, `dist-standalone/kisani-urjaa-app.html`, opening on Direction 02 |
 | `npm run build:standalone3` | The same for Ver 3: `dist-standalone/kisani-urjaa-app-v3.html` |
+| `npm run build:mobile3` | Ver 3 only, as a phone app: `dist-mobile/kisani-urjaa-ver3.html` (opens on Ver 3, no switching to other directions) |
 | `npm run build:mobile` | Phone preview files in `dist-mobile/`, one per direction (01, 02 and Ver 3) |
 | `npm run typecheck` | TypeScript only |
 | `npm test` | Unit tests for pricing, validation, formatting, weather advice, filtering, season-record totals |

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
-import { HashRouter, MemoryRouter, useLocation, useNavigationType } from 'react-router-dom';
+import { HashRouter, MemoryRouter, Navigate, useLocation, useNavigationType } from 'react-router-dom';
 import { AnimatePresence, MotionConfig, motion, type Variants } from 'framer-motion';
 import { AppFrame, frameStyles } from './AppFrame';
 import { AppRoutes, prefetchScreens } from './routes';
@@ -25,6 +25,8 @@ const IS_MOBILE = import.meta.env.VITE_MOBILE === '1';
 /** The Direction 02 demo build opens on Direction 02; the demo3 build on Ver 3. */
 const START = import.meta.env.MODE === 'demo2' ? '/d2' : import.meta.env.MODE === 'demo3' ? '/d3' : '/';
 const ROUTE_KEY = 'kisani-urjaa:route';
+/** Ver 3 phone app (npm run build:mobile3): only Ver 3 is reachable. */
+const ONLY_D3 = import.meta.env.VITE_ONLY_D3 === '1';
 
 /** Applies display preferences to <html> so CSS tokens respond. */
 function usePreferenceAttributes() {
@@ -128,6 +130,7 @@ function D1App() {
 
 function DirectionRoot() {
   const { pathname } = useLocation();
+  if (ONLY_D3 && !isD3Path(pathname)) return <Navigate to="/d3" replace />;
   if (isD2Path(pathname))
     return (
       <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#0a1128' }} />}>
@@ -160,7 +163,7 @@ export function App() {
       <Router>
         <RouteMemory />
         <DirectionRoot />
-        <DirectionSwitcher />
+        {!ONLY_D3 && <DirectionSwitcher />}
       </Router>
     </MotionConfig>
   );
