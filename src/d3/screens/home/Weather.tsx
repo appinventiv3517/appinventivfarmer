@@ -7,6 +7,7 @@ import { Sheet } from '../../ui/Sheet';
 import { Button } from '../../ui/Button';
 import { Note, Skel } from '../../ui/Blocks';
 import s from './Weather.module.css';
+import { TAP } from '../../motion/tokens';
 
 const ICONS: Record<ConditionIcon, typeof Sun> = { sun: Sun, 'cloud-sun': CloudSun, cloud: Cloud, fog: CloudFog, drizzle: CloudDrizzle, rain: CloudRain, storm: CloudLightning };
 const TONE_ICON = { good: CheckCircle2, caution: Info, warning: AlertTriangle };
@@ -45,7 +46,7 @@ export function WeatherPanel({ weather, loading, onOpen, t }: { weather?: Weathe
   const ToneIcon = TONE_ICON[spray.tone];
   const cond = t.condition(weather.current.code);
   return (
-    <motion.button type="button" whileTap={{ scale: 0.985 }} className={s.panel} onClick={onOpen} aria-label={t.weatherA11y(weather.current.tempC, cond, spray.title)}>
+    <motion.button type="button" whileTap={TAP} className={s.panel} onClick={onOpen} aria-label={t.weatherA11y(weather.current.tempC, cond, spray.title)}>
       <span className={s.left}>
         <span className={s.loc}>
           <MapPin aria-hidden /> {weather.locationName}

@@ -23,6 +23,7 @@ import { useNav } from '../../nav';
 import { to } from '../../paths';
 import { WeatherPanel, WeatherSheet } from './Weather';
 import s from './Home.module.css';
+import { TAP } from '../../motion/tokens';
 
 /** Hero photograph follows the time of day (and the rain). */
 function heroSlot(rainy: boolean, now = new Date()) {
@@ -173,7 +174,7 @@ export default function Home() {
           <ul className={s.quickGrid}>
             {quick.map((q) => (
               <li key={q.key}>
-                <motion.button type="button" whileTap={{ scale: 0.97 }} className={s.quickTile} onClick={q.onTap}>
+                <motion.button type="button" whileTap={TAP} className={s.quickTile} onClick={q.onTap}>
                   <span className={s.quickTop}>
                     <span className={s.quickIcon}>{q.icon}</span>
                     {q.badge ? <span className={s.quickBadge}>{q.badge > 9 ? '9+' : q.badge}</span> : <ChevronRight aria-hidden className={s.quickArrow} />}
@@ -199,7 +200,7 @@ export default function Home() {
             </p>
           </div>
           <div className={s.didiFoot}>
-            <motion.button type="button" whileTap={{ scale: 0.97 }} className={s.askDidi} onClick={() => setVoiceOpen(true)} aria-haspopup="dialog">
+            <motion.button type="button" whileTap={TAP} className={s.askDidi} onClick={() => setVoiceOpen(true)} aria-haspopup="dialog">
               <span className={s.askMic} aria-hidden>
                 <Mic />
               </span>

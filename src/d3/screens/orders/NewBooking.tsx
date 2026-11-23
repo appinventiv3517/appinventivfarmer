@@ -19,6 +19,7 @@ import { photoOf } from '../../content/meta';
 import { useUI } from '../../providers';
 import { useNav } from '../../nav';
 import s from './Orders.module.css';
+import { TAP, stepMotion } from '../../motion/tokens';
 
 const STEPS = ['Field and crop', 'Date and time', 'Check and send'];
 const SLOT_HINT: Record<string, string> = { '07:00': 'Early morning', '09:00': 'Morning', '12:00': 'Midday', '15:00': 'Afternoon' };
@@ -121,7 +122,7 @@ export default function NewBooking() {
         </div>
 
         <AnimatePresence mode="wait" initial={false} custom={dir}>
-          <motion.div key={step} initial={{ opacity: 0, x: dir * 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: dir * -30 }} transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }} className="fj3-stack" style={{ ['--gap' as string]: '22px' }}>
+          <motion.div key={step} {...stepMotion(dir)} className="fj3-stack" style={{ ['--gap' as string]: '22px' }}>
             {step === 1 && (
               <>
                 <div className="fj3-stack" style={{ ['--gap' as string]: '10px' }}>
@@ -130,7 +131,7 @@ export default function NewBooking() {
                   {lands.status === 'success' && (lands.data ?? []).length === 0 && <EmptyState animation="crate" title="Add a field first" body="Bookings are made for a registered field." action={<Button to="/lands/new">Add a field</Button>} compact />}
                   <div className={s.choices} role="radiogroup" aria-labelledby="fj3-land">
                     {(lands.data ?? []).map((l) => (
-                      <motion.button key={l.id} type="button" whileTap={{ scale: 0.98 }} role="radio" aria-checked={land?.id === l.id} className={s.landOpt} disabled={!l.active} onClick={() => choose(l)}>
+                      <motion.button key={l.id} type="button" whileTap={TAP} role="radio" aria-checked={land?.id === l.id} className={s.landOpt} disabled={!l.active} onClick={() => choose(l)}>
                         <span className={s.landThumb}>
                           <Photo id={photoOf(l)} src={l.scene.src} ratio="1/1" decorative muted={!l.active} />
                         </span>

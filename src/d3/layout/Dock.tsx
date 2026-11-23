@@ -5,6 +5,7 @@ import { useStore } from '@/services/store';
 import { isTabRoot, to } from '../paths';
 import { useUI } from '../providers';
 import s from './Dock.module.css';
+import { SPRING, SPRING_SOFT, TAP_ICON } from '../motion/tokens';
 
 /* Custom two-weight glyphs: an outline at rest, a filled lime form when active. */
 function Glyph({ name, active }: { name: 'today' | 'journal' | 'orders' | 'me'; active: boolean }) {
@@ -72,7 +73,7 @@ export function Dock() {
               const active = pathname === href;
               return (
                 <Link key={t.path} to={href} replace className={`${s.tab} ${active ? s.active : ''}`} aria-current={active ? 'page' : undefined}>
-                  {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={{ type: 'spring', stiffness: 480, damping: 38 }} />}
+                  {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={SPRING} />}
                   <motion.span className={s.glyph} animate={active ? { y: [0, -3, 0] } : { y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
                     <Glyph name={t.glyph} active={active} />
                     {t.path === '/account' && unread > 0 && <span className={s.dot} aria-hidden />}
@@ -83,8 +84,8 @@ export function Dock() {
             })}
           </div>
           <span className={s.divider} aria-hidden />
-          <motion.button type="button" className={`${s.create} ${createOpen ? s.createOpen : ''}`} whileTap={{ scale: 0.9 }} onClick={openCreate} aria-haspopup="dialog" aria-expanded={createOpen} aria-label="New: order FOM, book a service or add a field">
-            <motion.span animate={{ rotate: createOpen ? 45 : 0 }} transition={{ type: 'spring', stiffness: 400, damping: 22 }} style={{ display: 'grid' }}>
+          <motion.button type="button" className={`${s.create} ${createOpen ? s.createOpen : ''}`} whileTap={TAP_ICON} onClick={openCreate} aria-haspopup="dialog" aria-expanded={createOpen} aria-label="New: order FOM, book a service or add a field">
+            <motion.span animate={{ rotate: createOpen ? 45 : 0 }} transition={SPRING_SOFT} style={{ display: 'grid' }}>
               <Plus aria-hidden strokeWidth={2.6} />
             </motion.span>
             <span className={s.createLabel}>New</span>

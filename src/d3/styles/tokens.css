@@ -122,7 +122,19 @@
 
   /* ---------- Space ---------- */
   --fj3-gutter: 20px;
-  --fj3-section: 40px;
+  /* Spacing rhythm: between page sections · between groups or cards · between form fields. */
+  --fj3-section: 32px;
+  --fj3-group: 24px;
+  --fj3-field-gap: 16px;
+  /*
+   * Corner radii by role (Ver 3 rule):
+   *   panels and cards        --r-xl (28)   e.g. weather, profile, sheets' cards
+   *   tiles and options       --r-lg (22)   e.g. quick actions, choice tiles, lists
+   *   controls and buttons    --r-md (16)   e.g. inputs, OTP boxes, action buttons
+   *   icon chips              --r-sm (12)
+   *   tags                    --r-xs (8)
+   *   navigation and pills    --r-pill      e.g. Back, dock, tabs, chips
+   */
 
   /* ---------- Motion ---------- */
   --fj3-ease: cubic-bezier(0.65, 0, 0.35, 1);

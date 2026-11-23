@@ -11,10 +11,11 @@ import { StatusTag } from '../ui/Blocks';
 import { to } from '../paths';
 import { bookingMeta, category, contentMeta, contentPath, eventMeta, orderMeta, photoOf } from './meta';
 import s from './Cards.module.css';
+import { TAP } from '../motion/tokens';
 
 function Tap({ to: path, children, className, label }: { to: string; children: ReactNode; className?: string; label?: string }) {
   return (
-    <motion.div whileTap={{ scale: 0.985 }} className={s.tapWrap}>
+    <motion.div whileTap={TAP} className={s.tapWrap}>
       <Link to={to(path)} className={`${s.tap} ${className ?? ''}`} aria-label={label}>
         {children}
       </Link>

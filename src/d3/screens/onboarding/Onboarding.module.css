@@ -259,7 +259,7 @@
 .panelBody {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--fj3-field-gap);
   padding: 22px var(--fj3-gutter) calc(var(--safe-bottom) + 24px);
 }
 .panelTitle {
@@ -426,9 +426,10 @@
 .splitShort {
   height: 240px;
 }
+/* Same place as the Back button in the screen header. */
 .splitBack {
   position: absolute;
-  top: calc(var(--safe-top) + 8px);
+  top: calc(var(--safe-top) + (var(--fj3-header-h) - 40px) / 2);
   left: 12px;
   z-index: 4;
 }
@@ -535,7 +536,7 @@
   height: 60px;
   /* #8f8178 on white is 3.6:1, so the empty boxes pass WCAG 1.4.11. */
   border: 1.5px solid #8f8178;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   background: var(--fj3-surface, #fff);
   font: 500 1.625rem/1 var(--font);
 }

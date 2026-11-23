@@ -12,7 +12,7 @@
   padding: 12px var(--fj3-gutter);
 }
 .topicsHead {
-  margin-top: 32px;
+  margin-top: var(--fj3-section);
 }
 .words {
   display: flex;

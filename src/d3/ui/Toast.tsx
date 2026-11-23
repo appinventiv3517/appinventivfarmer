@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, Check, Info } from 'lucide-react';
 import s from './Toast.module.css';
+import { SPRING } from '../motion/tokens';
 
 export interface ToastOptions {
   message: string;
@@ -69,7 +70,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 const tone = t.tone ?? 'success';
                 const Icon = ICON[tone];
                 return (
-                  <motion.div key={t.id} layout className={`${s.toast} ${s[tone]}`} initial={{ opacity: 0, y: 30, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, transition: { duration: 0.18 } }} transition={{ type: 'spring', stiffness: 420, damping: 34 }}>
+                  <motion.div key={t.id} layout className={`${s.toast} ${s[tone]}`} initial={{ opacity: 0, y: 30, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, transition: { duration: 0.18 } }} transition={SPRING}>
                     <span className={s.icon} aria-hidden>
                       <Icon />
                     </span>

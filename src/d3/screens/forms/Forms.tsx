@@ -15,6 +15,7 @@ import { EmptyState, ErrorState, Segments, Skel, StaleNote, StatusTag } from '..
 import { photoOf } from '../../content/meta';
 import { to } from '../../paths';
 import s from './Forms.module.css';
+import { TAP } from '../../motion/tokens';
 
 type Filter = 'all' | 'progress' | 'done';
 
@@ -63,7 +64,7 @@ export default function Forms() {
             const land = lands.find((l) => l.id === c.landId);
             const last = lastUpdate(c);
             return (
-              <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }} whileTap={{ scale: 0.985 }}>
+              <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }} whileTap={TAP}>
                 <Link to={to(`/forms/${c.id}`)} className={s.cycle} aria-label={`Form cycle ${c.number}, ${c.crop.name} ${c.crop.season}, ${p.done} of ${p.total} steps recorded`}>
                   <Photo id={land ? photoOf(land) : 'cotton-picking'} ratio="21/9" decorative muted={p.complete} />
                   <div className={s.cycleBody}>

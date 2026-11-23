@@ -21,6 +21,7 @@ import { eventMeta, photoOf } from '../../content/meta';
 import { ShareSheet, shareOrOpen, shareUrl } from '../../content/Share';
 import { useUI } from '../../providers';
 import s from './EventDetail.module.css';
+import { TAP } from '../../motion/tokens';
 
 const HERO = 560;
 
@@ -157,11 +158,11 @@ export default function EventDetail() {
                   Will you come?
                 </h2>
                 <div className={s.choices}>
-                  <motion.button type="button" whileTap={{ scale: 0.96 }} className={`${s.choice} ${interest === 'interested' ? s.yes : ''}`} aria-pressed={interest === 'interested'} onClick={() => choose('interested')}>
+                  <motion.button type="button" whileTap={TAP} className={`${s.choice} ${interest === 'interested' ? s.yes : ''}`} aria-pressed={interest === 'interested'} onClick={() => choose('interested')}>
                     {interest === 'interested' ? <Check aria-hidden strokeWidth={3} /> : <ThumbsUp aria-hidden />}
                     <span>Interested</span>
                   </motion.button>
-                  <motion.button type="button" whileTap={{ scale: 0.96 }} className={`${s.choice} ${interest === 'not_interested' ? s.no : ''}`} aria-pressed={interest === 'not_interested'} onClick={() => choose('not_interested')}>
+                  <motion.button type="button" whileTap={TAP} className={`${s.choice} ${interest === 'not_interested' ? s.no : ''}`} aria-pressed={interest === 'not_interested'} onClick={() => choose('not_interested')}>
                     {interest === 'not_interested' ? <X aria-hidden strokeWidth={3} /> : <ThumbsDown aria-hidden />}
                     <span>Not this time</span>
                   </motion.button>
@@ -209,7 +210,7 @@ export default function EventDetail() {
                 <SectionHead title="From the day" inset={false} />
                 <div className={s.collage}>
                   {ev.media.map((m, i) => (
-                    <motion.button key={i} type="button" className={`${s.tile} ${s[`t${i % 5}`]}`} whileTap={{ scale: 0.97 }} onClick={() => setViewer(i)} aria-label={`Open photo ${i + 1} of ${ev.media!.length}`}>
+                    <motion.button key={i} type="button" className={`${s.tile} ${s[`t${i % 5}`]}`} whileTap={TAP} onClick={() => setViewer(i)} aria-label={`Open photo ${i + 1} of ${ev.media!.length}`}>
                       <Photo id={slotFor(m)} src={m.src} ratio="fill" decorative />
                     </motion.button>
                   ))}

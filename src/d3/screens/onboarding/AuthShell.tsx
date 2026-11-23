@@ -1,9 +1,8 @@
 import type { FormEvent, ReactNode } from 'react';
-import { ArrowLeft, X } from 'lucide-react';
 import { useStatusTone } from '@/lib/statusTone';
 import markUrl from '@/assets/brand/kisani-urjaa-mark.webp';
 import { Photo } from '../../photo/Photo';
-import { IconButton } from '../../ui/Button';
+import { BackButton } from '../../ui/BackButton';
 import { useNav } from '../../nav';
 import s from './Onboarding.module.css';
 
@@ -38,16 +37,8 @@ export function AuthShell({
     <div className={s.split}>
       <div className={`${s.splitPhoto} ${s.splitShort}`}>
         <Photo id={photo} ratio="fill" shade="full" drift priority label="hero" />
-        {back !== undefined && (
-          <IconButton label="Back" variant="glass" className={s.splitBack} onClick={() => nav(back as string)}>
-            <ArrowLeft />
-          </IconButton>
-        )}
-        {close && (
-          <IconButton label="Close" variant="glass" className={s.splitBack} onClick={() => nav(close, { replace: true })}>
-            <X />
-          </IconButton>
-        )}
+        {back !== undefined && <BackButton tone="image" className={s.splitBack} onClick={() => nav(back as string)} />}
+        {close && <BackButton tone="image" close className={s.splitBack} onClick={() => nav(close, { replace: true })} />}
         <div className={s.splitBrand}>
           <span className={s.plate}>
             <img src={markUrl} alt="" />

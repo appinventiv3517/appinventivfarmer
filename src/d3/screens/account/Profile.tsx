@@ -47,7 +47,7 @@ export default function Profile() {
         <section className={s.form} aria-label="Where you farm">
           <div className={s.grid2}>
             <TextField label="Village" value={f.village} onChange={(e) => setF({ ...f, village: e.target.value })} error={errors.village} />
-            <TextField label="Taluka" value={f.taluka} onChange={(e) => setF({ ...f, taluka: e.target.value })} />
+            <TextField label="Mandal" value={f.taluka} onChange={(e) => setF({ ...f, taluka: e.target.value })} />
           </div>
           <div className={s.grid2}>
             <TextField label="District" value={f.district} onChange={(e) => setF({ ...f, district: e.target.value })} error={errors.district} />

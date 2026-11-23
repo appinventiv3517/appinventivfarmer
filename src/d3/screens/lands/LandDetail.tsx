@@ -145,7 +145,7 @@ export default function LandDetail() {
             rows={[
               { label: 'Address', value: land.address.line || '—', stacked: true },
               { label: 'Village', value: land.address.village },
-              { label: 'Taluka', value: land.address.taluka },
+              { label: 'Mandal', value: land.address.taluka },
               { label: 'District', value: land.address.district },
               { label: 'State', value: land.address.state },
               { label: 'PIN code', value: land.address.pincode },

@@ -8,6 +8,7 @@ import { to as d3 } from '../paths';
 import { FjLottie } from '../lottie/Lottie';
 import type { AnimationName } from '../lottie/animations';
 import { Button } from './Button';
+import { SPRING_SOFT } from '../motion/tokens';
 import s from './Blocks.module.css';
 
 export type Tone = 'success' | 'warning' | 'danger' | 'info' | 'live' | 'neutral';
@@ -152,7 +153,7 @@ export function Tracker({ steps, night }: { steps: TrackStep[]; night?: boolean 
       {steps.map((st, i) => (
         <li key={st.label} className={`${s.trackStep} ${s[`ts_${st.state}`]}`}>
           <div className={s.trackHead}>
-            <motion.span className={s.trackNode} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2 + i * 0.15, type: 'spring', stiffness: 400, damping: 22 }}>
+            <motion.span className={s.trackNode} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ ...SPRING_SOFT, delay: 0.2 + i * 0.15 }}>
               {st.state === 'done' ? <Check strokeWidth={3} /> : st.state === 'failed' ? <X strokeWidth={3} /> : <span />}
             </motion.span>
             {i < steps.length - 1 && (

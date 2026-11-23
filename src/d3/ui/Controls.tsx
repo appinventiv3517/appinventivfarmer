@@ -2,12 +2,13 @@ import { useId, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Minus, Plus } from 'lucide-react';
 import s from './Controls.module.css';
+import { SPRING, TAP } from '../motion/tokens';
 
 /* ---------- Chips: filter pills ---------- */
 
 export function Chip({ selected, onClick, children, count, icon, night }: { selected?: boolean; onClick?: () => void; children: ReactNode; count?: number; icon?: ReactNode; night?: boolean }) {
   return (
-    <motion.button type="button" whileTap={{ scale: 0.95 }} className={`${s.chip} ${night ? s.chipNight : ''} ${selected ? s.chipOn : ''}`} aria-pressed={!!selected} onClick={onClick}>
+    <motion.button type="button" whileTap={TAP} className={`${s.chip} ${night ? s.chipNight : ''} ${selected ? s.chipOn : ''}`} aria-pressed={!!selected} onClick={onClick}>
       {icon && <span className={s.chipIcon}>{icon}</span>}
       {children}
       {count !== undefined && <span className={s.count}>{count}</span>}
@@ -41,7 +42,7 @@ export function SectionTabs<T extends string>({ value, onChange, items, label, n
           <button key={t.value} type="button" role="tab" aria-selected={on} className={`${s.tab} ${on ? s.tabOn : ''}`} onClick={() => onChange(t.value)}>
             <span>{t.label}</span>
             {t.count !== undefined && <span className={s.tabCount}>{t.count}</span>}
-            {on && <motion.span layoutId={`${id}-bar`} className={s.tabBar} transition={{ type: 'spring', stiffness: 500, damping: 40 }} />}
+            {on && <motion.span layoutId={`${id}-bar`} className={s.tabBar} transition={SPRING} />}
           </button>
         );
       })}
@@ -59,7 +60,7 @@ export function Toggle<T extends string>({ value, onChange, options, label }: { 
         const on = o.value === value;
         return (
           <button key={o.value} type="button" role="radio" aria-checked={on} className={`${s.toggleOpt} ${on ? s.toggleOn : ''}`} onClick={() => onChange(o.value)}>
-            {on && <motion.span layoutId={`${id}-thumb`} className={s.thumb} transition={{ type: 'spring', stiffness: 520, damping: 38 }} />}
+            {on && <motion.span layoutId={`${id}-thumb`} className={s.thumb} transition={SPRING} />}
             <span className={s.toggleLabel}>{o.label}</span>
           </button>
         );
@@ -73,7 +74,7 @@ export function Toggle<T extends string>({ value, onChange, options, label }: { 
 export function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button type="button" role="switch" aria-checked={checked} aria-label={label} className={`${s.switch} ${checked ? s.switchOn : ''}`} onClick={() => onChange(!checked)}>
-      <motion.span className={s.knob} layout transition={{ type: 'spring', stiffness: 600, damping: 34 }} />
+      <motion.span className={s.knob} layout transition={SPRING} />
     </button>
   );
 }

@@ -16,6 +16,7 @@ import { to } from '../../paths';
 import { Done } from '../onboarding/Done';
 import { InfoTip, formatMobile } from '../onboarding/fields';
 import { PickerField, type PickOption } from './Picker';
+import { DUR, EASE, stepMotion } from '../../motion/tokens';
 import s from './ProfileSetup.module.css';
 import o from '../onboarding/Onboarding.module.css';
 
@@ -67,7 +68,7 @@ function Progress({ step, percent }: { step: number; percent: number }) {
       <div className={s.segments} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-label={`${percent}% profile complete`}>
         {[1, 2, 3].map((n) => (
           <span key={n} className={s.segment}>
-            <motion.span className={s.segmentFill} initial={false} animate={{ scaleX: segFill(n) }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} />
+            <motion.span className={s.segmentFill} initial={false} animate={{ scaleX: segFill(n) }} transition={{ duration: DUR.slow, ease: EASE }} />
           </span>
         ))}
       </div>
@@ -273,7 +274,7 @@ export default function ProfileSetup() {
       <div className={s.page}>
         <Progress step={step} percent={percent} />
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={step} className={s.stack} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}>
+          <motion.div key={step} className={s.stack} {...stepMotion(1)}>
             {step === 1 && (
               <>
                 <PickerField label="My Kisani Didi" value={d.didiId} onChange={(v) => set('didiId', v)} options={DIDIS} placeholder="Select Kisani Didi" sheetTitle="Select Kisani Didi" search="Search by name, ID or mobile number" icon={<Users aria-hidden />} hint="Your local Kisani Didi helps you with orders and bookings." />

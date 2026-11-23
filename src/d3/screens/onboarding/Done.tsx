@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '../../ui/Button';
 import { useClearToasts } from '../../ui/Toast';
 import s from './Onboarding.module.css';
+import { SPRING_SOFT } from '../../motion/tokens';
 
 /**
  * A short confirmation between steps ("Verified successfully", "Thanks for
@@ -19,8 +20,8 @@ export function Done({ icon, title, text, action = 'Continue', onContinue, auto 
   }, [auto, onContinue]);
   return (
     <div className={s.done}>
-      <motion.div className={s.doneCard} role="status" aria-live="polite" initial={{ opacity: 0, y: 18, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}>
-        <motion.span className={s.doneIcon} initial={{ scale: 0.4 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 320, damping: 16, delay: 0.12 }} aria-hidden>
+      <motion.div className={s.doneCard} role="status" aria-live="polite" initial={{ opacity: 0, y: 18, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={SPRING_SOFT}>
+        <motion.span className={s.doneIcon} initial={{ scale: 0.4 }} animate={{ scale: 1 }} transition={{ ...SPRING_SOFT, delay: 0.12 }} aria-hidden>
           {icon}
         </motion.span>
         <h1 className={s.doneTitle}>{title}</h1>

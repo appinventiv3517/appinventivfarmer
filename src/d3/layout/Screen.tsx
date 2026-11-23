@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import { motion, motionValue, useMotionValueEvent, useScroll, useTransform, type MotionValue } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { BackButton } from '../ui/BackButton';
 import { setStatusTone } from '@/lib/statusTone';
 import { to } from '../paths';
 import s from './Screen.module.css';
@@ -91,10 +91,7 @@ export function Screen({ title, kicker, deck, variant = 'detail', back = variant
           <motion.div className={s.barBg} style={{ opacity: variant === 'detail' ? 1 : barBg }} aria-hidden />
           <div className={s.barRow}>
             {back && (
-              <motion.button type="button" whileTap={{ scale: 0.94 }} className={s.back} onClick={goBack}>
-                <ArrowLeft aria-hidden strokeWidth={2.4} />
-                <span>Back</span>
-              </motion.button>
+              <BackButton onClick={goBack} tone={night ? 'night' : onImage ? 'image' : 'surface'} />
             )}
             <motion.p className={`${s.barTitle} ${back ? '' : s.barTitleLeft}`} style={{ opacity: titleOpacity, y: titleY }} aria-hidden={variant === 'masthead' || undefined}>
               {title}

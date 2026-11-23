@@ -65,7 +65,7 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: var(--fj3-group);
   margin-top: -24px;
   padding: 18px var(--fj3-gutter) 0;
   border-radius: var(--r-xl) var(--r-xl) 0 0;

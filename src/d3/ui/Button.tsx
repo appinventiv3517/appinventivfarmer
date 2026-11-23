@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { to as d3 } from '../paths';
 import s from './Button.module.css';
+import { TAP, TAP_ICON } from '../motion/tokens';
 
 export type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'tonal' | 'ghost' | 'danger' | 'night' | 'glass';
 
@@ -34,7 +35,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   );
   if (to)
     return (
-      <motion.span whileTap={{ scale: 0.97 }} className={block ? s.blockWrap : s.inlineWrap}>
+      <motion.span whileTap={TAP} className={block ? s.blockWrap : s.inlineWrap}>
         <Link to={d3(to)} replace={replace} className={cls} aria-label={rest['aria-label']} onClick={rest.onClick as never}>
           {content}
         </Link>
@@ -42,7 +43,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     );
   if (href)
     return (
-      <motion.a whileTap={{ scale: 0.97 }} href={href} target="_blank" rel="noreferrer" className={cls} aria-label={rest['aria-label']}>
+      <motion.a whileTap={TAP} href={href} target="_blank" rel="noreferrer" className={cls} aria-label={rest['aria-label']}>
         {content}
       </motion.a>
     );
@@ -82,7 +83,7 @@ export function IconButton({ label, variant = 'surface', badge, to, active, clas
       </Link>
     );
   return (
-    <motion.button whileTap={{ scale: 0.9 }} type="button" className={cls} aria-label={fullLabel} aria-pressed={active} {...rest}>
+    <motion.button whileTap={TAP_ICON} type="button" className={cls} aria-label={fullLabel} aria-pressed={active} {...rest}>
       {inner}
     </motion.button>
   );

@@ -14,6 +14,7 @@ import { BookingTicket, OrderTicket } from '../../content/Cards';
 import { KD_CONTACT, useUI } from '../../providers';
 import { useNav } from '../../nav';
 import s from './Orders.module.css';
+import { TAP } from '../../motion/tokens';
 
 type Tab = 'fom' | 'bookings';
 type Status = 'pending' | 'approved' | 'rejected';
@@ -108,7 +109,7 @@ export default function Orders() {
 
       <div className={s.ledger} role="group" aria-label="Filter by status">
         {(['pending', 'approved', 'rejected'] as Status[]).map((k) => (
-          <motion.button key={k} type="button" whileTap={{ scale: 0.96 }} className={`${s.ledgerCell} ${s[`l_${k}`]} ${status === k ? s.ledgerOn : ''}`} aria-pressed={status === k} onClick={() => setStatus(status === k ? 'all' : k)}>
+          <motion.button key={k} type="button" whileTap={TAP} className={`${s.ledgerCell} ${s[`l_${k}`]} ${status === k ? s.ledgerOn : ''}`} aria-pressed={status === k} onClick={() => setStatus(status === k ? 'all' : k)}>
             <span className={s.ledgerNum}>{active.data ? counts[k] : '–'}</span>
             <span className={s.ledgerLabel}>
               <i aria-hidden />

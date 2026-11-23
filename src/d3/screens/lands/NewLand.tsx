@@ -16,6 +16,7 @@ import { RevealText } from '../../motion/Reveal';
 import { useNav } from '../../nav';
 import { Photo } from '../../photo/Photo';
 import o from '../orders/Orders.module.css';
+import { stepMotion } from '../../motion/tokens';
 import s from './Lands.module.css';
 
 const STATES = ['Maharashtra', 'Madhya Pradesh', 'Karnataka', 'Telangana', 'Gujarat', 'Uttar Pradesh', 'Rajasthan', 'Punjab'];
@@ -127,7 +128,7 @@ export default function NewLand() {
           <Segments done={step} total={3} label={`Step ${step} of 3`} />
         </div>
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={step} className={s.form} initial={{ opacity: 0, x: dir * 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: dir * -30 }} transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}>
+          <motion.div key={step} className={s.form} {...stepMotion(dir)}>
             {step === 1 && (
               <>
                 <TextField label="Field name" placeholder="e.g. Canal field" value={f.name} onChange={(e) => set('name', e.target.value)} error={errors.name} hint="A name you’ll recognise in bookings" autoFocus />
@@ -143,7 +144,7 @@ export default function NewLand() {
                 <TextField label="Address" optional placeholder="Survey or gat number, landmark" value={f.line} onChange={(e) => set('line', e.target.value)} />
                 <div className={s.grid2}>
                   <TextField label="Village" value={f.village} onChange={(e) => set('village', e.target.value)} error={errors.village} />
-                  <TextField label="Taluka" optional value={f.taluka} onChange={(e) => set('taluka', e.target.value)} />
+                  <TextField label="Mandal" optional value={f.taluka} onChange={(e) => set('taluka', e.target.value)} />
                 </div>
                 <div className={s.grid2}>
                   <TextField label="District" value={f.district} onChange={(e) => set('district', e.target.value)} error={errors.district} />

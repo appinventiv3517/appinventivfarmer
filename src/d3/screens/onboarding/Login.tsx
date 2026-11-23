@@ -13,6 +13,7 @@ import { to } from '../../paths';
 import { AuthShell } from './AuthShell';
 import { PasswordField, PhoneField, UserIdField } from './fields';
 import { startFlow } from './flow';
+import { SWAP } from '../../motion/tokens';
 import s from './Onboarding.module.css';
 
 type Mode = 'otp' | 'password';
@@ -84,7 +85,7 @@ export default function Login() {
         ]}
       />
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div key={mode} className="fj3-stack" style={{ ['--gap' as string]: '16px' }} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.22 }}>
+        <motion.div key={mode} className="fj3-stack" style={{ ['--gap' as string]: '16px' }} {...SWAP}>
           {mode === 'otp' ? (
             <>
               <PhoneField label="Registered mobile number" required value={phone} onChange={(v) => (setPhone(v), errors.phone && setErrors({}))} error={errors.phone} />

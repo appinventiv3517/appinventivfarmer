@@ -7,6 +7,7 @@ import { Sheet } from './Sheet';
 import { Button } from './Button';
 import { Chip } from './Controls';
 import s from './DateRange.module.css';
+import { SPRING } from '../motion/tokens';
 
 export interface DateRange {
   from?: string;
@@ -176,7 +177,7 @@ export function DateRangeSheet({ open, onClose, value, onApply, title = 'Filter 
                   aria-label={formatDate(d, 'long')}
                   onClick={() => pick(d)}
                 >
-                  {(isStart || isEnd) && <motion.span layoutId="fj3-cal-pick" className={s.pickBg} transition={{ type: 'spring', stiffness: 500, damping: 36 }} />}
+                  {(isStart || isEnd) && <motion.span layoutId="fj3-cal-pick" className={s.pickBg} transition={SPRING} />}
                   <span className={s.dayNum}>{d.getDate()}</span>
                 </button>
               );

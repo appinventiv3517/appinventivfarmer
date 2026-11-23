@@ -5,6 +5,7 @@ import { formatDuration } from '@/lib/format';
 import { Photo } from '../photo/Photo';
 import { Button } from '../ui/Button';
 import s from './VideoPlayer.module.css';
+import { SPRING_SOFT, TAP_ICON } from '../motion/tokens';
 
 /** Direction 02 sample clips, one per video photo slot (see scripts/make-d2-clips.py). */
 const CLIPS = new Set(['harvest-hands', 'harvest-baler', 'soil-sample', 'cotton-drip', 'paddy-closeup', 'paddy-field', 'wheat-grain']);
@@ -127,7 +128,7 @@ export function VideoPlayer({ src, title, poster, durationHint = 0 }: Props) {
         {!started && (
           <motion.div className={s.poster} exit={{ opacity: 0, scale: 1.04 }} transition={{ duration: 0.4 }}>
             <Photo id={poster} ratio="fill" shade="bottom" decorative />
-            <motion.button type="button" className={s.bigPlay} onClick={toggle} aria-label={`Play ${title}`} initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} whileTap={{ scale: 0.9 }} transition={{ type: 'spring', stiffness: 300, damping: 18, delay: 0.2 }}>
+            <motion.button type="button" className={s.bigPlay} onClick={toggle} aria-label={`Play ${title}`} initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} whileTap={TAP_ICON} transition={{ ...SPRING_SOFT, delay: 0.2 }}>
               <Play fill="currentColor" aria-hidden />
             </motion.button>
             <span className={s.sample}>Sample clip · {formatDuration(durationHint)}</span>

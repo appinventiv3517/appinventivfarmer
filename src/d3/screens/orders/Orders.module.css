@@ -78,7 +78,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--fj3-section);
   padding: 4px var(--fj3-gutter) 0;
 }
 .statusHero {

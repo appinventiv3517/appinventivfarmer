@@ -41,7 +41,7 @@
 .cinema {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--fj3-section);
 }
 .cinemaLead {
   padding: 0 var(--fj3-gutter);

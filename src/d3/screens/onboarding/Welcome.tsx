@@ -9,6 +9,7 @@ import { FjLottie } from '../../lottie/Lottie';
 import type { AnimationName } from '../../lottie/animations';
 import { useNav } from '../../nav';
 import s from './Onboarding.module.css';
+import { TAP_ICON } from '../../motion/tokens';
 
 const SLIDES: { photo: string; section: string; title: string; text: string; anim: AnimationName }[] = [
   { photo: 'dawn-field', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records, kept up to date by your Kisani Didi.', anim: 'sprout' },
@@ -91,7 +92,7 @@ export default function Welcome() {
               <button key={n} type="button" role="tab" aria-selected={n === i} aria-label={`Page ${n + 1} of ${SLIDES.length}`} className={`${s.dot} ${n === i ? s.dotOn : ''}`} onClick={() => go(n)} />
             ))}
           </div>
-          <motion.button type="button" whileTap={{ scale: 0.92 }} className={`${s.next} ${last ? s.nextWide : ''}`} onClick={() => (last ? finish() : go(i + 1))} aria-label={last ? 'Get started' : 'Next page'}>
+          <motion.button type="button" whileTap={TAP_ICON} className={`${s.next} ${last ? s.nextWide : ''}`} onClick={() => (last ? finish() : go(i + 1))} aria-label={last ? 'Get started' : 'Next page'}>
             <svg className={s.ring} viewBox="0 0 72 72" aria-hidden>
               <circle cx="36" cy="36" r={R} className={s.ringTrack} />
               <motion.circle cx="36" cy="36" r={R} className={s.ringFill} strokeDasharray={CIRC} animate={{ strokeDashoffset: CIRC * (1 - (i + 1) / SLIDES.length) }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} />

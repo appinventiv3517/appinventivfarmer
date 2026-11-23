@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import logoUrl from '@/assets/brand/kisani-urjaa-logo.webp';
 import { useReducedMotion } from '@/lib/theme';
 import { getStatusTone, setStatusTone } from '@/lib/statusTone';
+import { SPRING_SOFT } from '../motion/tokens';
 import s from './Splash.module.css';
 
 /**
@@ -33,7 +34,7 @@ export function Splash() {
             className={s.logo}
             initial={{ opacity: 0, scale: 0.86, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 160, damping: 18, delay: 0.1 }}
+            transition={{ ...SPRING_SOFT, delay: 0.1 }}
             draggable={false}
           />
           <div className={s.bar} role="progressbar" aria-label="Loading">
