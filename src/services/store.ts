@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react';
 import type { Booking, Crop, FomOrder, Interest, Land, Machinery, Profile, AppNotification } from '@/types';
 import { readJSON, writeJSON, removeKey } from '@/lib/storage';
-import { DEFAULT_PROFILE } from '@/data/people';
+import { DEFAULT_PROFILE, DEMO_ACCOUNT } from '@/data/people';
 import { buildLands } from '@/data/lands';
 import { INITIALLY_UNREAD } from '@/data/notifications';
 
@@ -15,6 +15,8 @@ export interface Session {
   verified: boolean;
   phone: string;
   location: 'unknown' | 'granted' | 'denied' | 'skipped';
+  /** Signed in as the built-in demo farmer (Ver 3), not the account made on this device. */
+  demo?: boolean;
 }
 
 export interface Prefs {
@@ -235,6 +237,24 @@ export function useStore<T>(selector: (s: AppState) => T): T {
 /* Actions                                                              */
 /* ------------------------------------------------------------------ */
 
+/**
+ * The profile to show after a real (non-demo) sign-in: the device account's
+ * own details from profile setup, so a demo session never leaves its sample
+ * profile behind.
+ */
+function profileForAccount(s: AppState, phone: string) {
+  const d = s.profileDetails;
+  if (!s.account || s.account.phone !== phone) return phone ? { ...s.profile, phone } : s.profile;
+  return {
+    ...s.profile,
+    phone,
+    username: s.account.userId,
+    ...(d.completed >= 3
+      ? { name: d.fullName.trim(), village: d.village.trim(), taluka: d.mandal === 'Other' ? d.otherMandal.trim() : d.mandal, district: d.district.trim(), state: d.state, pincode: d.pincode }
+      : {}),
+  };
+}
+
 export const actions = {
   completeOnboarding() {
     setState((s) => ({ ...s, session: { ...s.session, onboarded: true } }));
@@ -242,8 +262,16 @@ export const actions = {
   signIn(phone: string, verified: boolean) {
     setState((s) => ({
       ...s,
-      session: { ...s.session, onboarded: true, signedIn: true, verified, phone: phone || s.session.phone },
-      profile: phone ? { ...s.profile, phone } : s.profile,
+      session: { ...s.session, onboarded: true, signedIn: true, verified, phone: phone || s.session.phone, demo: false },
+      profile: profileForAccount(s, phone),
+    }));
+  },
+  /** Ver 3: sign in as the built-in demo farmer (sample profile, profile setup already done). */
+  signInDemo() {
+    setState((s) => ({
+      ...s,
+      session: { ...s.session, onboarded: true, signedIn: true, verified: true, phone: DEMO_ACCOUNT.phone, demo: true },
+      profile: { ...DEFAULT_PROFILE, phone: DEMO_ACCOUNT.phone, username: DEMO_ACCOUNT.userId },
     }));
   },
   verify(phone?: string) {
@@ -257,8 +285,8 @@ export const actions = {
       ...s,
       account,
       profileDetails: EMPTY_PROFILE_DETAILS,
-      session: { ...s.session, onboarded: true, signedIn: true, verified: true, phone: account.phone },
-      profile: { ...s.profile, phone: account.phone, username: account.userId, memberSince: new Date().toISOString().slice(0, 10) },
+      session: { ...s.session, onboarded: true, signedIn: true, verified: true, phone: account.phone, demo: false },
+      profile: { ...DEFAULT_PROFILE, phone: account.phone, username: account.userId, memberSince: new Date().toISOString().slice(0, 10) },
     }));
   },
   setPasswordHash(passwordHash: string) {

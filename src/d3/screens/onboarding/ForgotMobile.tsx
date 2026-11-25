@@ -8,6 +8,7 @@ import { useNav } from '../../nav';
 import { AuthShell } from './AuthShell';
 import { PhoneField } from './fields';
 import { startFlow } from './flow';
+import { DEMO_ACCOUNT } from '@/data/people';
 
 /** Forgot password / forgot User ID: registered mobile number, then an OTP. */
 export function ForgotMobile({ kind }: { kind: 'password' | 'user-id' }) {
@@ -20,7 +21,7 @@ export function ForgotMobile({ kind }: { kind: 'password' | 'user-id' }) {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const err = validatePhone(digits) ?? (getState().account?.phone !== digits ? 'No account found for this number. Check it, or sign up.' : null);
+    const err = validatePhone(digits) ?? (digits === DEMO_ACCOUNT.phone && getState().account?.phone !== digits ? `This is the demo account: User ID ${DEMO_ACCOUNT.userId}, password ${DEMO_ACCOUNT.password}.` : null) ?? (getState().account?.phone !== digits ? 'No account found for this number. Check it, or sign up.' : null);
     setError(err);
     if (err) return;
     setBusy(true);

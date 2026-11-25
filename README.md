@@ -27,7 +27,7 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | `npm run typecheck` | TypeScript only |
 | `npm test` | Unit tests for pricing, validation, formatting, weather advice, filtering, season-record totals |
 
-**Demo tips:** the OTP is `123456`. Account → Prototype controls switches verified/unverified, normal/slow/offline network and empty states, and resets data. Everything you create is stored on your device only.
+**Demo tips:** the OTP is `123456`. In Ver 3 you can also skip sign-up with the demo account: “Try the demo account” on Get started, “Log in as demo farmer” on Log in, User ID `demo` / password `demo1234`, or mobile `90000 12345` with the OTP. Account → Prototype controls switches verified/unverified, normal/slow/offline network and empty states, and resets data. Everything you create is stored on your device only.
 
 ## What's inside
 

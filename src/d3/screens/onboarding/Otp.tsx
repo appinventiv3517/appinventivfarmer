@@ -9,6 +9,7 @@ import { AuthShell } from './AuthShell';
 import { Done } from './Done';
 import { OtpForm } from './OtpForm';
 import { readFlow, updateFlow, endFlow } from './flow';
+import { DEMO_ACCOUNT } from '@/data/people';
 
 const BACK: Record<string, string> = { signup: '/auth', login: '/login', 'forgot-password': '/auth/forgot-password', 'forgot-user-id': '/auth/forgot-user-id' };
 
@@ -24,7 +25,11 @@ export default function Otp() {
     if (f.purpose === 'signup') nav('/auth/user-id', { replace: true });
     else if (f.purpose === 'forgot-password') nav('/auth/reset-password', { replace: true });
     else if (f.purpose === 'forgot-user-id') nav('/auth/enter-password', { replace: true });
-    else {
+    else if (f.phone === DEMO_ACCOUNT.phone && getState().account?.phone !== f.phone) {
+      actions.signInDemo();
+      endFlow();
+      nav('/home', { replace: true });
+    } else {
       actions.signIn(f.phone, true);
       endFlow();
       nav(getState().profileDetails.completed < 3 ? '/profile/setup/1' : '/home', { replace: true });

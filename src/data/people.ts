@@ -31,3 +31,13 @@ export const SUPPORT = {
 
 /** Registered village coordinates, used for weather when location is not shared. */
 export const HOME_COORDS = { latitude: 20.53, longitude: 76.18, label: 'Ratanpur, Buldhana' };
+
+/**
+ * Ver 3 demo account, for reviewers who want to look around without signing
+ * up. It signs in as the sample farmer above. Shown on the log-in screens.
+ */
+export const DEMO_ACCOUNT = {
+  userId: 'demo',
+  password: 'demo1234',
+  phone: '9000012345',
+} as const;

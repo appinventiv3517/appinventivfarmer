@@ -68,8 +68,9 @@ function RootRedirect() {
   const account = useStore((st) => st.account);
   const profileDone = useStore((st) => st.profileDetails.completed);
   if (!session.onboarded) return <Navigate to={to('/welcome')} replace />;
-  if (!session.signedIn) return <Navigate to={to(account ? '/login' : '/start')} replace />;
-  if (account && profileDone < 3) return <Navigate to={to(`/profile/setup/${profileDone + 1}`)} replace />;
+  // Anyone who has signed in on this phone before (own account or the demo) returns to Log in.
+  if (!session.signedIn) return <Navigate to={to(account || session.phone ? '/login' : '/start')} replace />;
+  if (account && !session.demo && profileDone < 3) return <Navigate to={to(`/profile/setup/${profileDone + 1}`)} replace />;
   return <Navigate to={to('/home')} replace />;
 }
 

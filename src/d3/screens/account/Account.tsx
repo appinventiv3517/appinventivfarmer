@@ -32,7 +32,7 @@ export default function Account() {
         <Rise>
           <section className={s.profile} aria-label="Profile">
             <div className={s.profileTop}>
-              <Avatar name={profile.name} size={56} verified={session.verified} night photo={photo || undefined} />
+              <Avatar name={profile.name} size={56} verified={session.verified} night photo={(!session.demo && photo) || undefined} />
               <div className={s.who}>
                 <h2 className={s.name}>{profile.name}</h2>
                 <p className={s.phone}>{formatPhone(session.phone || profile.phone)}</p>

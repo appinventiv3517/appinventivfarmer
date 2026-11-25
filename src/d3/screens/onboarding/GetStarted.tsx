@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Languages, LogIn, UserPlus } from 'lucide-react';
+import { FlaskConical, Languages, LogIn, UserPlus } from 'lucide-react';
 import { useStore, LANGUAGE_NAMES } from '@/services/store';
 import { Button } from '../../ui/Button';
 import { to } from '../../paths';
 import { AuthShell } from './AuthShell';
+import { useDemoLogin } from './DemoLogin';
 import s from './Onboarding.module.css';
 
 /** After the intro screens and the language: sign up, or log in to an existing account. */
 export default function GetStarted() {
   const language = useStore((st) => st.prefs.language);
+  const demo = useDemoLogin();
   return (
     <AuthShell title="Welcome to Kisani Urjaa" text="Are you new here, or do you already have an account?" back="/welcome/language">
       <div className="fj3-stack" style={{ ['--gap' as string]: '12px' }}>
@@ -20,6 +22,10 @@ export default function GetStarted() {
           Log in
         </Button>
         <p className={s.choiceHint}>Already registered? Log in with an OTP or your User ID.</p>
+        <Button size="lg" block variant="ghost" icon={<FlaskConical aria-hidden />} onClick={demo}>
+          Try the demo account
+        </Button>
+        <p className={s.choiceHint}>Look around as a sample farmer, no sign-up needed.</p>
       </div>
       <p className={s.switchLine}>
         <Languages aria-hidden className={s.inlineIcon} /> {LANGUAGE_NAMES[language]} ·<Link to={to('/welcome/language')}>Change language</Link>

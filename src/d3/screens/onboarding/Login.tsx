@@ -13,6 +13,8 @@ import { to } from '../../paths';
 import { AuthShell } from './AuthShell';
 import { PasswordField, PhoneField, UserIdField } from './fields';
 import { startFlow } from './flow';
+import { DemoNote, useDemoLogin } from './DemoLogin';
+import { DEMO_ACCOUNT } from '@/data/people';
 import { SWAP } from '../../motion/tokens';
 import s from './Onboarding.module.css';
 
@@ -29,12 +31,13 @@ export default function Login() {
   const [pw, setPw] = useState('');
   const [errors, setErrors] = useState<{ phone?: string | null; userId?: string | null; pw?: string | null }>({});
   const [busy, setBusy] = useState(false);
+  const demoLogin = useDemoLogin();
   const digits = phone.replace(/\D/g, '');
 
   const sendOtp = async () => {
     const err = validatePhone(digits);
     if (err) return setErrors({ phone: err });
-    if (getState().account?.phone !== digits) return setErrors({ phone: 'No account found for this number. Check it, or sign up.' });
+    if (getState().account?.phone !== digits && digits !== DEMO_ACCOUNT.phone) return setErrors({ phone: 'No account found for this number. Check it, or sign up.' });
     setBusy(true);
     try {
       await api.sendOtp(digits);
@@ -51,6 +54,7 @@ export default function Login() {
     const next = { userId: userId.trim() ? null : 'Enter your User ID.', pw: pw ? null : 'Enter your password.' };
     setErrors(next);
     if (next.userId || next.pw) return;
+    if (userId.trim().toLowerCase() === DEMO_ACCOUNT.userId && pw === DEMO_ACCOUNT.password && getState().account?.userId.toLowerCase() !== DEMO_ACCOUNT.userId) return demoLogin();
     setBusy(true);
     const account = getState().account;
     const ok = !!account && account.userId.toLowerCase() === userId.trim().toLowerCase() && (await checkPassword(account.userId, pw, account.passwordHash));
@@ -117,6 +121,7 @@ export default function Login() {
       <p className={s.switchLine}>
         Don’t have an account?<Link to={to('/auth')}>Sign up</Link>
       </p>
+      <DemoNote />
     </AuthShell>
   );
 }

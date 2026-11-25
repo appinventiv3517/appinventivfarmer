@@ -10,6 +10,7 @@ import { to } from '../../paths';
 import { AuthShell } from './AuthShell';
 import { PhoneField } from './fields';
 import { startFlow } from './flow';
+import { DEMO_ACCOUNT } from '@/data/people';
 import s from './Onboarding.module.css';
 
 /** Sign up, step 1: mobile number, then an OTP. */
@@ -29,6 +30,10 @@ export default function SignUp() {
     setTouched(true);
     if (err) {
       toast({ message: 'Invalid mobile number', tone: 'error' });
+      return;
+    }
+    if (digits === DEMO_ACCOUNT.phone) {
+      setError('This is the demo account’s number. Use your own number, or log in as the demo farmer.');
       return;
     }
     if (getState().account?.phone === digits) {
