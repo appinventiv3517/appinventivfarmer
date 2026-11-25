@@ -72,6 +72,9 @@ export const SLOTS: PhotoSlot[] = [
   { id: 'village-delivery', short: 'FOM delivery', subject: 'Bags of fermented organic manure being unloaded from a truck at a village delivery point.', alt: 'Bags of organic manure unloaded from a truck in a village', focal: '50% 50%', tone: land(['#b7c9d6', '#e3e6e2'], '#ebe9e0', ['#8d7a5a', '#3e3426'], 40, 30, '#ffffff') },
   { id: 'workshop-demo', short: 'Village workshop', subject: 'Farmer training workshop in a village hall, agronomist demonstrating compost to seated farmers.', alt: 'Farmers at a training workshop in a village hall', focal: '35% 45%', tone: macro('#2b2a33', '#b58a55', '#f0c98d', 62, 40) },
   { id: 'kisani-field-day', short: 'Kisani Urjaa field day', subject: 'The Kisani Urjaa team at a village farmers’ meeting under a shamiana, farmers gathered around the speaker.', alt: 'The Kisani Urjaa team seated under a colourful tent at a village meeting, with farmers gathered in front', focal: '50% 55%', tone: land(['#a9c4d6', '#e4e6dc'], '#ece5d2', ['#b9864e', '#5a3a22'], 46, 60, '#fff3d6') },
+  { id: 'kisani-farmer-training', short: 'Farmers at a Kisani Urjaa session', subject: 'Farmers seated under a red and saffron shamiana at a Kisani Urjaa training session.', alt: 'Farmers seated in rows under a red and saffron tent at a Kisani Urjaa session', focal: '50% 62%', tone: land(['#bcd0dc', '#ece6d6'], '#efe2cf', ['#c0573f', '#6a2a1e'], 40, 60, '#fff1d6') },
+  { id: 'kisani-samriddhi-session', short: 'Samriddhi awareness meeting', subject: 'A Kisani Urjaa Samriddhi meeting: farmers in a large tent facing the stage and banner.', alt: 'Farmers seated under a large tent facing the Kisani Urjaa Samriddhi stage', focal: '58% 60%', tone: land(['#b9cfdc', '#eadfcb'], '#f0d9b8', ['#d0602f', '#6a2a1e'], 40, 60, '#fff1d6') },
+  { id: 'kisani-team-award', short: 'Kisani Urjaa team with a farmer', subject: 'The Kisani Urjaa team presenting an award to a farmer in front of the Samriddhi banner.', alt: 'The Kisani Urjaa team presenting an award to a farmer in front of the Samriddhi banner', focal: '50% 42%', tone: land(['#c9d6dd', '#eee8dc'], '#efe6d6', ['#a0233a', '#5a1a22'], 40, 50, '#fff6e6') },
   { id: 'canal-irrigation', short: 'Irrigation canal', subject: 'An irrigation canal between green fields, reflection of the sky, early morning.', alt: 'An irrigation canal running between green fields', focal: '50% 60%', tone: land(['#9cc0e2', '#dbe9f2'], '#e6eff2', ['#5d9a73', '#234433'], 42, 45, '#ffffff') },
   { id: 'monsoon-sky', short: 'Monsoon over fields', subject: 'Heavy monsoon clouds over open fields, a farmer with an umbrella on the bund.', alt: 'Dark monsoon clouds over open farmland', focal: '28% 55%', tone: land(['#4d5868', '#8c96a0'], '#a3aaae', ['#56715a', '#1f2c22'], 50, 50, '#c9d0d4') },
   { id: 'fom-product', short: 'FOM manure', subject: 'Close-up texture of fermented organic manure in an open sack, with a farmer’s hand for scale.', alt: 'Fermented organic manure in an open sack, close up', focal: '50% 55%', tone: macro('#21180f', '#6a4a2c', '#a87d4f', 55, 60) },
@@ -145,10 +148,12 @@ const OVERRIDES: Record<string, string> = {
   'v-decomposer': 'paddy-closeup',
   'v-stem-borer': 'paddy-field',
   'v-wheat-storage': 'wheat-grain',
-  'e-training': 'workshop-demo',
+  // Real Kisani Urjaa event photos (client-supplied).
+  'e-training': 'kisani-farmer-training',
+  'e-crop-health': 'kisani-samriddhi-session',
   // A real Kisani Urjaa event photo (client-supplied), used for the live event card.
   'e-baling-demo': 'kisani-field-day',
-  'e-soil-camp': 'soil-sample',
+  'e-soil-camp': 'kisani-team-award',
 };
 
 /** The slot for a piece of shared data. `key` is the item id, for art-directed overrides. */

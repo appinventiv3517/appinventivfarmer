@@ -20,6 +20,9 @@ Recommended export: 1600 px on the long edge, WebP or AVIF, under 250 KB.
 - `kisani-field-day.webp`: a real Kisani Urjaa event photo supplied by the
   client (not AI-generated), used for the live event card and its detail page
   (event `e-baling-demo`). Credit in `../credits.ts`.
+- `kisani-farmer-training.webp` (event `e-training`), `kisani-samriddhi-session.webp`
+  (`e-crop-health`) and `kisani-team-award.webp` (`e-soil-camp`): real Kisani
+  Urjaa event photos supplied by the client.
 
 ## Brand grade
 
