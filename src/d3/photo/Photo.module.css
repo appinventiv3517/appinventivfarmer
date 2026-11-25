@@ -23,6 +23,18 @@
   object-fit: cover;
   opacity: 0;
   transition: opacity 0.6s var(--fj3-ease-out);
+  /* Brand grade, part 1: a gentle warm shift on every photo, real or concept. */
+  filter: var(--fj3-photo-grade);
+}
+/* Brand grade, part 2: an apricot wash in soft light, like late-afternoon sun. */
+.inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--fj3-photo-wash);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 .loaded {
   opacity: 1;

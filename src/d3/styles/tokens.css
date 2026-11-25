@@ -123,6 +123,9 @@
   /* ---------- Space ---------- */
   --fj3-gutter: 20px;
   /* Spacing rhythm: between page sections · between groups or cards · between form fields. */
+  /* Brand photo grade: every Ver 3 photo and video gets the same warm, sunlit tone. */
+  --fj3-photo-grade: sepia(0.3) saturate(1.12) contrast(1.04) hue-rotate(-4deg);
+  --fj3-photo-wash: linear-gradient(160deg, rgba(242, 199, 155, 0.75), rgba(168, 87, 58, 0.5));
   --fj3-section: 32px;
   --fj3-group: 24px;
   --fj3-field-gap: 16px;

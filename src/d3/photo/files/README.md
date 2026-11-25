@@ -14,3 +14,15 @@ Supported: .jpg, .jpeg, .png, .webp, .avif. Update its entry in
 launch.
 
 Recommended export: 1600 px on the long edge, WebP or AVIF, under 250 KB.
+
+## Ver 3's own photos
+
+- `kisani-field-day.webp`: a real Kisani Urjaa event photo supplied by the
+  client (not AI-generated), used for the live event card and its detail page
+  (event `e-baling-demo`). Credit in `../credits.ts`.
+
+## Brand grade
+
+Every Ver 3 photo and video gets the same warm tone: a CSS filter
+(`--fj3-photo-grade`) plus an apricot soft-light wash (`--fj3-photo-wash`),
+both in `src/d3/styles/tokens.css`. Source files stay untouched.

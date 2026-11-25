@@ -14,6 +14,8 @@
   height: 100%;
   object-fit: contain;
   background: #000;
+  /* Same brand grade as photos (see Photo.module.css). */
+  filter: var(--fj3-photo-grade);
 }
 .poster {
   position: absolute;

@@ -36,3 +36,6 @@ export const CREDITS: Record<string, PhotoCredit> = Object.fromEntries(
     'canal-irrigation', 'monsoon-sky', 'fom-product', 'machinery-tractor', 'farmer-portrait', 'dawn-field',
   ].map((id) => [id, AI]),
 );
+
+/** Real photographs supplied by Kisani Urjaa (not AI-generated). */
+CREDITS['kisani-field-day'] = { author: 'Kisani Urjaa', source: 'Kisani Urjaa field event', licence: 'Supplied by the client' };

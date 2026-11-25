@@ -71,6 +71,7 @@ export const SLOTS: PhotoSlot[] = [
   { id: 'village-meeting', short: 'Kisani Didi with farmers', subject: 'A Kisani Didi talking with a group of farmers under a neem tree, notebook in hand, documentary style.', alt: 'A Kisani Didi talking with farmers under a tree', focal: '38% 45%', tone: land(['#c9d6c4', '#e8e6d4'], '#ece7d2', ['#9b8a5c', '#4a3f26'], 30, 70, '#fff8de') },
   { id: 'village-delivery', short: 'FOM delivery', subject: 'Bags of fermented organic manure being unloaded from a truck at a village delivery point.', alt: 'Bags of organic manure unloaded from a truck in a village', focal: '50% 50%', tone: land(['#b7c9d6', '#e3e6e2'], '#ebe9e0', ['#8d7a5a', '#3e3426'], 40, 30, '#ffffff') },
   { id: 'workshop-demo', short: 'Village workshop', subject: 'Farmer training workshop in a village hall, agronomist demonstrating compost to seated farmers.', alt: 'Farmers at a training workshop in a village hall', focal: '35% 45%', tone: macro('#2b2a33', '#b58a55', '#f0c98d', 62, 40) },
+  { id: 'kisani-field-day', short: 'Kisani Urjaa field day', subject: 'The Kisani Urjaa team at a village farmers’ meeting under a shamiana, farmers gathered around the speaker.', alt: 'The Kisani Urjaa team seated under a colourful tent at a village meeting, with farmers gathered in front', focal: '50% 55%', tone: land(['#a9c4d6', '#e4e6dc'], '#ece5d2', ['#b9864e', '#5a3a22'], 46, 60, '#fff3d6') },
   { id: 'canal-irrigation', short: 'Irrigation canal', subject: 'An irrigation canal between green fields, reflection of the sky, early morning.', alt: 'An irrigation canal running between green fields', focal: '50% 60%', tone: land(['#9cc0e2', '#dbe9f2'], '#e6eff2', ['#5d9a73', '#234433'], 42, 45, '#ffffff') },
   { id: 'monsoon-sky', short: 'Monsoon over fields', subject: 'Heavy monsoon clouds over open fields, a farmer with an umbrella on the bund.', alt: 'Dark monsoon clouds over open farmland', focal: '28% 55%', tone: land(['#4d5868', '#8c96a0'], '#a3aaae', ['#56715a', '#1f2c22'], 50, 50, '#c9d0d4') },
   { id: 'fom-product', short: 'FOM manure', subject: 'Close-up texture of fermented organic manure in an open sack, with a farmer’s hand for scale.', alt: 'Fermented organic manure in an open sack, close up', focal: '50% 55%', tone: macro('#21180f', '#6a4a2c', '#a87d4f', 55, 60) },
@@ -145,7 +146,8 @@ const OVERRIDES: Record<string, string> = {
   'v-stem-borer': 'paddy-field',
   'v-wheat-storage': 'wheat-grain',
   'e-training': 'workshop-demo',
-  'e-baling-demo': 'harvest-baler',
+  // A real Kisani Urjaa event photo (client-supplied), used for the live event card.
+  'e-baling-demo': 'kisani-field-day',
   'e-soil-camp': 'soil-sample',
 };
 
