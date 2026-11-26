@@ -19,7 +19,7 @@ const SLIDES: { photo: string; section: string; title: string; text: string }[] 
 export default function Welcome() {
   const nav = useNav();
   const [i, setI] = useState(0);
-  useStatusTone('dark');
+  useStatusTone('light');
   const last = i === SLIDES.length - 1;
   const finish = useCallback(() => {
     // Next: a dedicated page to choose the app language (it completes onboarding).
@@ -45,7 +45,9 @@ export default function Welcome() {
   return (
     <div className={s.cover}>
       <div className={s.coverTop}>
-        <img src={markUrl} alt="Kisani Urjaa" className={s.coverMark} />
+        <span className={s.coverPlate}>
+          <img src={markUrl} alt="Kisani Urjaa" />
+        </span>
         <span className={s.issue}>
           {String(i + 1).padStart(2, '0')} <span>/ {String(SLIDES.length).padStart(2, '0')}</span>
         </span>
@@ -58,11 +60,11 @@ export default function Welcome() {
         )}
       </div>
 
-      {/* The photo card fills the space between the top bar and the text. */}
+      {/* Full-screen photo; a dark fade at the bottom carries the text. */}
       <div className={s.coverStage}>
         <AnimatePresence initial={false}>
           <motion.div key={i} className={s.coverPhoto} initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: DUR.slow, ease: EASE }}>
-            <Photo id={slide.photo} ratio="fill" priority label="hero" />
+            <Photo id={slide.photo} ratio="fill" shade="top" priority label="hero" />
           </motion.div>
         </AnimatePresence>
         <motion.div className={s.drag} drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.1} onDragEnd={onDragEnd} aria-hidden />

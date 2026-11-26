@@ -1,37 +1,82 @@
 /* ---------- Cover (welcome) ----------
-   Top bar on ivory, the photo as a rounded card that fills the middle,
-   then kicker, title, text and one full-width button. */
+   Full-screen photo. Photos are cropped to the phone's tall shape with the
+   people in the upper half; a dark fade at the bottom carries the text and
+   one full-width button. No zoom, so photos stay sharp. */
 .cover {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  background: var(--fj3-bg);
-  color: var(--fj3-fg);
-  padding: var(--safe-top) 0 calc(var(--safe-bottom) + 16px);
+  overflow: hidden;
+  background: var(--fj3-midnight);
+  color: #fff;
+}
+.coverStage {
+  position: absolute;
+  inset: 0;
+}
+.coverPhoto {
+  position: absolute;
+  inset: 0;
+}
+.coverStage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(30, 20, 14, 0) 44%, rgba(30, 20, 14, 0.55) 60%, rgba(30, 20, 14, 0.86) 76%, rgba(30, 20, 14, 0.94) 100%);
+  pointer-events: none;
+}
+.drag {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  touch-action: pan-y;
 }
 .coverTop {
-  flex: none;
+  position: absolute;
+  top: var(--safe-top);
+  left: 0;
+  right: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 56px;
   padding: 0 var(--fj3-gutter);
 }
-.coverMark {
-  width: 44px;
-  height: 36px;
-  object-fit: contain;
-  object-position: left center;
+/* Logo on the photo with the soft ivory haze used elsewhere (keeps 3:1 or better). */
+.coverPlate {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+}
+.coverPlate::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(251, 243, 230, 0.8) 0%, rgba(251, 243, 230, 0.6) 30%, rgba(251, 243, 230, 0.28) 60%, rgba(251, 243, 230, 0) 100%);
+  pointer-events: none;
+}
+.coverPlate img {
+  height: 38px;
+  width: auto;
 }
 .issue {
   font: 600 0.9375rem/1 var(--font);
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
-  color: var(--fj3-fg);
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .issue span {
-  color: var(--fj3-fg-3);
+  color: rgba(255, 255, 255, 0.75);
 }
 .skip,
 .skipSpacer {
@@ -39,37 +84,26 @@
   min-height: 44px;
   text-align: right;
   font: var(--fj3-label);
-  color: var(--fj3-link);
-}
-.coverStage {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  margin: 4px 12px 0;
-  border-radius: var(--r-2xl);
-  overflow: hidden;
-  background: var(--fj3-sand-200);
-  isolation: isolate;
-}
-.coverPhoto {
-  position: absolute;
-  inset: 0;
-}
-.drag {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  touch-action: pan-y;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .coverBottom {
-  flex: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 18px var(--fj3-gutter) 0;
+  padding: 0 var(--fj3-gutter) calc(var(--safe-bottom) + 16px);
+  pointer-events: none;
+}
+.coverBottom > * {
+  pointer-events: auto;
 }
 .coverCopy {
-  min-height: 172px;
+  min-height: 168px;
 }
 .section {
   display: flex;
@@ -79,7 +113,7 @@
   font: var(--fj3-kicker);
   letter-spacing: var(--fj3-track-kicker);
   text-transform: uppercase;
-  color: var(--fj3-hl-ink);
+  color: var(--fj3-apricot);
 }
 .section::before {
   content: '';
@@ -89,13 +123,13 @@
 }
 .coverTitle {
   font: var(--fj3-display);
-  font-size: 2rem;
+  font-size: 2.25rem;
   letter-spacing: var(--fj3-track-display);
 }
 .coverLede {
   margin-top: 10px;
   font: var(--fj3-body);
-  color: var(--fj3-fg-2);
+  color: rgba(255, 255, 255, 0.88);
 }
 .dots {
   display: flex;
@@ -115,11 +149,11 @@
   top: 10px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(58, 46, 40, 0.22);
+  background: rgba(255, 255, 255, 0.35);
   transition: background 0.3s;
 }
 .dotOn::after {
-  background: var(--fj3-primary);
+  background: var(--fj3-apricot);
 }
 
 /* ---------- Split (auth) ---------- */
