@@ -19,9 +19,9 @@ npm run dev        # http://localhost:5173 (phone-sized frame on desktop)
 | `npm run build` | Type-check, then production build to `dist/` (hash routing, static hosting) |
 | `npm run build:demo` | Self-contained build to `dist-demo/` with in-memory routing, for embedding in hosts that don't allow URL routing |
 | `npm run build:demo2` | The same, to `dist-demo2/`, opening on Direction 02 |
-| `npm run build:demo3` | The same, to `dist-demo3/`, opening on Ver 3 |
+| `npm run build:demo3` | Ver 3 only, to `dist-demo3/` |
 | `npm run build:standalone` | One self-contained HTML file, `dist-standalone/kisani-urjaa-app.html`, opening on Direction 02 |
-| `npm run build:standalone3` | The same for Ver 3: `dist-standalone/kisani-urjaa-app-v3.html` |
+| `npm run build:standalone3` | Ver 3 only (no Directions 01/02, no switcher): `dist-standalone/kisani-urjaa-app-v3.html` |
 | `npm run build:mobile3` | Ver 3 only, as a phone app: `dist-mobile/kisani-urjaa-ver3.html` (opens on Ver 3, no switching to other directions) |
 | `npm run build:mobile` | Phone preview files in `dist-mobile/`, one per direction (01, 02 and Ver 3) |
 | `npm run typecheck` | TypeScript only |

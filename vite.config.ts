@@ -13,6 +13,7 @@ const STANDALONE = process.env.STANDALONE === '1';
 // safe-area insets, hash routing so the phone's back button and swipe work,
 // and app-like head tags added by make-standalone.mjs. See npm run build:mobile.
 const MOBILE = process.env.VITE_MOBILE === '1';
+const ONLY_D3 = process.env.VITE_ONLY_D3 === '1';
 
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -25,7 +26,11 @@ export default defineConfig(({ mode }) => ({
   ],
   base: './',
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: [
+      // Ver 3-only builds (VITE_ONLY_D3=1) use their own shell, so Directions 01 and 02 are not bundled.
+      ...(ONLY_D3 ? [{ find: /^\.\/app\/App$/, replacement: fileURLToPath(new URL('./src/app/AppV3.tsx', import.meta.url)) }] : []),
+      { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
+    ],
   },
   build: {
     outDir: STANDALONE ? (MOBILE ? 'dist-mobile/build' : 'dist-standalone') : mode === 'demo' ? 'dist-demo' : mode === 'demo2' ? 'dist-demo2' : mode === 'demo3' ? 'dist-demo3' : 'dist',
