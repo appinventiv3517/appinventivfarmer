@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useTransform } from 'framer-motion';
-import { ArrowUpRight, Bell, Languages, BellRing, CalendarCheck, ChevronRight, ClipboardList, Lock, Mic, Package, Phone, Search, ShieldAlert } from 'lucide-react';
+import { ArrowUpRight, Bell, Languages, BellRing, CalendarCheck, ChevronRight, ClipboardList, Lock, Mic, Package, Phone, Search, ShieldAlert, Plus } from 'lucide-react';
 import { LANGUAGE_NAMES, useStore } from '@/services/store';
 import { eventStatus } from '@/data/events';
 import { KISANI_DIDI } from '@/data/people';
@@ -235,8 +235,10 @@ export default function Home() {
             {lands.status === 'loading' && [0, 1].map((i) => <Skel key={i} w={240} h={300} r="var(--r-xl)" />)}
             {lands.data?.map((l) => <FieldTile key={l.id} land={l} />)}
             <Link to={to('/lands/new')} className={s.addField}>
-              <span className={s.addPlus}>+</span>
-              {t.addField}
+              <span className={s.addPlus} aria-hidden>
+                <Plus />
+              </span>
+              <span className={s.addLabel}>{t.addField}</span>
             </Link>
           </div>
         </section>

@@ -419,29 +419,39 @@
 }
 
 /* ---------- Fields ---------- */
+/* Add a field: same size, corners and 16 px insets as a field tile; icon where
+   the acres sit (top left), title where the field name sits (bottom left). */
 .addField {
+  flex: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 150px;
-  min-height: 300px;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 160px;
+  height: 300px;
+  padding: 16px;
   border-radius: var(--r-xl);
-  box-shadow: inset 0 0 0 1.5px var(--fj3-line-strong);
+  border: 1.5px dashed #8f8178;
+  background: var(--fj3-surface);
   color: var(--fj3-fg);
-  font: var(--fj3-label);
   text-decoration: none;
 }
 .addPlus {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--r-md);
   background: var(--fj3-primary);
   color: #fff;
-  font: 300 2rem/1 var(--font);
+}
+.addPlus svg {
+  width: 24px;
+  height: 24px;
+}
+.addLabel {
+  font: var(--fj3-heading);
+  letter-spacing: -0.02em;
 }
 
 /* ---------- End ---------- */
