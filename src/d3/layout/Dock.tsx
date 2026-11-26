@@ -7,40 +7,43 @@ import { useUI } from '../providers';
 import s from './Dock.module.css';
 import { SPRING, SPRING_SOFT, TAP_ICON } from '../motion/tokens';
 
-/* Custom two-weight glyphs: an outline at rest, a filled lime form when active. */
+/*
+ * Tab glyphs. The outline is identical at rest and when selected, so the icon
+ * never changes size or position; selection only adds a soft fill and the
+ * darker ink colour.
+ */
 function Glyph({ name, active }: { name: 'today' | 'journal' | 'orders' | 'me'; active: boolean }) {
-  const stroke = 'currentColor';
-  const fill = active ? 'var(--fj3-lime-400)' : 'none';
-  const common = { fill: 'none', stroke, strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+  const fill = active ? 'var(--fj3-apricot)' : 'none';
+  const line = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
   switch (name) {
     case 'today':
       return (
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden>
-          <circle cx="12" cy="10" r="4.2" fill={fill} stroke={active ? 'none' : stroke} strokeWidth={2} />
-          <path d="M3 19h18M6 15.5h12" {...common} />
+          <circle cx="12" cy="10" r="4.2" {...line} fill={fill} />
+          <path d="M3 19h18M6 15.5h12" {...line} />
         </svg>
       );
     case 'journal':
       return (
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden>
-          <rect x="4" y="3.5" width="16" height="17" rx="3" fill={fill} stroke={active ? 'none' : stroke} strokeWidth={2} />
-          <path d="M8 8.5h8M8 12h8M8 15.5h5" {...common} stroke={active ? 'var(--fj3-midnight)' : stroke} />
+          <rect x="4" y="3.5" width="16" height="17" rx="3" {...line} fill={fill} />
+          <path d="M8 8.5h8M8 12h8M8 15.5h5" {...line} />
         </svg>
       );
     case 'orders':
       // Requests: a clipboard with a tick.
       return (
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden>
-          <rect x="4.5" y="4.5" width="15" height="16.5" rx="3" fill={fill} stroke={active ? 'none' : stroke} strokeWidth={2} />
-          <path d="M9 4.5V4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v.5" {...common} />
-          <path d="M8.6 13.2 11 15.6l4.6-4.8" {...common} stroke={active ? 'var(--fj3-midnight)' : stroke} />
+          <rect x="4.5" y="4.5" width="15" height="16.5" rx="3" {...line} fill={fill} />
+          <path d="M9 4.5V4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v.5" {...line} />
+          <path d="M8.6 13.2 11 15.6l4.6-4.8" {...line} />
         </svg>
       );
     default:
       return (
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden>
-          <circle cx="12" cy="8.5" r="4" fill={fill} stroke={active ? 'none' : stroke} strokeWidth={2} />
-          <path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" {...common} />
+          <circle cx="12" cy="8.5" r="4" {...line} fill={fill} />
+          <path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" {...line} />
         </svg>
       );
   }
@@ -73,11 +76,11 @@ export function Dock() {
               const active = pathname === href;
               return (
                 <Link key={t.path} to={href} replace className={`${s.tab} ${active ? s.active : ''}`} aria-current={active ? 'page' : undefined}>
-                  {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={SPRING} />}
-                  <motion.span className={s.glyph} animate={active ? { y: [0, -3, 0] } : { y: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+                  <span className={s.glyph}>
+                    {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={SPRING} />}
                     <Glyph name={t.glyph} active={active} />
                     {t.path === '/account' && unread > 0 && <span className={s.dot} aria-hidden />}
-                  </motion.span>
+                  </span>
                   <span className={s.label}>{t.label}</span>
                 </Link>
               );

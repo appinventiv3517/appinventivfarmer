@@ -30,7 +30,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  /* Room for the selection pill (4 px past the icon) above the label. */
+  gap: 8px;
   min-height: var(--fj3-dock-h);
   color: var(--fj3-fg-3);
   text-decoration: none;
@@ -39,10 +40,14 @@
 .active {
   color: var(--fj3-hl-ink);
 }
-/* The active tab sits on a soft clay chip that slides between tabs. */
+/* Selected tab: a small clay pill behind the icon only (label stays below,
+   centred on the same axis), sliding between tabs. */
 .bar {
   position: absolute;
-  inset: 0 2px;
+  top: -4px;
+  bottom: -4px;
+  left: -14px;
+  right: -14px;
   z-index: -1;
   border-radius: var(--r-pill);
   background: var(--fj3-clay-100);
@@ -52,7 +57,9 @@
 }
 .glyph {
   position: relative;
+  z-index: 0;
   display: grid;
+  place-items: center;
 }
 .dot {
   position: absolute;
