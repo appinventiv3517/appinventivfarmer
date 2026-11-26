@@ -1,0 +1,41 @@
+<style>
+  body { font: 13px/1.45 Inter, system-ui, sans-serif; margin: 0; padding: 16px; color: #3a2e28; background: #fbf7f1; }
+  h1 { font-size: 15px; margin: 0 0 6px; }
+  p { margin: 0 0 12px; color: #62544b; }
+  label { display: block; padding: 18px; border: 1.5px dashed #8f8178; border-radius: 12px; text-align: center; cursor: pointer; background: #fff; }
+  input { display: none; }
+  button { margin-top: 12px; width: 100%; height: 40px; border: 0; border-radius: 10px; background: #a8573a; color: #fff; font-weight: 600; cursor: pointer; }
+  button:disabled { background: #d8c9bb; cursor: default; }
+  #log { margin-top: 12px; font-size: 12px; white-space: pre-wrap; max-height: 120px; overflow: auto; }
+  .bar { height: 6px; border-radius: 6px; background: #eadfd1; margin-top: 10px; overflow: hidden; }
+  .bar span { display: block; height: 100%; width: 0; background: #a8573a; transition: width .2s; }
+</style>
+<h1>Kisani Urjaa · Ver 3</h1>
+<p>Choose <b>kisani-urjaa-ver3.figma.json</b>. The importer creates the style guide, components and every screen, using auto layout throughout.</p>
+<label id="drop">Choose the JSON file<input id="file" type="file" accept=".json,application/json" /></label>
+<button id="go" disabled>Import into this file</button>
+<div class="bar"><span id="bar"></span></div>
+<div id="log"></div>
+<script>
+  let text = null;
+  const log = (m) => { document.getElementById('log').textContent = m; };
+  document.getElementById('file').addEventListener('change', async (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    document.getElementById('drop').firstChild.textContent = f.name + ' (' + (f.size / 1048576).toFixed(1) + ' MB)';
+    text = await f.text();
+    document.getElementById('go').disabled = false;
+  });
+  document.getElementById('go').addEventListener('click', () => {
+    document.getElementById('go').disabled = true;
+    log('Starting…');
+    parent.postMessage({ pluginMessage: { type: 'import', json: text } }, '*');
+  });
+  onmessage = (e) => {
+    const m = e.data.pluginMessage;
+    if (!m) return;
+    if (m.type === 'progress') { log(m.message); document.getElementById('bar').style.width = Math.round(m.ratio * 100) + '%'; }
+    if (m.type === 'done') { log(m.message); document.getElementById('bar').style.width = '100%'; }
+    if (m.type === 'error') { log('Error: ' + m.message); document.getElementById('go').disabled = false; }
+  };
+</script>

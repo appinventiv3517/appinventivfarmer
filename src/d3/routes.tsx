@@ -62,6 +62,8 @@ const Verify = page(() => import('./screens/account/Verify'));
 const PrototypeControls = page(() => import('./screens/account/PrototypeControls'));
 const DesignSystem = page(() => import('./screens/system/DesignSystem'));
 const NotFound = page(() => import('./screens/NotFound'));
+/** Development only: every component for the Figma export (scripts/figma). */
+const FigmaKit = import.meta.env.DEV ? lazy(() => import('./screens/system/FigmaKit')) : null;
 
 function RootRedirect() {
   const session = useStore((st) => st.session);
@@ -97,6 +99,7 @@ export function D3Routes({ location }: { location: Location }) {
         <Route path="auth/forgot-user-id" element={<ForgotUserId />} />
         <Route path="auth/reset-password" element={<ResetPassword />} />
         <Route path="auth/enter-password" element={<EnterPassword />} />
+        {FigmaKit && <Route path="figma-kit" element={<FigmaKit />} />}
         <Route path="login" element={<Login />} />
         <Route path="profile/setup/:step" element={authed(<ProfileSetup />)} />
         <Route path="auth/location" element={<LocationAccess />} />
