@@ -2,23 +2,22 @@
 .cover {
   position: absolute;
   inset: 0;
+  container-type: size;
   overflow: hidden;
-  background: var(--fj3-midnight);
-  color: #fff;
+  background: var(--fj3-bg);
+  color: var(--fj3-fg);
 }
+/* The photo is the hero: a 4:5 frame across the top, shown whole (no zoom, no
+   text on top), rounded into the ivory page below. */
 .coverPhoto {
   position: absolute;
-  inset: 0;
-}
-/* Extra shade behind the text block so it stays readable over light
-   clothing or sky in real photos (on top of the photo's own shade). */
-.coverPhoto::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(30, 20, 14, 0) 38%, rgba(30, 20, 14, 0.38) 52%, rgba(30, 20, 14, 0.6) 70%, rgba(30, 20, 14, 0.7) 100%);
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  aspect-ratio: 4 / 5;
+  max-height: calc(100% - 320px);
+  border-radius: 0 0 var(--r-2xl) var(--r-2xl);
+  overflow: hidden;
 }
 .drag {
   position: absolute;
@@ -79,14 +78,21 @@
   font: var(--fj3-label);
   color: #fff;
 }
+/* Text starts just under the photo; the page dots and Next stay at the bottom. */
 .coverBottom {
   position: absolute;
   left: 0;
   right: 0;
+  top: calc(min(125cqw, 100cqh - 320px) + 28px);
   bottom: 0;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
   padding: 0 var(--fj3-gutter) calc(var(--safe-bottom) + 24px);
   pointer-events: none;
+}
+.coverBottom .coverNav {
+  margin-top: auto;
 }
 .coverBottom > * {
   pointer-events: auto;
@@ -120,20 +126,20 @@
 }
 .coverTitle {
   font: var(--fj3-display);
-  font-size: 2.75rem;
+  font-size: 2.125rem;
   letter-spacing: var(--fj3-track-display);
 }
 .coverLede {
-  margin-top: 14px;
-  max-width: 32ch;
-  font: var(--fj3-lede);
-  color: rgba(255, 255, 255, 0.86);
+  margin-top: 12px;
+  max-width: 34ch;
+  font: var(--fj3-body);
+  color: var(--fj3-fg-2);
 }
 .coverNav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 .dots {
   display: flex;
@@ -152,11 +158,11 @@
   top: 12px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(58, 46, 40, 0.22);
   transition: background 0.3s;
 }
 .dotOn::after {
-  background: var(--fj3-lime-400);
+  background: var(--fj3-primary);
 }
 .next {
   position: relative;
@@ -194,12 +200,12 @@
 }
 .ringTrack {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.25);
+  stroke: var(--fj3-line-strong);
   stroke-width: 2;
 }
 .ringFill {
   fill: none;
-  stroke: var(--fj3-lime-400);
+  stroke: var(--fj3-primary);
   stroke-width: 2;
   stroke-linecap: round;
 }
@@ -429,7 +435,7 @@
 }
 
 .cover .section {
-  color: var(--fj3-apricot);
+  color: var(--fj3-hl-ink);
 }
 
 /* ---------- Ver 3 sign-up and log-in ---------- */

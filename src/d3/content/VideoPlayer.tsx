@@ -11,7 +11,7 @@ import { SPRING_SOFT, TAP_ICON } from '../motion/tokens';
 const CLIPS = new Set(['harvest-hands', 'harvest-baler', 'soil-sample', 'cotton-drip', 'paddy-closeup', 'paddy-field', 'wheat-grain']);
 export function clipFor(slot: string, fallback: string) {
   const file = slot === 'harvest-hands' ? 'harvest-baler' : slot;
-  return CLIPS.has(slot) ? `media/fj3/${file}.mp4` : fallback;
+  return CLIPS.has(slot) ? `media/fj/${file}.mp4` : fallback;
 }
 
 interface Props {

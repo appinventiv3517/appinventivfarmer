@@ -5,16 +5,14 @@ import { useStatusTone } from '@/lib/statusTone';
 import markUrl from '@/assets/brand/kisani-urjaa-mark.webp';
 import { Photo } from '../../photo/Photo';
 import { RevealText } from '../../motion/Reveal';
-import { FjLottie } from '../../lottie/Lottie';
-import type { AnimationName } from '../../lottie/animations';
 import { useNav } from '../../nav';
 import s from './Onboarding.module.css';
 import { TAP_ICON } from '../../motion/tokens';
 
-const SLIDES: { photo: string; section: string; title: string; text: string; anim: AnimationName }[] = [
-  { photo: 'kisani-paddy-green', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records in one place, kept up to date with your Kisani Didi.', anim: 'sprout' },
-  { photo: 'kisani-straw-field', section: 'From waste to wealth', title: 'Clear your straw, don’t burn it', text: 'Book straw clearing after harvest and order FOM manure for your soil. Follow every request until it’s done.', anim: 'crate' },
-  { photo: 'kisani-didi-meeting', section: 'Your Kisani Didi', title: 'Help from someone in your village', text: 'Your Kisani Didi, spray advice from the local forecast, and workshops near you.', anim: 'weather' },
+const SLIDES: { photo: string; section: string; title: string; text: string }[] = [
+  { photo: 'kisani-paddy-green', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records in one place, kept up to date with your Kisani Didi.' },
+  { photo: 'kisani-straw-field', section: 'From waste to wealth', title: 'Clear your straw, don’t burn it', text: 'Book straw clearing after harvest and order FOM manure for your soil. Follow every request until it’s done.' },
+  { photo: 'kisani-didi-meeting', section: 'Your Kisani Didi', title: 'Help from someone in your village', text: 'Your Kisani Didi, spray advice from the local forecast, and workshops near you.' },
 ];
 
 const R = 30;
@@ -50,7 +48,7 @@ export default function Welcome() {
     <div className={`${s.cover}`}>
       <AnimatePresence initial={false}>
         <motion.div key={i} className={s.coverPhoto} initial={{ clipPath: 'inset(0 0 0 100%)' }} animate={{ clipPath: 'inset(0 0 0 0%)' }} exit={{ opacity: 1 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-          <Photo id={slide.photo} ratio="fill" shade="full" drift priority label="hero" />
+          <Photo id={slide.photo} ratio="fill" shade="top" priority label="hero" />
         </motion.div>
       </AnimatePresence>
       <motion.div className={s.drag} drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.1} onDragEnd={onDragEnd} aria-hidden />
@@ -74,9 +72,6 @@ export default function Welcome() {
       <div className={s.coverBottom}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={i} exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }} aria-live="polite">
-            <div className={s.emblem}>
-              <FjLottie name={slide.anim} size={64} night loop={false} />
-            </div>
             <motion.p className={s.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
               {slide.section}
             </motion.p>
