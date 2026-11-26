@@ -57,42 +57,45 @@ const TABS = [
 ];
 
 /**
- * Direction 02 navigation: a dock fixed to the bottom edge. Four labelled
- * destinations sit left; the create action is anchored right, where a
- * right thumb rests, as its own lime key.
+ * Ver 3 navigation: a floating dock with four labelled destinations and the
+ * New action in the centre, raised as a round key. Every label sits on the
+ * same baseline.
  */
 export function Dock() {
   const { pathname } = useLocation();
   const { openCreate, createOpen } = useUI();
   const unread = useStore((st) => st.unreadNotifications.length);
   const visible = isTabRoot(pathname);
+  const tab = (t: (typeof TABS)[number]) => {
+    const href = to(t.path);
+    const active = pathname === href;
+    return (
+      <Link key={t.path} to={href} replace className={`${s.tab} ${active ? s.active : ''}`} aria-current={active ? 'page' : undefined}>
+        <span className={s.glyph}>
+          {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={SPRING} />}
+          <Glyph name={t.glyph} active={active} />
+          {t.path === '/account' && unread > 0 && <span className={s.dot} aria-hidden />}
+        </span>
+        <span className={s.label}>{t.label}</span>
+      </Link>
+    );
+  };
   return (
     <AnimatePresence initial={false}>
       {visible && (
         <motion.nav className={s.dock} aria-label="Main" initial={{ y: '110%' }} animate={{ y: 0 }} exit={{ y: '110%', transition: { duration: 0.22, ease: [0.65, 0, 0.35, 1] } }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
           <div className={s.tabs}>
-            {TABS.map((t) => {
-              const href = to(t.path);
-              const active = pathname === href;
-              return (
-                <Link key={t.path} to={href} replace className={`${s.tab} ${active ? s.active : ''}`} aria-current={active ? 'page' : undefined}>
-                  <span className={s.glyph}>
-                    {active && <motion.span layoutId="fj3-dock-bar" className={s.bar} transition={SPRING} />}
-                    <Glyph name={t.glyph} active={active} />
-                    {t.path === '/account' && unread > 0 && <span className={s.dot} aria-hidden />}
-                  </span>
-                  <span className={s.label}>{t.label}</span>
-                </Link>
-              );
-            })}
+            {TABS.slice(0, 2).map(tab)}
+            <motion.button type="button" className={`${s.create} ${createOpen ? s.createOpen : ''}`} whileTap={TAP_ICON} onClick={openCreate} aria-haspopup="dialog" aria-expanded={createOpen} aria-label="New: order FOM, book a service or add a field">
+              <span className={s.createKey}>
+                <motion.span animate={{ rotate: createOpen ? 45 : 0 }} transition={SPRING_SOFT} style={{ display: 'grid' }}>
+                  <Plus aria-hidden strokeWidth={2.6} />
+                </motion.span>
+              </span>
+              <span className={s.label}>New</span>
+            </motion.button>
+            {TABS.slice(2).map(tab)}
           </div>
-          <span className={s.divider} aria-hidden />
-          <motion.button type="button" className={`${s.create} ${createOpen ? s.createOpen : ''}`} whileTap={TAP_ICON} onClick={openCreate} aria-haspopup="dialog" aria-expanded={createOpen} aria-label="New: order FOM, book a service or add a field">
-            <motion.span animate={{ rotate: createOpen ? 45 : 0 }} transition={SPRING_SOFT} style={{ display: 'grid' }}>
-              <Plus aria-hidden strokeWidth={2.6} />
-            </motion.span>
-            <span className={s.createLabel}>New</span>
-          </motion.button>
         </motion.nav>
       )}
     </AnimatePresence>
