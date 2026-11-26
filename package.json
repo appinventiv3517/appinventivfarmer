@@ -16,9 +16,13 @@
     "build:standalone": "tsc --noEmit && STANDALONE=1 vite build --mode demo2 && node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-app.html",
     "build:standalone3": "tsc --noEmit && STANDALONE=1 VITE_ONLY_D3=1 vite build --mode demo3 && SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-app-v3.html",
     "build:mobile": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-01-illustrated.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo2 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-02-field-journal.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-03-field-journal-v3.html",
-    "build:mobile3": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 VITE_ONLY_D3=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-ver3.html"
+    "build:mobile3": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 VITE_ONLY_D3=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-ver3.html",
+    "build:android-web": "tsc --noEmit && VITE_ONLY_D3=1 VITE_MOBILE=1 vite build --mode demo3 --outDir dist-android-web --emptyOutDir",
+    "build:android": "npm run build:android-web && npx cap sync android && cd android && ./gradlew assembleDebug && cd .. && cp android/app/build/outputs/apk/debug/app-debug.apk dist-mobile/kisani-urjaa-ver3-debug.apk"
   },
   "dependencies": {
+    "@capacitor/android": "7.6.11",
+    "@capacitor/core": "7.6.11",
     "@fontsource-variable/plus-jakarta-sans": "5.1.1",
     "framer-motion": "11.11.17",
     "lottie-web": "5.12.2",
@@ -28,6 +32,7 @@
     "react-router-dom": "6.28.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "7.6.11",
     "@types/node": "^22.9.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
