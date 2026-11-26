@@ -573,7 +573,7 @@
           const l = Math.min(...rects.map((x) => x.left)), t = Math.min(...rects.map((x) => x.top)), rr = Math.max(...rects.map((x) => x.right)), b = Math.max(...rects.map((x) => x.bottom));
           const box = { left: l, top: t, width: rr - l + 1, height: b - t };
           const chars = /pre/.test(cs.whiteSpace) ? n.data : n.data.replace(/\s+/g, ' ').trim();
-          kids.push({ node: textNode(el, cs, box, chars, [], r, null), r: { left: l, top: t, right: rr, bottom: b }, abs: false });
+          kids.push({ node: textNode(el, cs, box, chars, [], r, null), r: { left: l, top: t, right: rr, bottom: b }, abs: false, z: 0 });
         } else if (n.nodeType === 1) {
           const ccs = getComputedStyle(n);
           const child = walk(n, r, filt);
@@ -583,6 +583,7 @@
         }
       }
       // stacking: negative z-index first, raised absolute layers last
+      for (const k of kids) k.z = k.z || 0;
       const neg = kids.filter((k) => k.z < 0);
       const mid = kids.filter((k) => k.z >= 0 && !(k.abs && k.z > 0));
       const top = kids.filter((k) => k.abs && k.z > 0).sort((x, y) => x.z - y.z);

@@ -14,7 +14,9 @@ for f in sorted(os.listdir(real)):
     a = Image.open(os.path.join(real, f)).convert('RGB')
     b = Image.open(pf).convert('RGB')
     if b.size != a.size:
-        b = b.resize(a.size)
+        # compare the common area (screens can differ by a few pixels in total height)
+        h = min(a.height, b.height)
+        a = a.crop((0, 0, min(a.width, b.width), h)); b = b.crop((0, 0, min(a.width, b.width), h))
     d = ImageChops.difference(a, b).convert('L')
     hist = d.histogram()
     total = a.size[0] * a.size[1]

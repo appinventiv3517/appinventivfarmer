@@ -214,7 +214,11 @@ const HARVEST = [
     await page.waitForTimeout(500);
     if (process.env.FIGMA_SHOTS) {
       fs.mkdirSync(process.env.FIGMA_SHOTS, { recursive: true });
-      await page.locator('#fj3-frame').screenshot({ path: path.join(process.env.FIGMA_SHOTS, name.replace(/[^\w·-]+/g, '_') + '.png') });
+      const box = await page.locator('#fj3-frame').boundingBox();
+      await page.setViewportSize({ width: 1600, height: Math.max(1200, Math.ceil(box.y + box.height + 20)) });
+      await page.waitForTimeout(300);
+      await page.screenshot({ path: path.join(process.env.FIGMA_SHOTS, name.replace(/[^\w·-]+/g, '_') + '.png'), clip: await page.locator('#fj3-frame').boundingBox() });
+      await page.setViewportSize({ width: 1600, height: 1200 });
     }
     return page.evaluate((n) => window.__figExtract(document.getElementById('fj3-frame'), { name: n }), name);
   }
