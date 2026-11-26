@@ -79,6 +79,10 @@ export const SLOTS: PhotoSlot[] = [
   { id: 'kisani-straw-field', short: 'Team in a harvested field', subject: 'Kisani Urjaa team, Kisani Didis and farmers standing in a harvested paddy field, thumbs up.', alt: 'Kisani Urjaa team, Kisani Didis and farmers giving a thumbs up in a harvested paddy field', focal: '50% 50%', tone: land(['#d5dade', '#eceae2'], '#e8e2d2', ['#c9a868', '#6d5530'], 46, 50, '#ffffff') },
   { id: 'kisani-didi-meeting', short: 'Kisani Didi with women farmers', subject: 'A Kisani Didi in her vest walking among women farmers seated at a village meeting.', alt: 'A Kisani Didi in her Kisani Urjaa vest walking among women farmers at a village meeting', focal: '50% 50%', tone: land(['#e6e3da', '#eeeae2'], '#e9e2d4', ['#9c5a3c', '#4d2a1c'], 30, 50, '#fff6e6') },
   { id: 'kisani-field-visit', short: 'Field visit with farmers', subject: 'A Kisani Urjaa field visit: an agronomist talks to a group of farmers on a bund beside a harvested paddy field.', alt: 'A Kisani Urjaa expert talking with a group of farmers beside a harvested paddy field', focal: '50% 50%', tone: land(['#b9cde0', '#e4e8e2'], '#e8e4d2', ['#c9a868', '#5a6a2c'], 30, 30, '#ffffff') },
+  { id: 'kisani-field-paddy', short: 'Farmer on a paddy bund', subject: 'A farmer standing on the bund between lush green paddy, trees behind.', alt: 'A farmer standing on the bund between rows of green paddy, with trees behind', focal: '50% 50%', tone: land(['#dfe6e2', '#eef0ea'], '#e6ecdf', ['#4f9a3c', '#1f4a1c'], 34, 50, '#ffffff') },
+  { id: 'kisani-field-golden', short: 'Ripening paddy field', subject: 'A Kisani Didi and a farmer standing in front of a ripening golden paddy field.', alt: 'A Kisani Didi and a farmer in front of a ripening golden paddy field', focal: '50% 26%', tone: land(['#bcd2e4', '#e6ecef'], '#ece6cf', ['#c9a838', '#5a6a2c'], 34, 50, '#ffffff') },
+  { id: 'kisani-field-green', short: 'Wide green paddy', subject: 'Two farmers waving from a wide green paddy field, seen from above.', alt: 'Two farmers waving from a wide green paddy field, seen from above', focal: '50% 50%', tone: land(['#c9d6e0', '#e6ecef'], '#e3eadf', ['#4f9a3c', '#1f4a1c'], 24, 50, '#ffffff') },
+  { id: 'kisani-field-farmers', short: 'Farmers in their paddy field', subject: 'Four farmers giving a thumbs up on the bund of their green paddy field, palms on the horizon.', alt: 'Four farmers giving a thumbs up beside their green paddy field, palm trees on the horizon', focal: '50% 50%', tone: land(['#bcd2e4', '#e6ecef'], '#e3eadf', ['#4f9a3c', '#1f4a1c'], 34, 50, '#ffffff') },
   { id: 'canal-irrigation', short: 'Irrigation canal', subject: 'An irrigation canal between green fields, reflection of the sky, early morning.', alt: 'An irrigation canal running between green fields', focal: '50% 60%', tone: land(['#9cc0e2', '#dbe9f2'], '#e6eff2', ['#5d9a73', '#234433'], 42, 45, '#ffffff') },
   { id: 'monsoon-sky', short: 'Monsoon over fields', subject: 'Heavy monsoon clouds over open fields, a farmer with an umbrella on the bund.', alt: 'Dark monsoon clouds over open farmland', focal: '28% 55%', tone: land(['#4d5868', '#8c96a0'], '#a3aaae', ['#56715a', '#1f2c22'], 50, 50, '#c9d0d4') },
   { id: 'fom-product', short: 'FOM manure', subject: 'Close-up texture of fermented organic manure in an open sack, with a farmer’s hand for scale.', alt: 'Fermented organic manure in an open sack, close up', focal: '50% 55%', tone: macro('#21180f', '#6a4a2c', '#a87d4f', 55, 60) },
@@ -152,6 +156,11 @@ const OVERRIDES: Record<string, string> = {
   'v-decomposer': 'paddy-closeup',
   'v-stem-borer': 'paddy-field',
   'v-wheat-storage': 'wheat-grain',
+  // Real Kisani Urjaa field photos (client-supplied) for the sample fields.
+  'l-paddy': 'kisani-field-paddy',
+  'l-wheat': 'kisani-field-golden',
+  'l-cotton': 'kisani-field-green',
+  'l-riverside': 'kisani-field-farmers',
   // Real Kisani Urjaa event photos (client-supplied).
   'e-training': 'kisani-farmer-training',
   'e-crop-health': 'kisani-samriddhi-session',

@@ -29,7 +29,7 @@ function Hero({ land }: { land: Land }) {
   return (
     <header className={s.hero}>
       <motion.div className={s.heroMedia} style={{ y }}>
-        <Photo id={photoOf(land)} src={land.scene.src} ratio="fill" shade="full" drift priority label="hero" muted={!land.active} />
+        <Photo id={photoOf(land)} src={land.scene.src} ratio="fill" shade="full" priority label="hero" muted={!land.active} />
       </motion.div>
       <div className={s.heroText}>
         <p className={s.heroAcres}>

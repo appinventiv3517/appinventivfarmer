@@ -6,7 +6,9 @@
 // like an installed app when opened in a phone's browser: home-screen tags,
 // an inline web manifest, full-screen safe areas and native touch behaviour.
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
-import { join, extname, relative } from 'node:path';
+import { join, extname, relative, basename } from 'node:path';
+import { tmpdir } from 'node:os';
+import { execFileSync } from 'node:child_process';
 
 const dist = process.env.STANDALONE_DIST ?? 'dist-standalone';
 const MOBILE = process.env.MOBILE === '1';
@@ -27,7 +29,17 @@ let html = readFileSync(join(dist, 'index.html'), 'utf8');
 html = html.replace(/<link rel="stylesheet"[^>]*href="\.\/([^"]+)"[^>]*>/g, (_, f) => `<style>\n${readFileSync(join(dist, f), 'utf8')}\n</style>`);
 
 // Sample videos are referenced by path at runtime; map them to data URIs.
-const media = Object.fromEntries(walk(join(dist, 'media')).map((f) => [relative(dist, f).split('\\').join('/'), dataUri(f)]));
+// SHRINK_MEDIA=1 (Ver 3 builds) re-encodes the larger sample clips to 960 px,
+// H.264 CRF 30, so the single file stays under its size limit. Source files
+// in public/media are never changed.
+const SHRINK = process.env.SHRINK_MEDIA === '1';
+function mediaFile(f) {
+  if (!SHRINK || extname(f) !== '.mp4' || statSync(f).size < 600_000) return f;
+  const out = join(tmpdir(), `ku-${basename(f)}`);
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', f, '-vf', 'scale=960:-2', '-c:v', 'libx264', '-crf', '30', '-preset', 'slow', '-an', '-movflags', '+faststart', out]);
+  return out;
+}
+const media = Object.fromEntries(walk(join(dist, 'media')).map((f) => [relative(dist, f).split('\\').join('/'), dataUri(mediaFile(f))]));
 const shim = `<script>
 (function () {
   var M = ${JSON.stringify(media)};
