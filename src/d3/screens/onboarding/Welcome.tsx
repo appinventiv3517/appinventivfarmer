@@ -12,9 +12,9 @@ import s from './Onboarding.module.css';
 import { TAP_ICON } from '../../motion/tokens';
 
 const SLIDES: { photo: string; section: string; title: string; text: string; anim: AnimationName }[] = [
-  { photo: 'dawn-field', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records, kept up to date by your Kisani Didi.', anim: 'sprout' },
-  { photo: 'village-delivery', section: 'Orders & bookings', title: 'Order and book in a few taps', text: 'Order FOM manure and book straw clearing. Follow every request until it’s done.', anim: 'crate' },
-  { photo: 'mustard-field', section: 'Weather & advice', title: 'Advice for your village, every day', text: 'Spray advice from the local forecast, plus stories, videos and workshops near you.', anim: 'weather' },
+  { photo: 'kisani-paddy-green', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records in one place, kept up to date with your Kisani Didi.', anim: 'sprout' },
+  { photo: 'kisani-straw-field', section: 'From waste to wealth', title: 'Clear your straw, don’t burn it', text: 'Book straw clearing after harvest and order FOM manure for your soil. Follow every request until it’s done.', anim: 'crate' },
+  { photo: 'kisani-didi-meeting', section: 'Your Kisani Didi', title: 'Help from someone in your village', text: 'Your Kisani Didi, spray advice from the local forecast, and workshops near you.', anim: 'weather' },
 ];
 
 const R = 30;

@@ -10,6 +10,16 @@
   position: absolute;
   inset: 0;
 }
+/* Extra shade behind the text block so it stays readable over light
+   clothing or sky in real photos (on top of the photo's own shade). */
+.coverPhoto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(30, 20, 14, 0) 38%, rgba(30, 20, 14, 0.38) 52%, rgba(30, 20, 14, 0.6) 70%, rgba(30, 20, 14, 0.7) 100%);
+  pointer-events: none;
+}
 .drag {
   position: absolute;
   inset: 0;

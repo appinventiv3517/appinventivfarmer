@@ -23,6 +23,9 @@ Recommended export: 1600 px on the long edge, WebP or AVIF, under 250 KB.
 - `kisani-farmer-training.webp` (event `e-training`), `kisani-samriddhi-session.webp`
   (`e-crop-health`) and `kisani-team-award.webp` (`e-soil-camp`): real Kisani
   Urjaa event photos supplied by the client.
+- `kisani-paddy-green.webp`, `kisani-straw-field.webp` and
+  `kisani-didi-meeting.webp`: real Kisani Urjaa photos for the three welcome
+  screens (client-supplied).
 
 ## Brand grade
 
