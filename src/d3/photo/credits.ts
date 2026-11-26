@@ -38,6 +38,6 @@ export const CREDITS: Record<string, PhotoCredit> = Object.fromEntries(
 );
 
 /** Real photographs supplied by Kisani Urjaa (not AI-generated). */
-for (const id of ['kisani-field-day', 'kisani-farmer-training', 'kisani-samriddhi-session', 'kisani-team-award', 'kisani-paddy-green', 'kisani-straw-field', 'kisani-didi-meeting']) {
+for (const id of ['kisani-field-day', 'kisani-farmer-training', 'kisani-samriddhi-session', 'kisani-team-award', 'kisani-paddy-green', 'kisani-straw-field', 'kisani-didi-meeting', 'kisani-field-visit']) {
   CREDITS[id] = { author: 'Kisani Urjaa', source: 'Kisani Urjaa field event', licence: 'Supplied by the client' };
 }

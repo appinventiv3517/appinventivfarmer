@@ -26,12 +26,9 @@ import s from './Home.module.css';
 import { TAP } from '../../motion/tokens';
 
 /** Hero photograph follows the time of day (and the rain). */
-function heroSlot(rainy: boolean, now = new Date()) {
-  if (rainy) return 'monsoon-sky';
-  const h = now.getHours();
-  if (h < 8) return 'dawn-field';
-  if (h < 15) return 'paddy-field';
-  return 'wheat-field';
+/** Home header: a real Kisani Urjaa field visit (client photo). */
+function heroSlot(_rainy: boolean) {
+  return 'kisani-field-visit';
 }
 
 function Hero({ slot, greeting, unread, village, t, onLang }: { slot: string; greeting: string; unread: number; village: string; t: ReturnType<typeof useHomeT>; onLang: () => void }) {
@@ -43,7 +40,7 @@ function Hero({ slot, greeting, unread, village, t, onLang }: { slot: string; gr
   return (
     <header className={s.hero}>
       <motion.div className={s.heroMedia} style={{ y }}>
-        <Photo id={slot} ratio="fill" shade="full" drift priority label="hero" />
+        <Photo id={slot} ratio="fill" shade="full" priority label="hero" />
       </motion.div>
       <div className={s.heroTop}>
         <Link to={to('/account/about')} className={s.brand} aria-label="About Kisani Urjaa">
