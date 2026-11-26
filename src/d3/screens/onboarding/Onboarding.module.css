@@ -1,23 +1,59 @@
-/* ---------- Cover (welcome) ---------- */
+/* ---------- Cover (welcome) ----------
+   Top bar on ivory, the photo as a rounded card that fills the middle,
+   then kicker, title, text and one full-width button. */
 .cover {
   position: absolute;
   inset: 0;
-  container-type: size;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--fj3-bg);
   color: var(--fj3-fg);
+  padding: var(--safe-top) 0 calc(var(--safe-bottom) + 16px);
 }
-/* The photo is the hero: a 4:5 frame across the top, shown whole (no zoom, no
-   text on top), rounded into the ivory page below. */
+.coverTop {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 var(--fj3-gutter);
+}
+.coverMark {
+  width: 44px;
+  height: 36px;
+  object-fit: contain;
+  object-position: left center;
+}
+.issue {
+  font: 600 0.9375rem/1 var(--font);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fj3-fg);
+}
+.issue span {
+  color: var(--fj3-fg-3);
+}
+.skip,
+.skipSpacer {
+  min-width: 44px;
+  min-height: 44px;
+  text-align: right;
+  font: var(--fj3-label);
+  color: var(--fj3-link);
+}
+.coverStage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 4px 12px 0;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  background: var(--fj3-sand-200);
+  isolation: isolate;
+}
 .coverPhoto {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  aspect-ratio: 4 / 5;
-  max-height: calc(100% - 320px);
-  border-radius: 0 0 var(--r-2xl) var(--r-2xl);
-  overflow: hidden;
+  inset: 0;
 }
 .drag {
   position: absolute;
@@ -25,94 +61,21 @@
   z-index: 1;
   touch-action: pan-y;
 }
-.coverTop {
-  position: absolute;
-  top: calc(var(--safe-top) + 10px);
-  left: var(--fj3-gutter);
-  right: var(--fj3-gutter);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-/* The mark sits straight on the photo, no tile. The page's ivory paper bleeds into the photo
-   behind it as a wide, feathered haze: just enough light for the brown handle to keep at least
-   3:1 contrast (WCAG 1.4.11; measured about 5:1 or better on every Ver 3 photo). */
-.plate {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  place-items: center;
-  width: 50px;
-  height: 50px;
-}
-.plate::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 50%;
-  width: 220px;
-  height: 170px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(closest-side, rgba(251, 243, 230, 0.8) 0%, rgba(251, 243, 230, 0.72) 22%, rgba(251, 243, 230, 0.46) 44%, rgba(251, 243, 230, 0.22) 64%, rgba(251, 243, 230, 0.07) 82%, rgba(251, 243, 230, 0) 100%);
-  pointer-events: none;
-}
-.plate img {
-  height: 42px;
-  width: auto;
-}
-.issue {
-  font: 300 1rem/1 var(--font);
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
-}
-.issue span {
-  color: rgba(255, 255, 255, 0.6);
-}
-.skip,
-.skipSpacer {
-  min-width: 64px;
-  min-height: 44px;
-  text-align: right;
-  font: var(--fj3-label);
-  color: #fff;
-}
-/* Text starts just under the photo; the page dots and Next stay at the bottom. */
 .coverBottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(min(125cqw, 100cqh - 320px) + 28px);
-  bottom: 0;
-  z-index: 3;
+  flex: none;
   display: flex;
   flex-direction: column;
-  padding: 0 var(--fj3-gutter) calc(var(--safe-bottom) + 24px);
-  pointer-events: none;
+  gap: 16px;
+  padding: 18px var(--fj3-gutter) 0;
 }
-.coverBottom .coverNav {
-  margin-top: auto;
-}
-.coverBottom > * {
-  pointer-events: auto;
-}
-.emblem {
-  display: grid;
-  place-items: center;
-  width: 84px;
-  height: 84px;
-  margin-bottom: 18px;
-  border-radius: var(--r-lg);
-  background: rgba(251, 247, 241, 0.88);
-  -webkit-backdrop-filter: var(--fj3-glass-blur);
-  backdrop-filter: var(--fj3-glass-blur);
+.coverCopy {
+  min-height: 172px;
 }
 .section {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font: var(--fj3-kicker);
   letter-spacing: var(--fj3-track-kicker);
   text-transform: uppercase;
@@ -126,36 +89,30 @@
 }
 .coverTitle {
   font: var(--fj3-display);
-  font-size: 2.125rem;
+  font-size: 2rem;
   letter-spacing: var(--fj3-track-display);
 }
 .coverLede {
-  margin-top: 12px;
-  max-width: 34ch;
+  margin-top: 10px;
   font: var(--fj3-body);
   color: var(--fj3-fg-2);
 }
-.coverNav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 24px;
-}
 .dots {
   display: flex;
-  gap: 6px;
+  gap: 4px;
+  margin-left: -4px;
 }
 .dot {
-  width: 28px;
-  height: 28px;
   position: relative;
+  width: 32px;
+  height: 24px;
 }
 .dot::after {
   content: '';
   position: absolute;
   left: 4px;
   right: 4px;
-  top: 12px;
+  top: 10px;
   height: 4px;
   border-radius: 2px;
   background: rgba(58, 46, 40, 0.22);
@@ -163,51 +120,6 @@
 }
 .dotOn::after {
   background: var(--fj3-primary);
-}
-.next {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 72px;
-  height: 72px;
-  border-radius: var(--r-pill);
-  background: var(--fj3-lime-400);
-  color: var(--fj3-midnight);
-  transition: width 0.4s var(--fj3-ease-out);
-}
-.next svg:last-child {
-  width: 24px;
-  height: 24px;
-}
-.nextWide {
-  width: 190px;
-  padding: 0 24px;
-}
-.nextLabel {
-  font: 760 1.0625rem/1 var(--font);
-}
-.ring {
-  position: absolute;
-  inset: -6px;
-  width: 84px;
-  height: 84px;
-  transform: rotate(-90deg);
-}
-.nextWide .ring {
-  display: none;
-}
-.ringTrack {
-  fill: none;
-  stroke: var(--fj3-line-strong);
-  stroke-width: 2;
-}
-.ringFill {
-  fill: none;
-  stroke: var(--fj3-primary);
-  stroke-width: 2;
-  stroke-linecap: round;
 }
 
 /* ---------- Split (auth) ---------- */
@@ -434,9 +346,7 @@
   color: var(--fj3-primary);
 }
 
-.cover .section {
-  color: var(--fj3-hl-ink);
-}
+
 
 /* ---------- Ver 3 sign-up and log-in ---------- */
 .splitShort {
@@ -656,4 +566,16 @@
   margin-right: 2px;
   vertical-align: -3px;
   color: var(--fj3-fg-3);
+}
+
+/* Brand mark in the sign-up / log-in header (on the paper wash). */
+.plate {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+}
+.plate img {
+  height: 42px;
+  width: auto;
 }

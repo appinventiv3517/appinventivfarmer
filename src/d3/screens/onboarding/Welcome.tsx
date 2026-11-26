@@ -7,7 +7,8 @@ import { Photo } from '../../photo/Photo';
 import { RevealText } from '../../motion/Reveal';
 import { useNav } from '../../nav';
 import s from './Onboarding.module.css';
-import { TAP_ICON } from '../../motion/tokens';
+import { Button } from '../../ui/Button';
+import { DUR, EASE } from '../../motion/tokens';
 
 const SLIDES: { photo: string; section: string; title: string; text: string }[] = [
   { photo: 'kisani-paddy-green', section: 'Your farm', title: 'Your whole farm, in one journal', text: 'Fields, crops and season records in one place, kept up to date with your Kisani Didi.' },
@@ -15,13 +16,10 @@ const SLIDES: { photo: string; section: string; title: string; text: string }[] 
   { photo: 'kisani-didi-meeting', section: 'Your Kisani Didi', title: 'Help from someone in your village', text: 'Your Kisani Didi, spray advice from the local forecast, and workshops near you.' },
 ];
 
-const R = 30;
-const CIRC = 2 * Math.PI * R;
-
 export default function Welcome() {
   const nav = useNav();
   const [i, setI] = useState(0);
-  useStatusTone('light');
+  useStatusTone('dark');
   const last = i === SLIDES.length - 1;
   const finish = useCallback(() => {
     // Next: a dedicated page to choose the app language (it completes onboarding).
@@ -45,20 +43,11 @@ export default function Welcome() {
   const slide = SLIDES[i];
 
   return (
-    <div className={`${s.cover}`}>
-      <AnimatePresence initial={false}>
-        <motion.div key={i} className={s.coverPhoto} initial={{ clipPath: 'inset(0 0 0 100%)' }} animate={{ clipPath: 'inset(0 0 0 0%)' }} exit={{ opacity: 1 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-          <Photo id={slide.photo} ratio="fill" shade="top" priority label="hero" />
-        </motion.div>
-      </AnimatePresence>
-      <motion.div className={s.drag} drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.1} onDragEnd={onDragEnd} aria-hidden />
-
+    <div className={s.cover}>
       <div className={s.coverTop}>
-        <span className={s.plate}>
-          <img src={markUrl} alt="Kisani Urjaa" />
-        </span>
+        <img src={markUrl} alt="Kisani Urjaa" className={s.coverMark} />
         <span className={s.issue}>
-          No. {String(i + 1).padStart(2, '0')} <span>/ 0{SLIDES.length}</span>
+          {String(i + 1).padStart(2, '0')} <span>/ {String(SLIDES.length).padStart(2, '0')}</span>
         </span>
         {!last ? (
           <button type="button" className={s.skip} onClick={finish}>
@@ -69,33 +58,36 @@ export default function Welcome() {
         )}
       </div>
 
+      {/* The photo card fills the space between the top bar and the text. */}
+      <div className={s.coverStage}>
+        <AnimatePresence initial={false}>
+          <motion.div key={i} className={s.coverPhoto} initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: DUR.slow, ease: EASE }}>
+            <Photo id={slide.photo} ratio="fill" priority label="hero" />
+          </motion.div>
+        </AnimatePresence>
+        <motion.div className={s.drag} drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.1} onDragEnd={onDragEnd} aria-hidden />
+      </div>
+
       <div className={s.coverBottom}>
+        <div className={s.dots} role="tablist" aria-label="Introduction pages">
+          {SLIDES.map((_, n) => (
+            <button key={n} type="button" role="tab" aria-selected={n === i} aria-label={`Page ${n + 1} of ${SLIDES.length}`} className={`${s.dot} ${n === i ? s.dotOn : ''}`} onClick={() => go(n)} />
+          ))}
+        </div>
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={i} exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }} aria-live="polite">
-            <motion.p className={s.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
+          <motion.div key={i} className={s.coverCopy} exit={{ opacity: 0, y: -8, transition: { duration: DUR.quick } }} aria-live="polite">
+            <motion.p className={s.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
               {slide.section}
             </motion.p>
-            <RevealText text={slide.title} className={s.coverTitle} delay={0.2} />
-            <motion.p className={s.coverLede} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.6 }}>
+            <RevealText text={slide.title} className={s.coverTitle} delay={0.15} />
+            <motion.p className={s.coverLede} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: DUR.base, ease: EASE }}>
               {slide.text}
             </motion.p>
           </motion.div>
         </AnimatePresence>
-        <div className={s.coverNav}>
-          <div className={s.dots} role="tablist" aria-label="Introduction pages">
-            {SLIDES.map((_, n) => (
-              <button key={n} type="button" role="tab" aria-selected={n === i} aria-label={`Page ${n + 1} of ${SLIDES.length}`} className={`${s.dot} ${n === i ? s.dotOn : ''}`} onClick={() => go(n)} />
-            ))}
-          </div>
-          <motion.button type="button" whileTap={TAP_ICON} className={`${s.next} ${last ? s.nextWide : ''}`} onClick={() => (last ? finish() : go(i + 1))} aria-label={last ? 'Get started' : 'Next page'}>
-            <svg className={s.ring} viewBox="0 0 72 72" aria-hidden>
-              <circle cx="36" cy="36" r={R} className={s.ringTrack} />
-              <motion.circle cx="36" cy="36" r={R} className={s.ringFill} strokeDasharray={CIRC} animate={{ strokeDashoffset: CIRC * (1 - (i + 1) / SLIDES.length) }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} />
-            </svg>
-            {last && <span className={s.nextLabel}>Get started</span>}
-            <ArrowRight aria-hidden />
-          </motion.button>
-        </div>
+        <Button size="lg" block iconRight={<ArrowRight aria-hidden />} onClick={() => (last ? finish() : go(i + 1))}>
+          {last ? 'Get started' : 'Next'}
+        </Button>
       </div>
     </div>
   );
