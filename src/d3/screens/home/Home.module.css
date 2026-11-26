@@ -69,6 +69,15 @@
   position: absolute;
   inset: 0 0 -60px;
 }
+/* Dark fade behind the greeting so it reads clearly over any photo. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(20, 13, 9, 0) 22%, rgba(20, 13, 9, 0.45) 42%, rgba(20, 13, 9, 0.72) 62%, rgba(20, 13, 9, 0.82) 100%);
+  pointer-events: none;
+}
 .heroTop {
   position: absolute;
   top: calc(var(--safe-top) + 8px);
@@ -120,6 +129,7 @@
   color: #fff;
 }
 .dateline {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -136,6 +146,7 @@
   color: var(--fj3-midnight);
 }
 .hello {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   font: var(--fj3-display);
   font-size: 2.875rem;
   letter-spacing: var(--fj3-track-display);
