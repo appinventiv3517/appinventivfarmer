@@ -7,12 +7,13 @@ import { Screen } from '../../layout/Screen';
 import { Button } from '../../ui/Button';
 import { EmptyState, ErrorState, Skel } from '../../ui/Blocks';
 import { FieldTile } from '../../content/Cards';
+import { visibleLands } from '../../content/lands';
 import s from './Lands.module.css';
 
 export default function Lands() {
   const lands = useStore((st) => st.lands);
   const q = useQuery(`lands:${lands.length}`, () => api.listLands());
-  const list = q.data ? lands.filter((l) => q.data!.some((x) => x.id === l.id)) : [];
+  const list = q.data ? visibleLands(lands.filter((l) => q.data!.some((x) => x.id === l.id))) : [];
   const acres = list.reduce((a, l) => a + l.areaAcres, 0);
   const crops = new Set(list.flatMap((l) => l.crops.map((c) => c.name))).size;
   return (

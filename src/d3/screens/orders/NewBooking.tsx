@@ -18,6 +18,7 @@ import { EmptyState, Note, Receipt, Segments, Skel } from '../../ui/Blocks';
 import { photoOf } from '../../content/meta';
 import { useUI } from '../../providers';
 import { useNav } from '../../nav';
+import { visibleLands } from '../../content/lands';
 import s from './Orders.module.css';
 import { TAP, stepMotion } from '../../motion/tokens';
 
@@ -128,9 +129,9 @@ export default function NewBooking() {
                 <div className="fj3-stack" style={{ ['--gap' as string]: '10px' }}>
                   <GroupLabel id="fj3-land">Which field?</GroupLabel>
                   {lands.status === 'loading' && <Skel h={88} r="var(--r-lg)" />}
-                  {lands.status === 'success' && (lands.data ?? []).length === 0 && <EmptyState animation="crate" title="Add a field first" body="Bookings are made for a registered field." action={<Button to="/lands/new">Add a field</Button>} compact />}
+                  {lands.status === 'success' && visibleLands(lands.data ?? []).length === 0 && <EmptyState animation="crate" title="Add a field first" body="Bookings are made for a registered field." action={<Button to="/lands/new">Add a field</Button>} compact />}
                   <div className={s.choices} role="radiogroup" aria-labelledby="fj3-land">
-                    {(lands.data ?? []).map((l) => (
+                    {visibleLands(lands.data ?? []).map((l) => (
                       <motion.button key={l.id} type="button" whileTap={TAP} role="radio" aria-checked={land?.id === l.id} className={s.landOpt} disabled={!l.active} onClick={() => choose(l)}>
                         <span className={s.landThumb}>
                           <Photo id={photoOf(l)} src={l.scene.src} ratio="1/1" decorative muted={!l.active} />

@@ -10,6 +10,7 @@ import { Button, IconButton } from '../../ui/Button';
 import { Sheet } from '../../ui/Sheet';
 import { Cascade, Rise } from '../../motion/Reveal';
 import { useNav } from '../../nav';
+import { visibleLands } from '../../content/lands';
 import s from './Account.module.css';
 
 export default function Account() {
@@ -21,7 +22,8 @@ export default function Account() {
   const session = useStore((st) => st.session);
   const bookmarks = useStore((st) => st.bookmarks.length);
   const unread = useStore((st) => st.unreadNotifications.length);
-  const lands = useStore((st) => st.lands);
+  const allLands = useStore((st) => st.lands);
+  const lands = visibleLands(allLands);
   const photo = useStore((st) => st.profileDetails.photo);
   const [logout, setLogout] = useState(false);
   const acres = lands.reduce((a, l) => a + l.areaAcres, 0);

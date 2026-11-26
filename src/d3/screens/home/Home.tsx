@@ -22,6 +22,7 @@ import { KD_CONTACT, useUI } from '../../providers';
 import { useNav } from '../../nav';
 import { to } from '../../paths';
 import { WeatherPanel, WeatherSheet } from './Weather';
+import { visibleLands } from '../../content/lands';
 import s from './Home.module.css';
 import { TAP } from '../../motion/tokens';
 
@@ -74,7 +75,8 @@ export default function Home() {
   const { openContact, requireVerified } = useUI();
   const profile = useStore((st) => st.profile);
   const d = useHomeData();
-  const { verified, unread, weather, lands, content } = d;
+  const { verified, unread, weather, content } = d;
+  const lands = { ...d.lands, data: d.lands.data && visibleLands(d.lands.data) };
   const [wxOpen, setWxOpen] = useState(false);
   const [voiceOpen, setVoiceOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
