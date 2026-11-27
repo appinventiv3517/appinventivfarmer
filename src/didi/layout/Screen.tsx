@@ -50,7 +50,7 @@ export function Screen({ title, kicker, deck, variant = 'detail', back = variant
   const navigate = useNavigate();
   const key = scrollKey ?? (tabRoot ? location.pathname : location.key);
   const { scrollY } = useScroll({ container: ref });
-  const threshold = variant === 'masthead' ? 92 : variant === 'overlay' || (variant === 'bare' && lightTop) ? heroHeight - 120 : 4;
+  const threshold = variant === 'masthead' ? 48 : variant === 'overlay' || (variant === 'bare' && lightTop) ? heroHeight - 120 : 4;
   const [past, setPast] = useState(false);
   const barBg = useTransform(scrollY, [threshold - 24, threshold], [0, 1]);
   // Detail pages: the bar title appears only once the large page title has faded away (see ScrollFade).
@@ -93,7 +93,7 @@ export function Screen({ title, kicker, deck, variant = 'detail', back = variant
             {back && (
               <BackButton onClick={goBack} tone={night ? 'night' : onImage ? 'image' : 'surface'} />
             )}
-            <motion.p className={`${s.barTitle} ${back ? '' : s.barTitleLeft}`} style={{ opacity: titleOpacity, y: titleY }} aria-hidden={variant === 'masthead' || undefined}>
+            <motion.p className={`${s.barTitle} ${back ? '' : s.barTitleLeft} didi-clip-text`} style={{ opacity: titleOpacity, y: titleY }} aria-hidden={variant === 'masthead' || undefined}>
               {title}
             </motion.p>
             <div className={s.actions}>{typeof actions === 'function' ? actions(onImage) : actions}</div>
@@ -105,7 +105,7 @@ export function Screen({ title, kicker, deck, variant = 'detail', back = variant
       <ScrollCtx.Provider value={scrollY}>
         <div ref={ref} className={`${s.scroll} ${variant === 'detail' ? s.underBar : ''} ${variant === 'masthead' ? s.underMasthead : ''}`} data-scroll-root>
           {variant === 'masthead' && (
-            <div className={s.masthead}>
+            <div className={`${s.masthead} didi-masthead`}>
               {/* The kicker spans the full width so a masthead action never squeezes it onto two lines. */}
               {kicker && <p className={s.kicker}>{kicker}</p>}
               <div className={s.mastRow}>
@@ -144,7 +144,7 @@ export function ScrollFade({ children, className }: { children: ReactNode; class
 /** Large detail-page heading block (kicker + title), for screens with a compact header. */
 export function PageTitle({ kicker, title, deck }: { kicker?: ReactNode; title: string; deck?: ReactNode }) {
   return (
-    <ScrollFade className={s.pageTitle}>
+    <ScrollFade className={`${s.pageTitle} didi-page-title`}>
       {kicker && <p className={s.kicker}>{kicker}</p>}
       <h2 className={s.pageTitleText}>{title}</h2>
       {deck && <p className={s.deck}>{deck}</p>}

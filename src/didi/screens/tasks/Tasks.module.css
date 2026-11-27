@@ -1,5 +1,5 @@
 .page {
-  padding-bottom: var(--fj3-dock-clearance);
+  padding-bottom: 0;
 }
 .tabs {
   padding: 8px var(--fj3-gutter) 12px;

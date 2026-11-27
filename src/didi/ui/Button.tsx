@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   const content = (
     <>
       {loading ? <Spinner /> : icon && <span className={s.icon}>{icon}</span>}
-      {children && <span className={s.label}>{children}</span>}
+      {children && <span className={`${s.label} didi-clip-text`}>{children}</span>}
       {iconRight && !loading && <span className={s.icon}>{iconRight}</span>}
     </>
   );

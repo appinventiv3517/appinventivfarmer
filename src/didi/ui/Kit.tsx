@@ -43,7 +43,7 @@ export function Ring({ value, size = 56, stroke = 6, label, children, tone = 'cl
         <circle cx={size / 2} cy={size / 2} r={r} className={s.ringTrack} strokeWidth={stroke} fill="none" />
         <motion.circle cx={size / 2} cy={size / 2} r={r} className={s.ringFill} strokeWidth={stroke} fill="none" strokeLinecap="round" strokeDasharray={c} initial={{ strokeDashoffset: c }} animate={{ strokeDashoffset: c * (1 - Math.min(100, value) / 100) }} transition={{ duration: 0.9, ease: EASE, delay: 0.1 }} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
       </svg>
-      <span className={s.ringValue}>{children ?? `${Math.round(value)}%`}</span>
+      <span className={s.ringValue} style={{ fontSize: size < 60 ? 12 : size < 84 ? 14 : 16 }}>{children ?? `${Math.round(value)}%`}</span>
     </span>
   );
 }

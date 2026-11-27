@@ -25,3 +25,17 @@
   margin-inline: 0;
   padding-inline: 0;
 }
+
+/* Text that truncates with "…" hides overflow: give letters like g, y, p room below the line without changing the layout. */
+.fj3 .didi-clip-text {
+  padding-bottom: 4px;
+  margin-bottom: -4px;
+}
+
+/* Tab pages have no header bar above the title, so they only clear the status bar. */
+.fj3 .didi-masthead {
+  padding-top: 16px;
+}
+.fj3 .didi-page-title {
+  padding-top: 4px;
+}

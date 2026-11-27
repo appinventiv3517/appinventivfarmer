@@ -1,6 +1,6 @@
 /* Kisani Didi Home: the Farmer App hero and cards, reordered for a Didi's day. */
 .home {
-  padding-bottom: var(--fj3-dock-clearance);
+  padding-bottom: 0;
 }
 .hero {
   height: 380px;
