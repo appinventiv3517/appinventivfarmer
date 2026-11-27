@@ -23,6 +23,10 @@ const Notifications = page(() => import('./screens/notifications/Notifications')
 const Tasks = page(() => import('./screens/tasks/Tasks'));
 const TaskDetail = page(() => import('./screens/tasks/TaskDetail'));
 const TaskHistory = page(() => import('./screens/tasks/TaskHistory'));
+const AddProgress = page(() => import('./screens/tasks/AddProgress'));
+const FarmerVerify = page(() => import('./screens/farmers/FarmerVerify'));
+const Bookings = page(() => import('./screens/bookings/Bookings'));
+const BookingDetail = page(() => import('./screens/bookings/BookingDetail'));
 const Farmers = page(() => import('./screens/farmers/Farmers'));
 const FarmerDetail = page(() => import('./screens/farmers/FarmerDetail'));
 const Attendance = page(() => import('./screens/attendance/Attendance'));
@@ -69,8 +73,12 @@ export function DidiRoutes({ location }: { location: Location }) {
         <Route path="tasks" element={authed(<Tasks />)} />
         <Route path="tasks/:id" element={authed(<TaskDetail />)} />
         <Route path="tasks/:id/history" element={authed(<TaskHistory />)} />
+        <Route path="tasks/:id/progress" element={authed(<AddProgress />)} />
         <Route path="farmers" element={authed(<Farmers />)} />
         <Route path="farmers/:id" element={authed(<FarmerDetail />)} />
+        <Route path="farmers/:id/verify" element={authed(<FarmerVerify />)} />
+        <Route path="bookings" element={authed(<Bookings />)} />
+        <Route path="bookings/:id" element={authed(<BookingDetail />)} />
         <Route path="attendance" element={authed(<Attendance />)} />
         <Route path="qr" element={authed(<MyQr />)} />
         <Route path="transactions" element={authed(<Transactions />)} />

@@ -225,3 +225,225 @@
 .detail > [role='tablist'] {
   padding-inline: 0;
 }
+
+/* Verification on the list: verified farmers get a green badge on the avatar;
+   others a dashed outline, so the two read apart at a glance. */
+.avatar {
+  position: relative;
+}
+.avatarBadge {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--fj3-surface);
+  color: var(--fj3-success-solid);
+}
+.avatarBadge svg {
+  width: 20px;
+  height: 20px;
+}
+.cardUnverified {
+  box-shadow: inset 0 0 0 1px var(--fj3-line-strong);
+  background: var(--fj3-surface-2);
+}
+.cardUnverified .avatar {
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1.5px var(--fj3-line-strong);
+  color: var(--fj3-fg-2);
+}
+.verifyRow {
+  margin-top: 4px;
+}
+.verifyStack {
+  display: grid;
+  gap: 12px;
+}
+.demoBox {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  border: 1px dashed var(--fj3-line-strong);
+}
+.demoBox p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.demoBox svg {
+  width: 16px;
+  height: 16px;
+}
+.demoRow {
+  display: flex;
+  gap: 10px;
+}
+.demoRow > :first-child {
+  flex: none;
+}
+.bookings {
+  display: grid;
+  gap: 8px;
+}
+.bookingRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.bookingRow > svg:first-child {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--fj3-primary);
+}
+.bookingRow > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.bookingRow strong {
+  font: var(--fj3-label);
+}
+.bookingRow small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.rowChev {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--fj3-fg-3);
+}
+.headText > * {
+  justify-self: start;
+}
+
+/* Verify farmer: upload slots and the confirmation */
+.slotIntro {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.slot {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  border: 1.5px dashed var(--fj3-line-strong);
+  background: var(--fj3-surface);
+}
+.slotErr {
+  border-color: var(--fj3-danger-solid);
+}
+.slotHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.slotHead strong {
+  font: var(--fj3-label);
+}
+.slotHead small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-3);
+}
+.slotBtns {
+  display: flex;
+  gap: 8px;
+}
+.slotFile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.slotFile img,
+.slotDoc {
+  flex: none;
+  width: 64px;
+  height: 48px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  background: var(--fj3-surface-2);
+}
+.slotDoc {
+  display: grid;
+  place-items: center;
+  color: var(--fj3-fg-2);
+}
+.slotDoc svg {
+  width: 22px;
+  height: 22px;
+}
+.slotFile > span {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.slotFile strong {
+  font: var(--fj3-label);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.slotFile small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.slotRemove {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fj3-surface-2);
+  color: var(--fj3-fg);
+}
+.slotRemove svg {
+  width: 18px;
+  height: 18px;
+}
+.confirm {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+  font: var(--fj3-small);
+}
+.confirm input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  accent-color: var(--fj3-primary);
+}
+.confirmErr {
+  box-shadow: inset 0 0 0 1.5px var(--fj3-danger-solid);
+}
+
+.docChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

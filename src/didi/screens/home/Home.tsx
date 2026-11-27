@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useTransform } from 'framer-motion';
-import { ArrowUpRight, Bell, CalendarClock, ChevronRight, CloudSun, Languages, LogIn, LogOut, MapPin, QrCode, Trophy, Wallet } from 'lucide-react';
-import { formatCurrency, formatTime, greeting, initials, plural } from '@/lib/format';
+import { ArrowUpRight, Bell, CalendarClock, ChevronRight, CloudSun, Languages, LogIn, LogOut, MapPin, QrCode, Tractor, Trophy, Wallet } from 'lucide-react';
+import { formatCurrency, formatTime, greeting, initials } from '@/lib/format';
 import { LANGUAGE_CATALOG } from '@/services/store';
 import { Sheet } from '@/d3/ui/Sheet';
 import { useToast } from '@/d3/ui/Toast';
@@ -30,6 +30,7 @@ import { CheckSheet } from '../attendance/CheckSheet';
 import { useNav } from '../../nav';
 import { to } from '../../paths';
 import { dueLabel } from '../tasks/TaskCard';
+import { BOOKINGS, BOOKING_LABEL, BOOKING_TONE } from '../../data/bookings';
 import s from './Home.module.css';
 
 /** Language switch in the hero: opens the language list and applies the choice at once. */
@@ -200,12 +201,16 @@ export default function Home() {
   const tasks = useDidi((st) => st.tasks);
   const open = tasks.filter((t) => tabOf(t.status) !== 'closed');
   const fresh = tasks.filter((t) => t.status === 'pending').length;
-  const ongoing = tasks.filter((t) => tabOf(t.status) === 'ongoing').length;
-  const upcoming = [...open].filter((t) => t.status !== 'in_review').sort((a, b) => a.dueOn.localeCompare(b.dueOn)).slice(0, 2);
+  const ongoing = tasks.filter((t) => tabOf(t.status) === 'progress').length;
+  const upcoming = [...open].filter((t) => t.status === 'pending' || t.status === 'in_progress').sort((a, b) => a.dueOn.localeCompare(b.dueOn)).slice(0, 2);
+  const inReview = tasks.filter((t) => t.status === 'in_review' || t.status === 'resubmitted').length;
+  const farmerVerify = useDidi((st) => st.farmerVerify);
+  const unverified = FARMERS.filter((f) => (farmerVerify[f.id]?.status ?? f.verification.status) !== 'verified').length;
+  const awaiting = BOOKINGS.filter((b) => b.status === 'pending' || b.status === 'cancel_requested').length;
+  const latestBooking = [...BOOKINGS].sort((a, b) => (b.decidedAt ?? b.createdAt).localeCompare(a.decidedAt ?? a.createdAt))[0];
   const needsAction = tasks.find((t) => t.status === 'rejected');
   const month = filterTxns(TRANSACTIONS, 'all', '30');
   const sum = totals(month);
-  const incomplete = FARMERS.filter((f) => completion(f) < 100).length;
 
   return (
     <Screen title="Home" variant="bare" tabRoot lightTop heroHeight={380}>
@@ -229,7 +234,7 @@ export default function Home() {
         </InView>
 
         <section className={s.section} aria-labelledby="tasks-h">
-          <SectionHead id="tasks-h" title="My tasks" meta={`${plural(fresh, 'new task')} · ${ongoing} ongoing`} to="/tasks" action="See all" />
+          <SectionHead id="tasks-h" title="My tasks" meta={`${fresh} pending · ${ongoing} in progress${inReview ? ` · ${inReview} in review` : ''}`} to="/tasks" action="See all" />
           {needsAction && (
             <Link to={to(`/tasks/${needsAction.id}`)} className={s.alert}>
               <strong>Needs your action</strong>
@@ -261,7 +266,7 @@ export default function Home() {
         </section>
 
         <section className={s.section} aria-labelledby="farmers-h">
-          <SectionHead id="farmers-h" title="My farmers" meta={`${FARMERS.length} farmers · ${incomplete} profiles to complete`} to="/farmers" action="View all" />
+          <SectionHead id="farmers-h" title="My farmers" meta={`${FARMERS.length} farmers · ${unverified} not verified`} to="/farmers" action="View all" />
           <div className={s.farmers}>
             {FARMERS.slice(0, 4).map((f) => (
               <Link key={f.id} to={to(`/farmers/${f.id}`)} className={s.farmer}>
@@ -275,6 +280,25 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        </section>
+
+        <section className={s.section} aria-labelledby="bk-h">
+          <SectionHead id="bk-h" title="Bookings" meta={`${awaiting} awaiting a decision`} to="/bookings" action="See all" />
+          {latestBooking && (
+            <Link to={to(`/bookings/${latestBooking.id}`)} className={`${s.card} ${s.booking} ${s.gutterCard}`}>
+              <span className={s.bookingIcon}>
+                <Tractor aria-hidden />
+              </span>
+              <span className={s.bookingText}>
+                <span className={s.kicker}>Latest update · #{latestBooking.id}</span>
+                <strong>{FARMERS.find((f) => f.id === latestBooking.farmerId)?.name}</strong>
+                <span>
+                  <StatusTag tone={BOOKING_TONE[latestBooking.status]}>{BOOKING_LABEL[latestBooking.status]}</StatusTag>
+                </span>
+              </span>
+              <ChevronRight aria-hidden className={s.bookingChev} />
+            </Link>
+          )}
         </section>
 
         <section className={s.section} aria-labelledby="wx-h">

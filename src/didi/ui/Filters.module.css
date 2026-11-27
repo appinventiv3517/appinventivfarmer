@@ -1,0 +1,96 @@
+/* Filters: the trigger button, the sheet's groups and its footer. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.row > :first-child {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.row input {
+  min-width: 0;
+  width: 100%;
+}
+.btn {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line-strong);
+  color: var(--fj3-fg);
+  font: var(--fj3-label);
+}
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+.btnCompact {
+  width: 52px;
+  padding: 0;
+  justify-content: center;
+}
+.btnCompact .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+}
+.btnOn {
+  background: var(--fj3-espresso);
+  color: #fff;
+  box-shadow: none;
+}
+.badge {
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+  font: 760 0.75rem/1 var(--font);
+}
+.body {
+  display: grid;
+  gap: 24px;
+  padding-bottom: 8px;
+}
+.group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.group legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.foot {
+  display: flex;
+  gap: 10px;
+}
+.foot > :first-child {
+  flex: none;
+}

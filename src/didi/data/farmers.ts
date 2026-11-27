@@ -29,7 +29,23 @@ export interface Farmer {
   /** Each step of the farmer profile: personal, address, ID, land, crops, bank. */
   steps: { personal: boolean; address: boolean; id: boolean; land: boolean; crops: boolean; bank: boolean };
   lands: FarmerLand[];
+  verification: FarmerVerification;
 }
+
+/** Identity verification of the farmer. Kisani Urjaa decides; the Didi submits the documents. */
+export type VerifyStatus = 'verified' | 'unverified' | 'pending' | 'failed';
+export interface FarmerVerification {
+  status: VerifyStatus;
+  docType?: string;
+  idLast4?: string;
+  submittedOn?: string;
+  decidedOn?: string;
+  /** Why Kisani Urjaa could not verify the farmer. */
+  reason?: string;
+}
+
+export const VERIFY_LABEL: Record<VerifyStatus, string> = { verified: 'Verified', unverified: 'Not verified', pending: 'Verification pending', failed: 'Verification failed' };
+export const VERIFY_TONE: Record<VerifyStatus, 'success' | 'warning' | 'danger' | 'neutral'> = { verified: 'success', unverified: 'neutral', pending: 'warning', failed: 'danger' };
 
 export const PROFILE_STEPS: { key: keyof Farmer['steps']; label: string }[] = [
   { key: 'personal', label: 'Personal details' },
@@ -74,6 +90,20 @@ const SEEDS: Seed[] = [
   ['KU-F-10368', 'Lata Sudam Wagh', '9000010368', 'Female', 47, 'Chikhli', 'Chikhli', '443201', all, [land('l1', 'Main field', '402/1', 2.25, kharif('Paddy', '2026-06-26'), { lat: 20.3488, lng: 76.2601, taggedOn: '2026-06-20', points: 7 }, S1)], '2024-11-16'],
 ];
 
+/** Sample verification records (from Kisani Urjaa). Farmers not listed are not verified yet. */
+const VERIFIED: Record<string, FarmerVerification> = {
+  'KU-F-10231': { status: 'verified', docType: 'Aadhaar', idLast4: '4417', submittedOn: '2024-06-14', decidedOn: '2024-06-16' },
+  'KU-F-10244': { status: 'verified', docType: 'Aadhaar', idLast4: '0921', submittedOn: '2024-07-05', decidedOn: '2024-07-08' },
+  'KU-F-10262': { status: 'pending', docType: 'Voter ID', idLast4: '7730', submittedOn: '2026-11-25' },
+  'KU-F-10283': { status: 'verified', docType: 'Aadhaar', idLast4: '5562', submittedOn: '2024-09-02', decidedOn: '2024-09-04' },
+  'KU-F-10291': { status: 'verified', docType: 'PAN card', idLast4: '812K', submittedOn: '2024-09-16', decidedOn: '2024-09-19' },
+  'KU-F-10305': { status: 'failed', docType: 'Aadhaar', idLast4: '3308', submittedOn: '2026-11-18', decidedOn: '2026-11-20', reason: 'The Aadhaar photo is blurred and the name can’t be read. Upload a clear photo of the front and back.' },
+  'KU-F-10312': { status: 'verified', docType: 'Aadhaar', idLast4: '6190', submittedOn: '2024-10-07', decidedOn: '2024-10-09' },
+  'KU-F-10334': { status: 'verified', docType: 'Voter ID', idLast4: '2251', submittedOn: '2025-02-13', decidedOn: '2025-02-17' },
+  'KU-F-10347': { status: 'verified', docType: 'Aadhaar', idLast4: '9043', submittedOn: '2025-03-29', decidedOn: '2025-04-01' },
+  'KU-F-10368': { status: 'verified', docType: 'Aadhaar', idLast4: '1176', submittedOn: '2024-11-18', decidedOn: '2024-11-21' },
+};
+
 export const FARMERS: Farmer[] = SEEDS.map(([id, name, phone, gender, age, village, mandal, pincode, steps, lands, registeredOn]) => ({
   id,
   name,
@@ -89,6 +119,7 @@ export const FARMERS: Farmer[] = SEEDS.map(([id, name, phone, gender, age, villa
   registeredOn,
   steps: { personal: false, address: false, id: false, land: false, crops: false, bank: false, ...steps },
   lands,
+  verification: VERIFIED[id] ?? { status: 'unverified' },
 }));
 
 export const farmerById = (id: string) => FARMERS.find((f) => f.id.toLowerCase() === id.toLowerCase());
@@ -103,14 +134,34 @@ export const FARMER_FILTERS: { value: FarmerFilter; label: string }[] = [
 
 export const geoPending = (f: Farmer) => f.lands.length === 0 || f.lands.some((l) => !l.geo);
 
-export function filterFarmers(list: Farmer[], query: string, filter: FarmerFilter, village = 'all'): Farmer[] {
+/** Filters from the Farmers filter sheet. */
+export interface FarmerFilters {
+  verify: VerifyStatus | 'all';
+  profile: FarmerFilter;
+  village: string;
+  /** Registered between these dates (yyyy-mm-dd), inclusive. */
+  from?: string;
+  to?: string;
+}
+export const NO_FARMER_FILTERS: FarmerFilters = { verify: 'all', profile: 'all', village: 'all' };
+
+export function activeFarmerFilters(f: FarmerFilters): number {
+  return (f.verify !== 'all' ? 1 : 0) + (f.profile !== 'all' ? 1 : 0) + (f.village !== 'all' ? 1 : 0) + (f.from || f.to ? 1 : 0);
+}
+
+export function filterFarmers(list: Farmer[], query: string, filter: FarmerFilter | FarmerFilters, village = 'all', verifyOf: (f: Farmer) => VerifyStatus = (f) => f.verification.status): Farmer[] {
+  const opts: FarmerFilters = typeof filter === 'string' ? { ...NO_FARMER_FILTERS, profile: filter, village } : filter;
   const q = query.trim().toLowerCase();
   const digits = q.replace(/\D/g, '');
   return list.filter((f) => {
-    if (village !== 'all' && f.village !== village) return false;
-    if (filter === 'incomplete' && completion(f) === 100) return false;
-    if (filter === 'complete' && completion(f) < 100) return false;
-    if (filter === 'geo' && !geoPending(f)) return false;
+    if (opts.village !== 'all' && f.village !== opts.village) return false;
+    if (opts.verify !== 'all' && verifyOf(f) !== opts.verify) return false;
+    if (opts.from && f.registeredOn < opts.from) return false;
+    if (opts.to && f.registeredOn > opts.to) return false;
+    const pf = opts.profile;
+    if (pf === 'incomplete' && completion(f) === 100) return false;
+    if (pf === 'complete' && completion(f) < 100) return false;
+    if (pf === 'geo' && !geoPending(f)) return false;
     if (!q) return true;
     return f.name.toLowerCase().includes(q) || f.id.toLowerCase().includes(q) || f.village.toLowerCase().includes(q) || (digits.length >= 3 && f.phone.includes(digits));
   });

@@ -11,7 +11,7 @@ const MAX = 10 * 1024 * 1024;
 
 function kb(n?: number) {
   if (!n) return '';
-  return n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.round(n / 1024)} KB`;
+  return n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`;
 }
 
 /** One proof, as a tile. */

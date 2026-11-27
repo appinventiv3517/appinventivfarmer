@@ -1,7 +1,13 @@
 import { daysFromNow } from './dates';
 
-export type TaskStatus = 'pending' | 'in_progress' | 'in_review' | 'approved' | 'rejected' | 'lapsed';
-export type TaskTab = 'new' | 'ongoing' | 'closed';
+export type TaskStatus = 'pending' | 'in_progress' | 'in_review' | 'approved' | 'rejected' | 'resubmitted' | 'lapsed';
+export type TaskTab = 'pending' | 'progress' | 'closed';
+
+export const TASK_TABS: { value: TaskTab; label: string }[] = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'progress', label: 'In progress' },
+  { value: 'closed', label: 'Closed' },
+];
 
 export const STATUS_LABEL: Record<TaskStatus, string> = {
   pending: 'Pending',
@@ -9,6 +15,7 @@ export const STATUS_LABEL: Record<TaskStatus, string> = {
   in_review: 'In review',
   approved: 'Approved',
   rejected: 'Rejected',
+  resubmitted: 'Resubmitted',
   lapsed: 'Lapsed',
 };
 
@@ -18,14 +25,34 @@ export const STATUS_TONE: Record<TaskStatus, 'neutral' | 'info' | 'warning' | 's
   in_review: 'warning',
   approved: 'success',
   rejected: 'danger',
+  resubmitted: 'warning',
   lapsed: 'neutral',
 };
 
-/** Which tab a status belongs to. Rejected tasks stay in Ongoing so they can be resubmitted. */
+/** One line on what the status means for the Didi. */
+export const STATUS_EXPLAIN: Record<TaskStatus, string> = {
+  pending: 'Assigned to you. Start it when you begin the work.',
+  in_progress: 'Add progress as you go, then submit it for approval.',
+  in_review: 'Submitted. Kisani Urjaa is reviewing your work.',
+  approved: 'Approved by Kisani Urjaa. This task is closed.',
+  rejected: 'Returned for changes. Fix it and resubmit.',
+  resubmitted: 'Resubmitted. Kisani Urjaa is reviewing it again.',
+  lapsed: 'Closed without approval.',
+};
+
+/**
+ * Which tab a status belongs to. Rejected, in-review and resubmitted tasks stay in
+ * In progress until Kisani Urjaa closes them; approved and lapsed ones are Closed.
+ */
 export function tabOf(status: TaskStatus): TaskTab {
-  if (status === 'pending') return 'new';
+  if (status === 'pending') return 'pending';
   if (status === 'approved' || status === 'lapsed') return 'closed';
-  return 'ongoing';
+  return 'progress';
+}
+
+/** What the Didi can do with a task in each status. Nothing else is offered. */
+export function actionsFor(status: TaskStatus): { start: boolean; addProgress: boolean; resubmit: boolean } {
+  return { start: status === 'pending', addProgress: status === 'in_progress', resubmit: status === 'rejected' };
 }
 
 export interface Proof {
@@ -47,6 +74,8 @@ export interface Submission {
   proofs: Proof[];
   kind: 'progress' | 'review';
   outcome?: 'approved' | 'rejected';
+  /** A submission sent again after a rejection. */
+  resubmission?: boolean;
   score?: number;
   adminComment?: string;
   reviewedAt?: string;
@@ -67,6 +96,8 @@ export interface Task {
   status: TaskStatus;
   submissions: Submission[];
   draftNote?: string;
+  /** Instructions from Kisani Urjaa shown with the task. */
+  adminNote?: string;
 }
 
 const ADMIN = 'Kisani Urjaa field team';
@@ -101,6 +132,7 @@ export const SAMPLE_TASKS: Task[] = [
     done: 0,
     status: 'pending',
     submissions: [],
+    adminNote: 'Capture at least four corner points per plot. Skip plots that are already geo-tagged.',
   },
   {
     id: 'T-2598',
@@ -140,6 +172,7 @@ export const SAMPLE_TASKS: Task[] = [
     title: 'Profile photos for Lonar farmers',
     summary: 'Add a clear profile photo for each registered farmer in Lonar.',
     description: 'Add a clear, front-facing profile photo for each farmer registered in Lonar. Photos must be taken in daylight.',
+    adminNote: 'Face the farmer towards the light. No caps or sunglasses.',
     category: 'Farmer onboarding',
     assignedBy: ADMIN,
     assignedOn: daysFromNow(-14, 10),
@@ -149,6 +182,25 @@ export const SAMPLE_TASKS: Task[] = [
     done: 8,
     status: 'rejected',
     submissions: [{ id: 's1', at: daysFromNow(-3, 12), count: 8, note: 'All 8 photos added.', proofs: [{ id: 'p1', kind: 'photo', name: 'lonar-visit.jpg', slot: 'kisani-field-farmers' }], kind: 'review', outcome: 'rejected', score: 4, adminComment: 'Three photos are too dark to recognise the farmer. Please retake them in daylight and resubmit.', reviewedAt: daysFromNow(-1, 11) }],
+  },
+  {
+    id: 'T-2576',
+    title: 'Residue-free field photos',
+    summary: 'Photograph fields after straw clearing to show they were left clean.',
+    description: 'Visit fields where straw was cleared this season and photograph each one, with the farmer, showing the field is clean. One photo per field.',
+    category: 'Field verification',
+    assignedBy: ADMIN,
+    assignedOn: daysFromNow(-16, 10),
+    dueOn: daysFromNow(4, 18),
+    target: 12,
+    unit: 'fields',
+    done: 12,
+    status: 'resubmitted',
+    submissions: [
+      { id: 's1', at: daysFromNow(-9, 16, 10), count: 7, note: 'Seven fields in Ratanpur photographed.', proofs: [{ id: 'p1', kind: 'photo', name: 'ratanpur-field.jpg', slot: 'kisani-paddy-green' }], kind: 'progress' },
+      { id: 's2', at: daysFromNow(-6, 17, 30), count: 12, note: 'All 12 fields done.', proofs: [{ id: 'p1', kind: 'photo', name: 'dhad-field.jpg', slot: 'kisani-field-farmers' }], kind: 'review', outcome: 'rejected', score: 5, adminComment: 'Two photos do not show the farmer. Add photos with the farmer present for fields 4 and 9.', reviewedAt: daysFromNow(-4, 12) },
+      { id: 's3', at: daysFromNow(-2, 15, 5), count: 12, note: 'Retook fields 4 and 9 with the farmers present.', proofs: [{ id: 'p1', kind: 'photo', name: 'field-4.jpg', slot: 'kisani-field-farmers' }, { id: 'p2', kind: 'video', name: 'field-9-walk.mp4', size: 6_400_000 }], kind: 'review', resubmission: true },
+    ],
   },
   {
     id: 'T-2561',
@@ -196,6 +248,21 @@ export const SAMPLE_TASKS: Task[] = [
     submissions: [{ id: 's1', at: daysFromNow(-28, 15), count: 3, note: 'Three farmers added. Others were away for the harvest.', proofs: [], kind: 'progress' }],
   },
 ];
+
+/** The date Kisani Urjaa approved the task, if it did. */
+export function completedOn(t: Task): string | undefined {
+  return [...t.submissions].reverse().find((x) => x.outcome === 'approved')?.reviewedAt;
+}
+
+/** The latest score Kisani Urjaa gave, if any. */
+export function scoreOf(t: Task): number | undefined {
+  return [...t.submissions].reverse().find((x) => x.score !== undefined)?.score;
+}
+
+/** The latest reviewed submission (approved or rejected). */
+export function lastReview(t: Task): Submission | undefined {
+  return [...t.submissions].reverse().find((x) => x.outcome);
+}
 
 export const progressOf = (t: Pick<Task, 'done' | 'target'>) => (t.target ? Math.min(100, Math.round((t.done / t.target) * 100)) : 0);
 

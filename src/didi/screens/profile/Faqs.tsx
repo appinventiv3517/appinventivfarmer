@@ -6,7 +6,10 @@ import { Button } from '../../ui/Button';
 import s from './Profile.module.css';
 
 const FAQS = [
-  { q: 'How do I start a task?', a: 'Open My tasks, choose a task in New and tap Start task. It moves to Ongoing, where you can save progress and submit it.' },
+  { q: 'How do I start a task?', a: 'Open My tasks, choose a task in Pending and tap Start task. It moves to In progress, where you add progress and submit it for approval.' },
+  { q: 'A task was rejected. What now?', a: 'Open the task to read the rejection reason, then tap Resubmit. Fix what was asked, add new photos or files if needed, and resubmit it for approval.' },
+  { q: 'Where do I see bookings?', a: 'Home → Bookings, or Profile → Bookings. You get a notification, with the booking number, whenever Kisani Urjaa approves, rejects or cancels a booking.' },
+  { q: 'How do I verify a farmer?', a: 'Open the farmer and tap Verify now. Add the ID number, photograph the document, and submit. Kisani Urjaa checks it and you get the result as a notification.' },
   { q: 'What counts as proof?', a: 'A clear photo, a short video or a file that shows the work, such as a photo of the farmer at the visit. Each file can be up to 10 MB.' },
   { q: 'My task was rejected. What now?', a: 'Open the task to read the reviewer’s comment, fix what they asked for, add new proof and tap Resubmit.' },
   { q: 'I forgot to check out. What happens?', a: 'You’ll see a notification. If your times are wrong, contact support with the date.' },

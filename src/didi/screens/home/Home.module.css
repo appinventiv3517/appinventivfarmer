@@ -478,3 +478,39 @@
   font: 740 0.9375rem/1 var(--font);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- Bookings ---------- */
+.booking {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.bookingIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+}
+.bookingIcon svg {
+  width: 22px;
+  height: 22px;
+}
+.bookingText {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+.bookingText strong {
+  font: var(--fj3-sub);
+}
+.bookingChev {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--fj3-primary);
+}

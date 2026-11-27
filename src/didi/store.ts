@@ -2,6 +2,7 @@ import { useSyncExternalStore } from 'react';
 import { readJSON, writeJSON, removeKey } from '@/lib/storage';
 import { DIDI_PROFILE, type DidiProfile } from './data/didi';
 import { SAMPLE_TASKS, type Proof, type Task } from './data/tasks';
+import { FARMERS, type Farmer, type FarmerVerification } from './data/farmers';
 import { INITIALLY_UNREAD } from './data/notifications';
 import { isoDay } from './data/dates';
 import type { AttendanceDay, CheckProof } from './data/attendance';
@@ -40,9 +41,16 @@ export interface DidiState {
   unread: string[];
   verification: Verification;
   prefs: { text: TextSize };
-  /** Prototype controls: show loading and error states on demand. */
-  demo: { slow: boolean; fail: boolean };
+  /** Verification records changed on this device (farmer ID → record). */
+  farmerVerify: Record<string, FarmerVerification>;
+  /** Prototype controls: show loading, error and empty states on demand. */
+  demo: { slow: boolean; fail: boolean; empty: boolean };
+  /** Sample-data version: when it changes, sample tasks are refreshed. */
+  dataVersion: number;
 }
+
+/** Bump when the sample tasks change shape, so returning visitors see the new ones. */
+const DATA_VERSION = 2;
 
 const KEY = 'kisani-urjaa:didi';
 
@@ -56,7 +64,9 @@ function initial(): DidiState {
     unread: INITIALLY_UNREAD,
     verification: { status: 'none', docType: '', idNumber: '', fullName: '', gender: '', dob: '' },
     prefs: { text: 'default' },
-    demo: { slow: false, fail: false },
+    farmerVerify: {},
+    demo: { slow: false, fail: false, empty: false },
+    dataVersion: DATA_VERSION,
   };
 }
 
@@ -64,6 +74,12 @@ function load(): DidiState {
   const base = initial();
   const saved = readJSON<Partial<DidiState>>(KEY);
   if (!saved) return base;
+  // Older saves keep their session, profile and attendance; sample tasks and notifications are refreshed.
+  if (saved.dataVersion !== DATA_VERSION) {
+    delete saved.tasks;
+    delete saved.unread;
+    saved.dataVersion = DATA_VERSION;
+  }
   return { ...base, ...saved, session: { ...base.session, ...saved.session }, profile: { ...base.profile, ...saved.profile }, prefs: { ...base.prefs, ...saved.prefs }, demo: { ...base.demo, ...saved.demo }, verification: { ...base.verification, ...saved.verification } };
 }
 
@@ -116,9 +132,34 @@ export const didi = {
   saveDraftNote: (id: string, draftNote: string) => updateTask(id, (t) => ({ ...t, draftNote })),
   /** Save progress: records what was done so far, with the note and proofs. */
   saveProgress: (id: string, done: number, note: string, proofs: Proof[]) =>
-    updateTask(id, (t) => ({ ...t, done, draftNote: '', status: t.status === 'pending' || t.status === 'rejected' ? 'in_progress' : t.status, submissions: [...t.submissions, { id: stamp(), at: new Date().toISOString(), count: done, note, proofs, kind: 'progress' }] })),
+    // A rejected task stays rejected while the Didi works on it, until she resubmits.
+    updateTask(id, (t) => ({ ...t, done, draftNote: '', status: t.status === 'pending' ? 'in_progress' : t.status, submissions: [...t.submissions, { id: stamp(), at: new Date().toISOString(), count: done, note, proofs, kind: 'progress' }] })),
   submitForReview: (id: string, done: number, note: string, proofs: Proof[]) =>
-    updateTask(id, (t) => ({ ...t, done, draftNote: '', status: 'in_review', submissions: [...t.submissions, { id: stamp(), at: new Date().toISOString(), count: done, note, proofs, kind: 'review' }] })),
+    updateTask(id, (t) => {
+      const again = t.submissions.some((x) => x.outcome === 'rejected');
+      return { ...t, done, draftNote: '', status: again ? 'resubmitted' : 'in_review', submissions: [...t.submissions, { id: stamp(), at: new Date().toISOString(), count: done, note, proofs, kind: 'review', ...(again ? { resubmission: true } : {}) }] };
+    }),
+  /** Prototype only: stands in for Kisani Urjaa's review of the latest submission. */
+  reviewTask: (id: string, outcome: 'approved' | 'rejected', score: number, adminComment: string) =>
+    updateTask(id, (t) => {
+      if (t.status !== 'in_review' && t.status !== 'resubmitted') return t;
+      const subs = [...t.submissions];
+      const i = subs.map((x) => x.kind).lastIndexOf('review');
+      if (i < 0) return t;
+      subs[i] = { ...subs[i], outcome, score, adminComment, reviewedAt: new Date().toISOString() };
+      return { ...t, status: outcome, submissions: subs };
+    }),
+
+  /* ---------- Farmer verification ---------- */
+  submitFarmerVerification: (id: string, v: { docType: string; idLast4: string }) =>
+    set((s) => ({ ...s, farmerVerify: { ...s.farmerVerify, [id]: { status: 'pending', docType: v.docType, idLast4: v.idLast4, submittedOn: new Date().toISOString() } } })),
+  /** Prototype only: stands in for Kisani Urjaa's decision. */
+  decideFarmerVerification: (id: string, outcome: 'verified' | 'failed', reason?: string) =>
+    set((s) => {
+      const cur = s.farmerVerify[id] ?? FARMERS.find((f) => f.id === id)?.verification;
+      if (!cur || cur.status !== 'pending') return s;
+      return { ...s, farmerVerify: { ...s.farmerVerify, [id]: { ...cur, status: outcome, decidedOn: new Date().toISOString(), reason: outcome === 'failed' ? reason : undefined } } };
+    }),
 
   /* ---------- Attendance ---------- */
   checkIn: (place: string, proof: CheckProof) =>
@@ -148,6 +189,11 @@ export const didi = {
     set(() => initial());
   },
 };
+
+/** A farmer's verification, including changes made on this device. */
+export function useFarmerVerification(f: Farmer | undefined): FarmerVerification | undefined {
+  return useDidi((s) => (f ? s.farmerVerify[f.id] ?? f.verification : undefined));
+}
 
 /** Today's attendance record, if any. */
 export function useToday(): AttendanceDay | undefined {

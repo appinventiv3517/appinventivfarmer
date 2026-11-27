@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CalendarClock, CalendarPlus, ChevronRight } from 'lucide-react';
+import { CalendarCheck2, CalendarClock, CalendarPlus, ChevronRight, Send } from 'lucide-react';
 import { formatDate } from '@/lib/format';
 import { TAP } from '@/d3/motion/tokens';
 import { StatusTag } from '../../ui/Blocks';
 import { Bar } from '../../ui/Kit';
-import { STATUS_LABEL, STATUS_TONE, progressOf, type Task } from '../../data/tasks';
+import { STATUS_LABEL, STATUS_TONE, completedOn, progressOf, type Task } from '../../data/tasks';
 import { dayDiff } from '../../data/dates';
 import { to } from '../../paths';
 import s from './Tasks.module.css';
@@ -24,7 +24,10 @@ export function TaskCard({ task }: { task: Task }) {
   const pct = progressOf(task);
   const closed = task.status === 'approved' || task.status === 'lapsed';
   const d = dayDiff(task.dueOn);
-  const late = !closed && task.status !== 'in_review' && d <= 2;
+  const waiting = task.status === 'in_review' || task.status === 'resubmitted';
+  const late = !closed && !waiting && d <= 2;
+  const done = completedOn(task);
+  const sentOn = waiting ? [...task.submissions].reverse().find((x) => x.kind === 'review')?.at : undefined;
   return (
     <motion.div whileTap={TAP}>
       <Link to={to(`/tasks/${task.id}`)} className={s.card}>
@@ -35,7 +38,7 @@ export function TaskCard({ task }: { task: Task }) {
         <strong className={s.title}>{task.title}</strong>
         <span className={s.summary}>{task.summary}</span>
         <span className={s.progressRow}>
-          <Bar value={pct} label={`${pct}% done`} tone={task.status === 'approved' ? 'green' : task.status === 'rejected' ? 'warn' : 'clay'} />
+          <Bar value={pct} label={`${pct}% done`} tone={task.status === 'approved' ? 'green' : task.status === 'rejected' || task.status === 'lapsed' ? 'warn' : 'clay'} />
           <span className={s.pct}>
             {task.done}/{task.target} {task.unit}
           </span>
@@ -45,8 +48,18 @@ export function TaskCard({ task }: { task: Task }) {
             <CalendarPlus aria-hidden /> Assigned {formatDate(task.assignedOn, 'short')}
           </span>
           <span className={late ? s.late : ''}>
-            <CalendarClock aria-hidden /> {closed ? `Due was ${formatDate(task.dueOn, 'short')}` : dueLabel(task.dueOn)}
+            <CalendarClock aria-hidden /> {closed || waiting ? `Due ${formatDate(task.dueOn, 'short')}` : dueLabel(task.dueOn)}
           </span>
+          {done && (
+            <span className={s.doneOn}>
+              <CalendarCheck2 aria-hidden /> Completed {formatDate(done, 'short')}
+            </span>
+          )}
+          {sentOn && (
+            <span>
+              <Send aria-hidden /> {task.status === 'resubmitted' ? 'Resubmitted' : 'Submitted'} {formatDate(sentOn, 'short')}
+            </span>
+          )}
           <ChevronRight aria-hidden className={s.chev} />
         </span>
       </Link>

@@ -1,0 +1,173 @@
+/* Kisani Didi bookings: list cards and the detail screen, on the Ver 3 tokens. */
+.page {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 40px;
+}
+.gutter {
+  padding: 16px var(--fj3-gutter) 0;
+}
+.tools {
+  display: grid;
+  gap: 12px;
+  padding: 0 var(--fj3-gutter) 8px;
+}
+.chips {
+  margin-inline: calc(var(--fj3-gutter) * -1);
+  padding-inline: var(--fj3-gutter);
+}
+.count {
+  padding: 8px var(--fj3-gutter) 10px;
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-3);
+}
+.list {
+  display: grid;
+  gap: 12px;
+  padding: 0 var(--fj3-gutter);
+}
+.card {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.ref {
+  white-space: nowrap;
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-hl-ink);
+}
+.farmer {
+  font: var(--fj3-heading);
+}
+.meta {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.line svg {
+  width: 16px;
+  height: 16px;
+  color: var(--fj3-success-solid);
+}
+.foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--fj3-line);
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.foot > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.foot svg {
+  width: 15px;
+  height: 15px;
+}
+.chev {
+  margin-left: auto;
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--fj3-primary);
+}
+
+/* ---------- Detail ---------- */
+.detail {
+  display: grid;
+  gap: 20px;
+  padding: 8px var(--fj3-gutter) 40px;
+}
+.detail section {
+  padding-inline: 0;
+}
+.hero {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
+}
+.heroTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.heroDate {
+  font: var(--fj3-caption);
+  font-weight: 600;
+  color: var(--fj3-fg-2);
+}
+.heroExplain {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.farmerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+  font: 760 1rem/1 var(--font);
+}
+.farmerText {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.farmerText strong {
+  font: var(--fj3-sub);
+}
+.farmerText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.farmerActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}

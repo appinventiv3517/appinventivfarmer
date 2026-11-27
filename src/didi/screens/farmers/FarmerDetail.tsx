@@ -1,6 +1,6 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, Circle, MapPin, MapPinOff, MessageCircle, Phone, Sprout } from 'lucide-react';
+import { Check, ChevronRight, Circle, MapPin, MapPinOff, MessageCircle, Phone, Sprout, Tractor } from 'lucide-react';
 import { formatDate, formatPhone, initials } from '@/lib/format';
 import { SectionTabs } from '@/d3/ui/Controls';
 import { SWAP } from '@/d3/motion/tokens';
@@ -8,7 +8,11 @@ import { Screen } from '../../layout/Screen';
 import { Button } from '../../ui/Button';
 import { EmptyState, ErrorState, Skel, StatusTag } from '../../ui/Blocks';
 import { Facts, Ring, Section, useLoad } from '../../ui/Kit';
-import { PROFILE_STEPS, completion, farmerById, type FarmerLand } from '../../data/farmers';
+import { PROFILE_STEPS, VERIFY_LABEL, VERIFY_TONE, completion, farmerById, type FarmerLand } from '../../data/farmers';
+import { BOOKING_LABEL, BOOKING_TONE, bookingsFor } from '../../data/bookings';
+import { useFarmerVerification } from '../../store';
+import { to } from '../../paths';
+import { VerifyCard } from './VerifyCard';
 import s from './Farmers.module.css';
 
 type Tab = 'overview' | 'land' | 'address';
@@ -66,6 +70,7 @@ export default function FarmerDetail() {
   const [params, setParams] = useSearchParams();
   const tab = (['overview', 'land', 'address'].includes(params.get('tab') ?? '') ? params.get('tab') : 'overview') as Tab;
   const load = useLoad(`farmer-${id}`);
+  const verification = useFarmerVerification(f);
 
   if (!f)
     return (
@@ -76,6 +81,8 @@ export default function FarmerDetail() {
   const pct = completion(f);
   const crops = f.lands.filter((l) => l.crop).map((l) => ({ ...l.crop!, land: l.name, acres: l.areaAcres }));
   const acres = f.lands.reduce((a, l) => a + l.areaAcres, 0);
+  const bookings = bookingsFor(f.id);
+  const tagged = f.lands.filter((l) => l.geo);
 
   return (
     <Screen title={f.name} backTo="/farmers">
@@ -96,6 +103,7 @@ export default function FarmerDetail() {
             <div className={s.headText}>
               <h2>{f.name}</h2>
               <span className={s.id}>{f.id}</span>
+              {verification && <StatusTag tone={VERIFY_TONE[verification.status]}>{VERIFY_LABEL[verification.status]}</StatusTag>}
               <span className={s.meta}>
                 {f.village}, {f.mandal} · Registered {formatDate(f.registeredOn, 'medium')}
               </span>
@@ -127,6 +135,7 @@ export default function FarmerDetail() {
             <motion.div key={tab} {...SWAP} className={s.tabBody}>
               {tab === 'overview' && (
                 <>
+                  <VerifyCard f={f} />
                   <Section title="Profile completion" id="pc">
                     <div className={s.completion}>
                       <Ring value={pct} size={76} stroke={7} label={`Profile ${pct}% complete`} tone={pct === 100 ? 'green' : 'clay'} />
@@ -149,6 +158,8 @@ export default function FarmerDetail() {
                         { label: 'Gender', value: f.gender },
                         { label: 'Age', value: `${f.age} years` },
                         { label: 'Registered land', value: f.lands.length ? `${f.lands.length} ${f.lands.length === 1 ? 'plot' : 'plots'} · ${acres} acres` : 'None yet' },
+                        { label: 'Registered on', value: formatDate(f.registeredOn, 'medium') },
+                        { label: 'Verification', value: verification ? VERIFY_LABEL[verification.status] : '—' },
                       ]}
                     />
                   </Section>
@@ -171,6 +182,27 @@ export default function FarmerDetail() {
                       <EmptyState animation="sprout" title="No active crops" body="Crops are added from the farmer’s land records." compact />
                     )}
                   </Section>
+                  {bookings.length > 0 && (
+                    <Section title="Bookings" id="bk">
+                      <ul className={s.bookings}>
+                        {bookings.map((b) => (
+                          <li key={b.id}>
+                            <Link to={to(`/bookings/${b.id}`)} className={s.bookingRow}>
+                              <Tractor aria-hidden />
+                              <span>
+                                <strong>
+                                  #{b.id} · {b.landName}
+                                </strong>
+                                <small>Visit {formatDate(b.date, 'medium')}</small>
+                              </span>
+                              <StatusTag tone={BOOKING_TONE[b.status]}>{BOOKING_LABEL[b.status]}</StatusTag>
+                              <ChevronRight aria-hidden className={s.rowChev} />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </Section>
+                  )}
                 </>
               )}
               {tab === 'land' && (
@@ -179,6 +211,7 @@ export default function FarmerDetail() {
                 </Section>
               )}
               {tab === 'address' && (
+                <>
                 <Section title="Address" id="ad">
                   <Facts
                     items={[
@@ -191,6 +224,16 @@ export default function FarmerDetail() {
                     ]}
                   />
                 </Section>
+                <Section title="Location" id="lc">
+                  {tagged.length ? (
+                    <Facts
+                      items={tagged.map((l) => ({ label: l.name, value: <span className="didi-num">{l.geo!.lat.toFixed(4)}° N, {l.geo!.lng.toFixed(4)}° E</span> }))}
+                    />
+                  ) : (
+                    <EmptyState animation="pin" title="No geo-tagged land" body="Geo-tag the farmer’s land on your next visit to record its location." compact />
+                  )}
+                </Section>
+                </>
               )}
             </motion.div>
           </AnimatePresence>

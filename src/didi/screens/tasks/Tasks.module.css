@@ -2,7 +2,7 @@
   padding-bottom: var(--fj3-dock-clearance);
 }
 .tabs {
-  padding: 8px var(--fj3-gutter) 20px;
+  padding: 8px var(--fj3-gutter) 12px;
 }
 .list {
   display: grid;
@@ -367,4 +367,107 @@
 /* The tab row already sits inside the page gutter: drop its own side padding so "New" lines up with the title. */
 .tabs > [role='tablist'] {
   padding-inline: 0;
+}
+/* Count and Filters button above the list. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--fj3-gutter) 16px;
+}
+.toolCount {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.toolbar button {
+  min-height: 44px;
+}
+
+.doneOn {
+  color: var(--fj3-success-fg);
+  font-weight: 650;
+}
+
+/* Task detail: status line, key numbers, prototype review box. */
+.explain {
+  margin-top: -6px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.kpis > span {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+}
+.kpis small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.kpis strong {
+  font: var(--fj3-sub);
+}
+.demoBox {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  border: 1px dashed var(--fj3-line-strong);
+}
+.demoBox p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.demoBox svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Add progress */
+.liveBar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.liveBar > span {
+  font: 700 0.875rem/1 var(--font);
+  color: var(--fj3-fg-2);
+}
+.fieldHint {
+  margin-bottom: 12px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.sentMark {
+  display: grid;
+  place-items: center;
+  padding: 4px 0 8px;
+}
+
+/* Progress details: status tag beside each event, and the label on feedback. */
+.eventTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+.feedback .feedbackHead {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  opacity: 0.85;
 }

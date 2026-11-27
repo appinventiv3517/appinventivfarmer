@@ -81,6 +81,10 @@
   background: var(--fj3-success-bg);
   color: var(--fj3-success-fg);
 }
+.c_booking {
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+}
 .c_payment {
   background: var(--fj3-warning-bg);
   color: var(--fj3-warning-fg);

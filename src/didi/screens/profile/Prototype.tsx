@@ -34,6 +34,13 @@ export default function Prototype() {
               </span>
               <Switch label="Loading fails" checked={demo.fail} onChange={(fail) => didi.setDemo({ fail })} />
             </label>
+            <label className={s.switchRow}>
+              <span>
+                <strong>Empty lists</strong>
+                <small>Tasks, farmers and bookings show their empty states.</small>
+              </span>
+              <Switch label="Empty lists" checked={demo.empty} onChange={(empty) => didi.setDemo({ empty })} />
+            </label>
           </div>
         </div>
         <div className={`${s.gutter} ${s.formView}`}>
@@ -43,7 +50,7 @@ export default function Prototype() {
           <Button block variant="danger" icon={<RotateCcw aria-hidden />} onClick={() => (didi.resetAll(), nav('/', { replace: true }))}>
             Reset the whole prototype
           </Button>
-          <Note tone="info">Everything in this prototype is kept on this device only.</Note>
+          <Note tone="info">Reviews of tasks and farmer verifications can be finished from the task or farmer screen while they’re waiting (“Prototype only” box). Everything in this prototype is kept on this device only.</Note>
         </div>
       </div>
     </Screen>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BadgeCheck, Bell, CircleHelp, FileText, FlaskConical, Info, KeyRound, Languages, LogOut, Phone, ScanFace, ShieldAlert, ShieldCheck, Trophy, Type, UserRound, Wallet, Clock } from 'lucide-react';
+import { BadgeCheck, Bell, CircleHelp, FileText, FlaskConical, Info, KeyRound, Languages, LogOut, Phone, ScanFace, ShieldAlert, ShieldCheck, Trophy, Type, UserRound, Wallet, Clock, Tractor } from 'lucide-react';
 import { LANGUAGE_CATALOG } from '@/services/store';
 import { initials } from '@/lib/format';
 import { Sheet } from '@/d3/ui/Sheet';
@@ -68,6 +68,7 @@ export default function Profile() {
           <Row icon={<Type aria-hidden />} title="Text size" value={TEXT_SIZES.find((t) => t.value === text)?.label} onClick={() => setTextOpen(true)} />
         </RowGroup>
         <RowGroup title="My work">
+          <Row icon={<Tractor aria-hidden />} title="Bookings" to="/bookings" />
           <Row icon={<Wallet aria-hidden />} title="My transactions" to="/transactions" />
           <Row icon={<Trophy aria-hidden />} title="Leaderboard" to="/leaderboard" />
           <Row icon={<Bell aria-hidden />} title="Notifications" value={unread ? `${unread} new` : undefined} to="/notifications" />

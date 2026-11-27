@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Bell, CalendarClock, CheckCheck, ClipboardCheck, ClipboardPlus, Megaphone, UserRoundPlus, Wallet, CalendarCheck, Circle, CircleDot } from 'lucide-react';
+import { Bell, CalendarClock, CheckCheck, ClipboardCheck, ClipboardPlus, Megaphone, UserRoundPlus, Wallet, CalendarCheck, Circle, CircleDot, Tractor } from 'lucide-react';
 import { formatRelative } from '@/lib/format';
 import { Chip, ChipRow } from '@/d3/ui/Controls';
 import { useToast } from '@/d3/ui/Toast';
@@ -12,9 +12,9 @@ import { dayDiff } from '../../data/dates';
 import { useNav } from '../../nav';
 import s from './Notifications.module.css';
 
-const ICON: Record<NoteCategory, typeof Bell> = { task: ClipboardPlus, deadline: CalendarClock, review: ClipboardCheck, farmer: UserRoundPlus, attendance: CalendarCheck, payment: Wallet, announcement: Megaphone };
-type Filter = 'all' | 'unread' | 'tasks' | 'farmers' | 'payments' | 'other';
-const GROUP: Record<Filter, NoteCategory[] | null> = { all: null, unread: null, tasks: ['task', 'deadline', 'review'], farmers: ['farmer'], payments: ['payment'], other: ['attendance', 'announcement'] };
+const ICON: Record<NoteCategory, typeof Bell> = { task: ClipboardPlus, deadline: CalendarClock, review: ClipboardCheck, farmer: UserRoundPlus, booking: Tractor, attendance: CalendarCheck, payment: Wallet, announcement: Megaphone };
+type Filter = 'all' | 'unread' | 'tasks' | 'bookings' | 'farmers' | 'payments' | 'other';
+const GROUP: Record<Filter, NoteCategory[] | null> = { all: null, unread: null, tasks: ['task', 'deadline', 'review'], bookings: ['booking'], farmers: ['farmer'], payments: ['payment'], other: ['attendance', 'announcement'] };
 
 export default function Notifications() {
   const nav = useNav();
@@ -78,9 +78,9 @@ export default function Notifications() {
     >
       <PageTitle kicker={unread.length ? `${unread.length} unread` : 'All caught up'} title="Notifications" />
       <ChipRow label="Show" className={s.chips}>
-        {(['all', 'unread', 'tasks', 'farmers', 'payments', 'other'] as Filter[]).map((f) => (
+        {(['all', 'unread', 'tasks', 'bookings', 'farmers', 'payments', 'other'] as Filter[]).map((f) => (
           <Chip key={f} selected={filter === f} onClick={() => setFilter(f)} count={f === 'unread' ? unread.length : undefined}>
-            {f === 'all' ? 'All' : f === 'unread' ? 'Unread' : f === 'tasks' ? 'Tasks' : f === 'farmers' ? 'Farmers' : f === 'payments' ? 'Payments' : 'Other'}
+            {f === 'all' ? 'All' : f === 'unread' ? 'Unread' : f === 'tasks' ? 'Tasks' : f === 'bookings' ? 'Bookings' : f === 'farmers' ? 'Farmers' : f === 'payments' ? 'Payments' : 'Other'}
           </Chip>
         ))}
       </ChipRow>

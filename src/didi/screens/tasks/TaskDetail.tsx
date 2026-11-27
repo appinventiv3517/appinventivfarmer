@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { AlertTriangle, CheckCircle2, Clock, History, Play, Save, Send, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AlertTriangle, Check, ClipboardList, Clock, FlaskConical, History, Info, Play, Plus, RotateCcw, ShieldCheck, X } from 'lucide-react';
 import { formatDate, formatDateTime } from '@/lib/format';
-import { Counter } from '@/d3/ui/Controls';
-import { TextArea } from '@/d3/ui/Field';
 import { Sheet } from '@/d3/ui/Sheet';
 import { useToast } from '@/d3/ui/Toast';
 import { SPRING_SOFT } from '@/d3/motion/tokens';
@@ -13,68 +11,52 @@ import { Button } from '../../ui/Button';
 import { Note, StatusTag } from '../../ui/Blocks';
 import { Facts, Ring, Section } from '../../ui/Kit';
 import { didi, useDidi } from '../../store';
-import { STATUS_LABEL, STATUS_TONE, progressOf, type Proof } from '../../data/tasks';
-import { useNav } from '../../nav';
+import { STATUS_EXPLAIN, STATUS_LABEL, STATUS_TONE, actionsFor, completedOn, lastReview, progressOf, scoreOf } from '../../data/tasks';
 import { to } from '../../paths';
+import { IS_DEMO } from '../../demo';
 import { dueLabel } from './TaskCard';
-import { ProofPicker } from './ProofPicker';
 import s from './Tasks.module.css';
 
 export default function TaskDetail() {
   const { id = '' } = useParams();
   const task = useDidi((st) => st.tasks.find((t) => t.id === id));
-  const nav = useNav();
   const toast = useToast();
-  const [done, setDone] = useState(task?.done ?? 0);
-  const [note, setNote] = useState(task?.draftNote ?? '');
-  const [proofs, setProofs] = useState<Proof[]>([]);
-  const [confirm, setConfirm] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [busy, setBusy] = useState<'save' | 'submit' | null>(null);
-  const [noteErr, setNoteErr] = useState<string | null>(null);
+  const [starting, setStarting] = useState(false);
   if (!task) return <Navigate to={to('/tasks')} replace />;
 
-  const editable = task.status === 'in_progress' || task.status === 'rejected';
-  const pct = progressOf({ done, target: task.target });
-  const last = [...task.submissions].reverse().find((x) => x.kind === 'review');
-  const changed = done !== task.done || note.trim() !== '' || proofs.length > 0;
+  const pct = progressOf(task);
+  const act = actionsFor(task.status);
+  const review = lastReview(task);
+  const score = scoreOf(task);
+  const done = completedOn(task);
+  const waiting = task.status === 'in_review' || task.status === 'resubmitted';
+  const sent = [...task.submissions].reverse().find((x) => x.kind === 'review');
+  const closed = task.status === 'approved' || task.status === 'lapsed';
 
-  const save = async () => {
-    if (!changed) return toast({ message: 'Nothing new to save. Update the count, add a note or a proof.', tone: 'info' });
-    setBusy('save');
-    await new Promise((r) => setTimeout(r, 600));
-    didi.saveProgress(task.id, done, note.trim(), proofs);
-    setBusy(null);
-    setNote('');
-    setProofs([]);
-    toast({ message: 'Progress saved', tone: 'success' });
-  };
-  const askSubmit = () => {
-    if (!note.trim()) return setNoteErr('Add a short note on what you did, for the reviewer.');
-    setConfirm(true);
-  };
-  const submit = async () => {
-    setBusy('submit');
-    await new Promise((r) => setTimeout(r, 900));
-    didi.submitForReview(task.id, done, note.trim(), proofs);
-    setBusy(null);
-    setSent(true);
-  };
-
-  const footer = task.status === 'pending' ? (
-    <Button size="lg" block icon={<Play aria-hidden />} onClick={() => (didi.startTask(task.id), toast({ message: 'Task started. It’s now in Ongoing.', tone: 'success' }))}>
+  const progressLink = `/tasks/${task.id}/history`;
+  const footer = act.start ? (
+    <Button size="lg" block icon={<Play aria-hidden />} onClick={() => setStarting(true)}>
       Start task
     </Button>
-  ) : editable ? (
+  ) : act.addProgress ? (
     <div className={s.footRow}>
-      <Button size="lg" variant="secondary" icon={<Save aria-hidden />} onClick={save} loading={busy === 'save'}>
-        Save
-      </Button>
-      <Button size="lg" block icon={<Send aria-hidden />} onClick={askSubmit} disabled={done === 0}>
-        {task.status === 'rejected' ? 'Resubmit' : 'Submit'}
+      <Button size="lg" variant="secondary" icon={<History aria-hidden />} to={progressLink} aria-label="Progress details" />
+      <Button size="lg" block icon={<Plus aria-hidden />} to={`/tasks/${task.id}/progress`}>
+        Add progress
       </Button>
     </div>
-  ) : undefined;
+  ) : act.resubmit ? (
+    <div className={s.footRow}>
+      <Button size="lg" variant="secondary" icon={<History aria-hidden />} to={progressLink} aria-label="Progress details" />
+      <Button size="lg" block icon={<RotateCcw aria-hidden />} to={`/tasks/${task.id}/progress`}>
+        Resubmit
+      </Button>
+    </div>
+  ) : (
+    <Button size="lg" block variant="secondary" icon={<History aria-hidden />} to={progressLink}>
+      View progress details
+    </Button>
+  );
 
   return (
     <Screen title={task.title} backTo="/tasks" footer={footer}>
@@ -87,30 +69,52 @@ export default function TaskDetail() {
               {STATUS_LABEL[task.status]}
             </StatusTag>
             <strong className="didi-num">
-              {done} of {task.target} {task.unit}
+              {task.done} of {task.target} {task.unit}
             </strong>
-            <span>{task.status === 'approved' || task.status === 'lapsed' ? `Closed · due was ${formatDate(task.dueOn, 'short')}` : dueLabel(task.dueOn)}</span>
+            <span>{closed ? (done ? `Completed ${formatDate(done, 'medium')}` : `Due was ${formatDate(task.dueOn, 'medium')}`) : waiting ? `Due ${formatDate(task.dueOn, 'medium')}` : dueLabel(task.dueOn)}</span>
           </div>
         </motion.div>
+        <p className={s.explain}>{STATUS_EXPLAIN[task.status]}</p>
 
-        {task.status === 'rejected' && last && (
-          <Note tone="danger" icon={<AlertTriangle aria-hidden />} title="Returned for changes">
-            “{last.adminComment}” — {task.assignedBy}
+        <div className={s.kpis}>
+          <span>
+            <small>{done ? 'Completed' : 'Due'}</small>
+            <strong className="didi-num">{formatDate(done ?? task.dueOn, 'short')}</strong>
+          </span>
+          <span>
+            <small>Score</small>
+            <strong className="didi-num">{score !== undefined ? `${score} / 10` : '—'}</strong>
+          </span>
+          <span>
+            <small>Updates</small>
+            <strong className="didi-num">{task.submissions.length}</strong>
+          </span>
+        </div>
+
+        {task.status === 'rejected' && review && (
+          <Note tone="danger" icon={<AlertTriangle aria-hidden />} title="Rejected · returned for changes">
+            “{review.adminComment}” — {task.assignedBy}
+            {review.reviewedAt ? `, ${formatDate(review.reviewedAt, 'short')}` : ''}
           </Note>
         )}
-        {task.status === 'in_review' && (
-          <Note tone="warning" icon={<Clock aria-hidden />} title="Waiting for review">
-            Submitted {last ? formatDateTime(last.at) : ''}. You’ll get a notification when it’s reviewed.
+        {waiting && (
+          <Note tone="warning" icon={<Clock aria-hidden />} title={task.status === 'resubmitted' ? 'Resubmitted · waiting for review' : 'Waiting for review'}>
+            {sent ? `Sent ${formatDateTime(sent.at)}. ` : ''}You’ll get a notification when Kisani Urjaa reviews it. You can’t change it meanwhile.
           </Note>
         )}
-        {task.status === 'approved' && last && (
-          <Note tone="success" icon={<ShieldCheck aria-hidden />} title={last.score !== undefined ? `Approved · score ${last.score} / 10` : 'Approved'}>
-            {last.adminComment}
+        {task.status === 'approved' && review && (
+          <Note tone="success" icon={<ShieldCheck aria-hidden />} title={review.score !== undefined ? `Approved · score ${review.score} / 10` : 'Approved'}>
+            {review.adminComment}
           </Note>
         )}
         {task.status === 'lapsed' && (
           <Note tone="neutral" icon={<Clock aria-hidden />} title="Lapsed">
-            The due date passed before this task was submitted.
+            The due date passed before this task was submitted. It can’t be changed now.
+          </Note>
+        )}
+        {task.adminNote && (
+          <Note tone="info" icon={<Info aria-hidden />} title="Note from Kisani Urjaa">
+            {task.adminNote}
           </Note>
         )}
 
@@ -120,74 +124,58 @@ export default function TaskDetail() {
             items={[
               { label: 'Assigned on', value: formatDate(task.assignedOn, 'medium') },
               { label: 'Due on', value: formatDate(task.dueOn, 'medium') },
-              { label: 'Target', value: `${task.target} ${task.unit}` },
-              { label: 'Target completed', value: `${task.done} ${task.unit}` },
+              ...(done ? [{ label: 'Completed on', value: formatDate(done, 'medium') }] : []),
+              { label: 'Total target', value: `${task.target} ${task.unit}` },
+              { label: 'Target completed', value: `${task.done} ${task.unit} (${pct}%)` },
+              { label: 'Score', value: score !== undefined ? `${score} / 10` : 'Not scored yet' },
               { label: 'Assigned by', value: task.assignedBy },
             ]}
           />
         </Section>
 
-        {editable && (
-          <Section title="Update progress" id="up">
-            <div className={s.counterRow}>
-              <span>
-                <strong>Target completed</strong>
-                <small>
-                  {task.unit} done so far, of {task.target}
-                </small>
-              </span>
-              <Counter value={done} onChange={setDone} label={task.unit} max={task.target} />
-            </div>
-            <TextArea label="Notes" placeholder="What did you do? Anything the reviewer should know?" value={note} maxLength={300} onChange={(e) => (setNote(e.target.value), setNoteErr(null))} error={noteErr} />
-            <div>
-              <p className={s.fieldLabel}>Proof</p>
-              <ProofPicker value={proofs} onChange={setProofs} />
-            </div>
-          </Section>
-        )}
-
-        <Section title="Progress history" id="ph">
-          <Link to={to(`/tasks/${task.id}/history`)} className={s.historyLink}>
-            <History aria-hidden />
+        <Section title="Progress" id="ph">
+          <Link to={to(progressLink)} className={s.historyLink}>
+            <ClipboardList aria-hidden />
             <span>
-              <strong>Submissions and feedback</strong>
+              <strong>Progress details</strong>
               <small>{task.submissions.length ? `${task.submissions.length} ${task.submissions.length === 1 ? 'update' : 'updates'} · last ${formatDate(task.submissions[task.submissions.length - 1].at, 'short')}` : 'No updates yet'}</small>
             </span>
           </Link>
         </Section>
+
+        {IS_DEMO && waiting && (
+          <div className={s.demoBox}>
+            <p>
+              <FlaskConical aria-hidden /> Prototype only: stand in for Kisani Urjaa’s review.
+            </p>
+            <div className={s.footRow}>
+              <Button variant="secondary" icon={<X aria-hidden />} onClick={() => (didi.reviewTask(task.id, 'rejected', 5, 'Some proof photos are unclear. Retake them in daylight and resubmit.'), toast({ message: `${task.id} rejected (prototype)`, tone: 'info' }))}>
+                Reject
+              </Button>
+              <Button block icon={<Check aria-hidden />} onClick={() => (didi.reviewTask(task.id, 'approved', 8, 'Good work. Approved.'), toast({ message: `${task.id} approved (prototype)`, tone: 'success' }))}>
+                Approve
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       <Sheet
-        open={confirm}
-        onClose={() => (setConfirm(false), sent && setSent(false))}
+        open={starting}
+        onClose={() => setStarting(false)}
         variant="dialog"
-        icon={sent ? <CheckCircle2 aria-hidden /> : <Send aria-hidden />}
-        tone={sent ? 'success' : 'neutral'}
-        title={sent ? 'Submitted for review' : 'Submit for review?'}
-        description={
-          sent
-            ? 'Kisani Urjaa will review your work. You’ll get a notification with the result.'
-            : `You’re reporting ${done} of ${task.target} ${task.unit}${proofs.length ? ` with ${proofs.length} proof ${proofs.length === 1 ? 'file' : 'files'}` : ', with no proof attached'}. You can’t edit it while it’s in review.`
-        }
+        icon={<Play aria-hidden />}
+        title="Start this task?"
+        description={`It moves to In progress, and you can add progress as you work. Due ${formatDate(task.dueOn, 'medium')}.`}
         footer={
-          <AnimatePresence mode="wait" initial={false}>
-            {sent ? (
-              <motion.div key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fj3-stack" style={{ ['--gap' as string]: '8px' }}>
-                <Button block onClick={() => (setConfirm(false), setSent(false), nav('/tasks?tab=ongoing', { replace: true }))}>
-                  Back to my tasks
-                </Button>
-              </motion.div>
-            ) : (
-              <motion.div key="ask" className="fj3-stack" style={{ ['--gap' as string]: '8px' }}>
-                <Button block onClick={submit} loading={busy === 'submit'}>
-                  Submit
-                </Button>
-                <Button block variant="ghost" onClick={() => setConfirm(false)}>
-                  Keep editing
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="fj3-stack" style={{ ['--gap' as string]: '8px' }}>
+            <Button block onClick={() => (didi.startTask(task.id), setStarting(false), toast({ message: 'Task started. It’s now in progress.', tone: 'success' }))}>
+              Start task
+            </Button>
+            <Button block variant="ghost" onClick={() => setStarting(false)}>
+              Not now
+            </Button>
+          </div>
         }
       />
     </Screen>
