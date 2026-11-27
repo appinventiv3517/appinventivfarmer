@@ -203,7 +203,6 @@ export default function Home() {
   const fresh = tasks.filter((t) => t.status === 'pending').length;
   const ongoing = tasks.filter((t) => tabOf(t.status) === 'progress').length;
   const upcoming = [...open].filter((t) => t.status === 'pending' || t.status === 'in_progress').sort((a, b) => a.dueOn.localeCompare(b.dueOn)).slice(0, 2);
-  const inReview = tasks.filter((t) => t.status === 'in_review' || t.status === 'resubmitted').length;
   const farmerVerify = useDidi((st) => st.farmerVerify);
   const unverified = FARMERS.filter((f) => (farmerVerify[f.id]?.status ?? f.verification.status) !== 'verified').length;
   const awaiting = BOOKINGS.filter((b) => b.status === 'pending' || b.status === 'cancel_requested').length;
@@ -234,7 +233,7 @@ export default function Home() {
         </InView>
 
         <section className={s.section} aria-labelledby="tasks-h">
-          <SectionHead id="tasks-h" title="My tasks" meta={`${fresh} pending · ${ongoing} in progress${inReview ? ` · ${inReview} in review` : ''}`} to="/tasks" action="See all" />
+          <SectionHead id="tasks-h" title="My tasks" meta={`${fresh} pending · ${ongoing} in progress`} to="/tasks" action="See all" />
           {needsAction && (
             <Link to={to(`/tasks/${needsAction.id}`)} className={s.alert}>
               <strong>Needs your action</strong>

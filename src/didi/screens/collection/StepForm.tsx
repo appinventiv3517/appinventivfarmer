@@ -15,15 +15,17 @@ import { farmerById } from '../../data/farmers';
 import { useNav } from '../../nav';
 import { LandCropCard, ctxOf } from './parts';
 import s from './Collection.module.css';
+import { DateField } from '../../ui/DateField';
+import { isoDay } from '../../data/dates';
 
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => isoDay(new Date());
 
 function FieldInput({ f, e, set, err, ctx }: { f: FieldDef; e: Entry; set: (k: string, v: string) => void; err?: string | null; ctx: { sown?: string } }) {
   const v = e[f.key] ?? '';
   if (f.kind === 'computed') return <ComputedField label={f.unit && !f.money && !f.label.toLowerCase().includes(f.unit.toLowerCase()) ? `${f.label} (${f.unit})` : f.label} value={shown(f, e, ctx)} explain={f.explain} />;
   if (f.kind === 'select') return <PickField label={f.label} value={v} onChange={(x) => set(f.key, x)} options={(f.options ?? []).map((o) => ({ value: o, label: o }))} placeholder={`Select ${f.label.toLowerCase()}`} required={f.required} error={err} />;
   if (f.kind === 'textarea') return <TextArea label={f.label} value={v} maxLength={500} placeholder="Enter recommendations" onChange={(x) => set(f.key, x.target.value)} />;
-  if (f.kind === 'date') return <TextField label={f.label} type="date" required={f.required} value={v} max={today()} onChange={(x) => set(f.key, x.target.value)} error={err} />;
+  if (f.kind === 'date') return <DateField label={f.label} required={f.required} value={v} max={today()} onChange={(x) => set(f.key, x)} error={err} />;
   if (f.kind === 'text') return <TextField label={f.label} value={v} placeholder={f.placeholder} onChange={(x) => set(f.key, x.target.value)} maxLength={80} />;
   const money = f.kind === 'money';
   const unit = f.unit && !f.label.toLowerCase().includes(f.unit.toLowerCase()) ? f.unit : undefined;

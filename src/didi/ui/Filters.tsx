@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { SlidersHorizontal } from 'lucide-react';
 import { Sheet } from '@/d3/ui/Sheet';
 import { Chip } from '@/d3/ui/Controls';
-import { TextField } from '@/d3/ui/Field';
 import { TAP } from '@/d3/motion/tokens';
 import { isoDay } from '../data/dates';
 import { Button } from './Button';
 import s from './Filters.module.css';
+import { DateField } from './DateField';
 
 /** The "Filters" button beside a search box. Shows how many filters are on. */
 export function FilterButton({ count, onClick, compact }: { count: number; onClick: () => void; compact?: boolean }) {
@@ -76,8 +76,8 @@ export function DateRangeGroup({ label, value, onChange, presets = 'past' }: { l
         ))}
       </div>
       <div className={s.dates}>
-        <TextField label="From" type="date" value={value.from ?? ''} max={value.to || undefined} onChange={(e) => onChange({ ...value, from: e.target.value || undefined })} />
-        <TextField label="To" type="date" value={value.to ?? ''} min={value.from || undefined} onChange={(e) => onChange({ ...value, to: e.target.value || undefined })} error={bad ? 'The end date is before the start date.' : null} />
+        <DateField label="From" clearable placeholder="Any" value={value.from ?? ''} max={value.to || undefined} onChange={(v) => onChange({ ...value, from: v || undefined })} />
+        <DateField label="To" clearable placeholder="Any" value={value.to ?? ''} min={value.from || undefined} onChange={(v) => onChange({ ...value, to: v || undefined })} error={bad ? 'The end date is before the start date.' : null} />
       </div>
     </fieldset>
   );

@@ -129,7 +129,7 @@
 .completion {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   padding: 16px;
   border-radius: var(--r-xl);
   background: var(--fj3-surface);
@@ -137,14 +137,16 @@
 }
 .steps {
   flex: 1;
+  min-width: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 10px;
+  gap: 8px;
 }
 .steps li {
   display: flex;
   align-items: center;
   gap: 6px;
+  line-height: 1.2;
   font: var(--fj3-caption);
   font-weight: 550;
   color: var(--fj3-fg-3);

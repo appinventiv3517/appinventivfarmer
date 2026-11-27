@@ -14,6 +14,8 @@ import { Note } from '../../ui/Blocks';
 import { Facts } from '../../ui/Kit';
 import { didi, getDidi, useDidi } from '../../store';
 import s from './Profile.module.css';
+import { DateField } from '../../ui/DateField';
+import { isoDay } from '../../data/dates';
 
 const DOCS = [
   { value: 'aadhaar', label: 'Aadhaar' },
@@ -134,7 +136,7 @@ export default function Verify() {
         ))}
       </ol>
       <AnimatePresence mode="wait" initial={false} custom={dir}>
-        <motion.div key={step} className={s.formEdit} {...stepMotion(dir)}>
+        <motion.div key={step} className={`${s.formEdit} didi-wrap-chips`} {...stepMotion(dir)}>
           {step === 0 && (
             <>
               <p className={s.groupLabel}>Document type</p>
@@ -193,7 +195,7 @@ export default function Verify() {
                 <p className={s.groupLabel}>Gender</p>
                 <Toggle label="Gender" value={form.gender} onChange={(g) => setForm({ ...form, gender: g })} options={[{ value: 'Female', label: 'Female' }, { value: 'Male', label: 'Male' }, { value: 'Other', label: 'Other' }]} />
               </div>
-              <TextField label="Date of birth" required type="date" value={form.dob} onChange={(e) => (setForm({ ...form, dob: e.target.value }), setErr({ ...err, dob: null }))} error={err.dob} />
+              <DateField label="Date of birth" required value={form.dob} min="1926-01-01" max={isoDay(new Date())} onChange={(v) => (setForm({ ...form, dob: v }), setErr({ ...err, dob: null }))} error={err.dob} />
             </>
           )}
           {step === 2 && (

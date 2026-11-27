@@ -218,3 +218,13 @@ describe('farmer data collection', () => {
     expect(mine.every((c) => !!farmerById(c.farmerId)!.lands.find((l) => l.id === c.landId))).toBe(true);
   });
 });
+
+describe('even sizes (Kisani Didi build)', () => {
+  it('rounds lengths and font shorthands to even whole pixels', async () => {
+    const { evenFont, evenLengths } = await import('../../../scripts/postcss-even.mjs');
+    expect(evenLengths('7px 13px 0 1px')).toBe('8px 14px 0 2px');
+    expect(evenLengths('0.9375rem')).toBe('1rem');
+    expect(evenFont('650 0.9375rem/1.25 var(--font)')).toBe('650 1rem/1.25rem var(--font)');
+    expect(evenFont('720 1.625rem/1.15 var(--font)')).toBe('720 1.625rem/1.875rem var(--font)');
+  });
+});

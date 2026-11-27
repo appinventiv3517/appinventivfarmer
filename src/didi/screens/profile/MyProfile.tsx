@@ -14,6 +14,8 @@ import { didi, useDidi } from '../../store';
 import type { DidiProfile } from '../../data/didi';
 import { profileItems, profilePct } from './profileCompletion';
 import s from './Profile.module.css';
+import { DateField } from '../../ui/DateField';
+import { isoDay } from '../../data/dates';
 
 type Errors = Partial<Record<keyof DidiProfile, string | null>>;
 
@@ -122,7 +124,7 @@ export default function MyProfile() {
                 <p className={s.groupLabel}>Gender</p>
                 <Toggle label="Gender" value={form.gender || 'Female'} onChange={(g) => set('gender', g)} options={[{ value: 'Female', label: 'Female' }, { value: 'Male', label: 'Male' }, { value: 'Other', label: 'Other' }]} />
               </div>
-              <TextField label="Date of birth" type="date" value={form.dob} onChange={(e) => set('dob', e.target.value)} error={err.dob} />
+              <DateField label="Date of birth" value={form.dob} min="1926-01-01" max={isoDay(new Date())} onChange={(v) => set('dob', v)} error={err.dob} />
               <TextField label="Village" required value={form.village} onChange={(e) => set('village', e.target.value)} error={err.village} />
               <div className={s.grid2}>
                 <TextField label="Mandal" required value={form.mandal} onChange={(e) => set('mandal', e.target.value)} error={err.mandal} />

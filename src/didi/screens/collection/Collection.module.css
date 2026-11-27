@@ -149,7 +149,7 @@
 .landHead > :last-child {
   flex: none;
 }
-.landHead > span,
+.landHead > span:first-child,
 .cropRow > span {
   display: grid;
   gap: 2px;

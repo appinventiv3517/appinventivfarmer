@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kisani Didi</string>
+    <string name="title_activity_main">Kisani Didi</string>
+    <string name="package_name">com.kisaniurjaa.didi.test</string>
+    <string name="custom_url_scheme">com.kisaniurjaa.didi.test</string>
+</resources>

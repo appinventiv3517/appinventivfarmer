@@ -73,8 +73,13 @@
 }
 .banner > span {
   flex: 1;
+  min-width: 0;
   display: grid;
   gap: 2px;
+}
+.banner > :last-child {
+  flex: none;
+  width: auto;
 }
 .banner strong {
   font: var(--fj3-label);
@@ -244,9 +249,14 @@
   font-weight: 550;
   color: var(--fj3-fg-3);
 }
-.completion svg {
+.completion li svg {
+  flex: none;
   width: 14px;
   height: 14px;
+}
+.completion {
+  grid-template-columns: auto 1fr;
+  align-items: center;
 }
 .itemDone {
   color: var(--fj3-fg) !important;

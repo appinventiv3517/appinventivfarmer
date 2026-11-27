@@ -77,9 +77,7 @@ export default function AddProgress() {
       backTo={`/tasks/${task.id}`}
       footer={
         <div className={s.footRow}>
-          <Button size="lg" variant="secondary" icon={<Save aria-hidden />} onClick={save} loading={busy === 'save'} aria-label="Save progress">
-            Save
-          </Button>
+          <Button size="lg" variant="secondary" icon={<Save aria-hidden />} onClick={save} loading={busy === 'save'} aria-label="Save progress" />
           <Button size="lg" block icon={resubmit ? <RotateCcw aria-hidden /> : <Send aria-hidden />} onClick={askSubmit}>
             {resubmit ? 'Resubmit' : 'Submit for approval'}
           </Button>

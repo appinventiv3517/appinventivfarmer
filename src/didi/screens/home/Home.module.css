@@ -68,15 +68,16 @@
 }
 .attend {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 14px 10px;
   padding: 16px;
   border-radius: var(--r-xl);
   background: var(--fj3-surface);
   box-shadow: var(--fj3-shadow-2);
 }
 .attendInfo {
-  flex: 1;
+  flex: 1 1 200px;
   min-width: 0;
   display: flex;
   align-items: flex-start;
@@ -112,7 +113,7 @@
 }
 /* Compact action so the status line stays on one line inside the gutter; still 48px tall to tap. */
 .attendBtn {
-  flex: none;
+  flex: 1 0 100%;
   min-height: 48px;
   padding-inline: 16px;
   gap: 8px;

@@ -2,7 +2,7 @@
   "name": "kisani-urjaa-farmer-app",
   "private": true,
   "version": "2.0.0",
-  "description": "Kisani Urjaa farmer mobile app \u2014 redesigned experience (React + TypeScript + Vite).",
+  "description": "Kisani Urjaa farmer mobile app — redesigned experience (React + TypeScript + Vite).",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,7 +22,9 @@
     "build:standalone-didi": "tsc --noEmit && STANDALONE=1 VITE_APP=didi vite build --mode demodidi && SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-didi-app.html",
     "build:mobile-didi": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 VITE_APP=didi vite build --mode demodidi && STANDALONE_DIST=dist-mobile/build MOBILE=1 SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-didi-app.html",
     "build:android-web": "tsc --noEmit && VITE_ONLY_D3=1 VITE_MOBILE=1 vite build --mode demo3 --outDir dist-android-web --emptyOutDir",
-    "build:android": "npm run build:android-web && npx cap sync android && cd android && ./gradlew assembleDebug assembleRelease && cd .. && mkdir -p dist-mobile/android && cp android/app/build/outputs/apk/debug/app-debug.apk dist-mobile/android/kisani-urjaa-ver3-debug.apk && cp android/app/build/outputs/apk/release/app-release.apk dist-mobile/android/kisani-urjaa-ver3-test.apk"
+    "build:android": "npm run build:android-web && npx cap sync android && cd android && ./gradlew assembleDebug assembleRelease && cd .. && mkdir -p dist-mobile/android && cp android/app/build/outputs/apk/debug/app-debug.apk dist-mobile/android/kisani-urjaa-ver3-debug.apk && cp android/app/build/outputs/apk/release/app-release.apk dist-mobile/android/kisani-urjaa-ver3-test.apk",
+    "build:android-didi-web": "tsc --noEmit && VITE_APP=didi VITE_MOBILE=1 vite build --mode demodidi --outDir dist-android-didi --emptyOutDir",
+    "build:android-didi": "npm run build:android-didi-web && CAP_APP=didi npx cap sync android && cd android-didi && ./gradlew assembleRelease && cd .. && mkdir -p dist-mobile/android-didi && cp android-didi/app/build/outputs/apk/release/app-release.apk dist-mobile/android-didi/kisani-didi-test.apk"
   },
   "dependencies": {
     "@capacitor/android": "7.6.11",

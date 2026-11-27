@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
+import postcssEven from './scripts/postcss-even.mjs';
 
 // `--mode demo` produces a self-contained build for sharing as a hosted demo:
 // in-memory routing (no URL dependence) and fonts/small assets inlined.
@@ -26,6 +27,8 @@ export default defineConfig(({ mode }) => ({
         mode === 'demo2' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Field Journal</title>') : mode === 'demo3' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Ver 3</title>') : DIDI ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa – Kisani Didi App</title>') : html,
     },
   ],
+  // Kisani Didi only: font sizes, line heights, spacing and corner radii become even whole pixels.
+  css: DIDI ? { postcss: { plugins: [postcssEven()] } } : undefined,
   base: './',
   resolve: {
     alias: [

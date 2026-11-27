@@ -40,8 +40,8 @@ export const TRANSACTIONS: Transaction[] = [
 
 export type TxnRange = '30' | '90' | 'all';
 export const TXN_RANGES: { value: TxnRange; label: string }[] = [
-  { value: '30', label: 'Last 30 days' },
-  { value: '90', label: 'Last 90 days' },
+  { value: '30', label: '30 days' },
+  { value: '90', label: '90 days' },
   { value: 'all', label: 'All' },
 ];
 
