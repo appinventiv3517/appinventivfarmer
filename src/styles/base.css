@@ -30,6 +30,12 @@ html {
 :root[data-text='large'] {
   font-size: 18px;
 }
+:root[data-text='small'] {
+  font-size: 14.5px;
+}
+:root[data-text='xsmall'] {
+  font-size: 13px;
+}
 
 body {
   margin: 0;

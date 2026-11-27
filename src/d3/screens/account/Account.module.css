@@ -280,3 +280,20 @@
 .helpPhoto > div {
   border-radius: var(--r-xl);
 }
+
+/* Live preview in the Text size sheet (scales with the chosen size). */
+.textPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+}
+.textPreview strong {
+  font: var(--fj3-sub);
+}
+.textPreview span {
+  font: var(--fj3-body);
+  color: var(--fj3-fg-2);
+}

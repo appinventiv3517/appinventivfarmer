@@ -38,7 +38,7 @@ function usePreferenceAttributes() {
     // Light only: clear any theme attribute an older version or host left behind.
     el.removeAttribute('data-theme');
     el.removeAttribute('data-theme-owner');
-    if (prefs.text === 'large') el.setAttribute('data-text', 'large');
+    if (prefs.text !== 'default') el.setAttribute('data-text', prefs.text);
     else el.removeAttribute('data-text');
     if (prefs.motion === 'reduce') el.setAttribute('data-motion', 'reduce');
     else el.removeAttribute('data-motion');

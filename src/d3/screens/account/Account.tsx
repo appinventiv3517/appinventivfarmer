@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Bell, Bookmark, ClipboardList, FlaskConical, HelpCircle, Info, KeyRound, Languages, LayoutTemplate, LogOut, MessageCircle, Pencil, Repeat, ScrollText, ShieldCheck, Sprout, Tractor } from 'lucide-react';
+import { Type, Bell, Bookmark, ClipboardList, FlaskConical, HelpCircle, Info, KeyRound, Languages, LayoutTemplate, LogOut, MessageCircle, Pencil, Repeat, ScrollText, ShieldCheck, Sprout, Tractor } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { actions, useStore, LANGUAGE_NAMES } from '@/services/store';
+import { actions, useStore, LANGUAGE_NAMES, TEXT_SIZES } from '@/services/store';
+import { Toggle } from '../../ui/Controls';
 import { formatPhone, monthYear } from '@/lib/format';
 import { counterpartPath } from '@/app/DirectionSwitcher';
 import { Screen } from '../../layout/Screen';
@@ -26,6 +27,8 @@ export default function Account() {
   const lands = visibleLands(allLands);
   const photo = useStore((st) => st.profileDetails.photo);
   const [logout, setLogout] = useState(false);
+  const [textOpen, setTextOpen] = useState(false);
+  const textSize = useStore((st) => st.prefs.text);
   const acres = lands.reduce((a, l) => a + l.areaAcres, 0);
 
   return (
@@ -90,6 +93,7 @@ export default function Account() {
         <Rise>
           <RowGroup title="Preferences">
             <Row icon={<Languages />} title="Language" value={LANGUAGE_NAMES[language]} to="/account/language" />
+            <Row icon={<Type />} title="Text size" value={TEXT_SIZES.find((x) => x.value === textSize)?.label} onClick={() => setTextOpen(true)} />
             {session.verified && <Row icon={<KeyRound />} title="Change password" to="/account/password" />}
           </RowGroup>
         </Rise>
@@ -144,6 +148,18 @@ export default function Account() {
           </>
         }
       />
+      <Sheet open={textOpen} onClose={() => setTextOpen(false)} title="Text size" description="Changes the size of text across the app. Saved on this phone.">
+        <div className="fj3-stack" style={{ ['--gap' as string]: '16px' }}>
+          <Toggle label="Text size" value={textSize} onChange={(v) => actions.setPrefs({ text: v })} options={TEXT_SIZES.map((x) => ({ value: x.value, label: x.label }))} />
+          <div className={s.textPreview} aria-hidden>
+            <strong>Good day to spray</strong>
+            <span>Calm and dry. Spray in the morning or late afternoon.</span>
+          </div>
+          <Button block onClick={() => setTextOpen(false)}>
+            Done
+          </Button>
+        </div>
+      </Sheet>
     </Screen>
   );
 }

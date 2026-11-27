@@ -19,8 +19,17 @@ export interface Session {
   demo?: boolean;
 }
 
+export type TextSize = 'xsmall' | 'small' | 'default' | 'large';
+export const TEXT_SIZES: { value: TextSize; label: string; px: number }[] = [
+  { value: 'xsmall', label: 'Smaller', px: 13 },
+  { value: 'small', label: 'Small', px: 14.5 },
+  { value: 'default', label: 'Default', px: 16 },
+  { value: 'large', label: 'Large', px: 18 },
+];
+
 export interface Prefs {
-  text: 'default' | 'large';
+  /** App text size. Smaller sizes help on phones set to a large system font. */
+  text: TextSize;
   motion: 'system' | 'reduce';
   language: Language;
 }
@@ -185,6 +194,7 @@ function load(): AppState {
   const base = initialState();
   const prefs = { ...base.prefs, ...saved.prefs };
   prefs.language = normalizeLanguage(prefs.language);
+  if (!TEXT_SIZES.some((x) => x.value === prefs.text)) prefs.text = 'default';
   // The app is light only; drop a theme saved by older versions.
   delete (prefs as Partial<Prefs> & { theme?: unknown }).theme;
   return { ...base, ...saved, session: { ...base.session, ...saved.session }, prefs, demo: { ...base.demo, ...saved.demo }, profileDetails: { ...base.profileDetails, ...saved.profileDetails } };
