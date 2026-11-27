@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Camera, LogIn, LogOut, MapPin, MapPinOff, RefreshCw, RotateCcw } from 'lucide-react';
 import { formatTime } from '@/lib/format';
 import { Sheet } from '@/d3/ui/Sheet';
-import { FjLottie } from '@/d3/lottie/Lottie';
+import { SuccessMark } from '../../ui/SuccessMark';
 import { Button } from '../../ui/Button';
 import { didi, getDidi } from '../../store';
 import { hoursLabel, workedMinutes, type CheckProof } from '../../data/attendance';
@@ -147,7 +147,7 @@ export function CheckSheet({ kind, open, onClose }: { kind: 'in' | 'out'; open: 
     >
       {done ? (
         <motion.div className={s.done} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
-          <FjLottie name="success" size={120} loop={false} label="Done" />
+          <SuccessMark size={96} label="Done" />
           <p className={s.doneText}>{done}</p>
         </motion.div>
       ) : (

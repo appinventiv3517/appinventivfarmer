@@ -111,3 +111,16 @@
   text-align: right;
   overflow-wrap: anywhere;
 }
+
+/* Success mark: a tick in a soft green disc. */
+.success {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--fj3-success-bg);
+  color: var(--fj3-success-solid);
+}
+.success svg {
+  width: 72%;
+  height: 72%;
+}

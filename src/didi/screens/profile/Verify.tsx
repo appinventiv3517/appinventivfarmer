@@ -6,7 +6,7 @@ import { validateDob, validateIdNumber, validatePersonName } from '@/lib/validat
 import { TextField } from '@/d3/ui/Field';
 import { Chip, ChipRow, Toggle } from '@/d3/ui/Controls';
 import { useToast } from '@/d3/ui/Toast';
-import { FjLottie } from '@/d3/lottie/Lottie';
+import { SuccessMark } from '../../ui/SuccessMark';
 import { stepMotion } from '@/d3/motion/tokens';
 import { Screen, PageTitle } from '../../layout/Screen';
 import { Button } from '../../ui/Button';
@@ -76,7 +76,7 @@ export default function Verify() {
         <PageTitle title="Profile verification" />
         <div className={s.sub}>
           <motion.div className={`${s.statusBox} ${v.status === 'verified' ? s.statusOk : ''}`} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}>
-            {v.status === 'verified' ? <BadgeCheck aria-hidden /> : <FjLottie name="success" size={84} loop={false} label="Submitted" />}
+            {v.status === 'verified' ? <BadgeCheck aria-hidden /> : <SuccessMark size={72} label="Submitted" />}
             <strong>{v.status === 'verified' ? 'Your profile is verified' : 'Submitted for review'}</strong>
             <span>{v.status === 'verified' ? 'Thank you. Nothing more is needed.' : `Sent ${v.submittedAt ? formatDateTime(v.submittedAt) : ''}. Kisani Urjaa will check your document and you’ll get a notification.`}</span>
           </motion.div>
