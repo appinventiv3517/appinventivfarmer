@@ -3,6 +3,7 @@ import { FARMERS, NO_FARMER_FILTERS, completion, farmerById, filterFarmers } fro
 import { BOOKINGS, bookingById, filterBookings } from '../data/bookings';
 import { NOTIFICATIONS } from '../data/notifications';
 import { didi, getDidi } from '../store';
+import { SAMPLE_CYCLES, STEP_ORDER, isComplete, missing, nextStep, stepDef, submittedCount } from '../data/collection';
 import { SAMPLE_TASKS, actionsFor, completedOn, lastReview, progressOf, scoreOf, tabOf, tasksIn } from '../data/tasks';
 import { TRANSACTIONS, filterTxns, totals } from '../data/money';
 import { board } from '../data/leaderboard';
@@ -182,5 +183,38 @@ describe('bookings', () => {
       expect(bookingById(id)).toBeTruthy();
       expect(n.title).toContain(`#${id}`);
     }
+  });
+});
+
+describe('farmer data collection', () => {
+  const field = (step: string, key: string) => stepDef(step)!.sections.flatMap((x) => x.fields).find((f) => f.key === key)!;
+  it('works out totals from what is entered', () => {
+    const e = { hours: '6', days: '2', fuelPerHour: '4', fuelCostPerHour: '360', rent: '1800', maleCount: '2', maleWage: '45', lHours: '6', lDays: '2', other: '100' };
+    expect(field('land_prep', 'prepTime').compute!(e, {})).toBe(12);
+    expect(field('land_prep', 'fuel').compute!(e, {})).toBe(48);
+    expect(field('land_prep', 'labourCost').compute!(e, {})).toBe(1080);
+    expect(field('land_prep', 'total').compute!(e, {})).toBe(1800 + 4320 + 1080 + 100);
+    expect(field('transport', 'tripFuel').compute!({ distance: '18', economy: '6', fuelCost: '92' }, {})).toBe(276);
+    expect(field('intercultivation', 'das').compute!({ date: '2026-07-04' }, { sown: '2026-06-24' })).toBe(10);
+    expect(field('nutrient', 'fertCost').compute!({}, {})).toBeNull();
+  });
+  it('lists required fields left empty', () => {
+    expect(missing(stepDef('intercultivation')!, { date: '2026-07-01' })).toEqual(['Method adopted']);
+    expect(missing(stepDef('sowing')!, { date: '2026-07-01', seedOrSapling: 'Seed' })).toEqual([]);
+  });
+  it('fills steps in order and completes a cycle', () => {
+    const id = didi.startCycle('KU-F-10283', 'l1', [{ date: '2026-06-20', prepType: 'Ploughing' }]);
+    const get = () => getDidi().collection.find((c) => c.id === id)!;
+    expect(submittedCount(get())).toBe(1);
+    expect(nextStep(get())).toBe('sowing');
+    for (const k of STEP_ORDER.slice(1)) didi.saveStep(id, k, [{ date: '2026-07-01' }]);
+    expect(isComplete(get())).toBe(true);
+    expect(nextStep(get())).toBeUndefined();
+    expect(get().no).toBe(1);
+  });
+  it('has sample cycles for Ram Prasad Yadav: one complete, one in progress', () => {
+    const mine = SAMPLE_CYCLES.filter((c) => c.farmerId === 'KU-F-10231');
+    expect(mine.map(isComplete)).toEqual([true, false]);
+    expect(mine.every((c) => !!farmerById(c.farmerId)!.lands.find((l) => l.id === c.landId))).toBe(true);
   });
 });

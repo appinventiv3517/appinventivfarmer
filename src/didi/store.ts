@@ -3,6 +3,7 @@ import { readJSON, writeJSON, removeKey } from '@/lib/storage';
 import { DIDI_PROFILE, type DidiProfile } from './data/didi';
 import { SAMPLE_TASKS, type Proof, type Task } from './data/tasks';
 import { FARMERS, type Farmer, type FarmerVerification } from './data/farmers';
+import { SAMPLE_CYCLES, type Cycle, type Entry, type StepKey } from './data/collection';
 import { INITIALLY_UNREAD } from './data/notifications';
 import { isoDay } from './data/dates';
 import type { AttendanceDay, CheckProof } from './data/attendance';
@@ -43,6 +44,8 @@ export interface DidiState {
   prefs: { text: TextSize };
   /** Verification records changed on this device (farmer ID → record). */
   farmerVerify: Record<string, FarmerVerification>;
+  /** Farmer data collection form cycles. */
+  collection: Cycle[];
   /** Prototype controls: show loading, error and empty states on demand. */
   demo: { slow: boolean; fail: boolean; empty: boolean };
   /** Sample-data version: when it changes, sample tasks are refreshed. */
@@ -65,6 +68,7 @@ function initial(): DidiState {
     verification: { status: 'none', docType: '', idNumber: '', fullName: '', gender: '', dob: '' },
     prefs: { text: 'default' },
     farmerVerify: {},
+    collection: SAMPLE_CYCLES,
     demo: { slow: false, fail: false, empty: false },
     dataVersion: DATA_VERSION,
   };
@@ -149,6 +153,29 @@ export const didi = {
       subs[i] = { ...subs[i], outcome, score, adminComment, reviewedAt: new Date().toISOString() };
       return { ...t, status: outcome, submissions: subs };
     }),
+
+  /* ---------- Farmer data collection ---------- */
+  /** Starts a new cycle with its first step. Returns the new cycle's ID. */
+  startCycle: (farmerId: string, landId: string, firstStep: Entry[]): string => {
+    const id = `c${Date.now().toString(36)}`;
+    const now = new Date().toISOString();
+    set((s) => {
+      const no = s.collection.filter((c) => c.farmerId === farmerId).length + 1;
+      return { ...s, collection: [...s.collection, { id, no, farmerId, landId, startedAt: now, steps: { land_prep: { entries: firstStep, submittedAt: now, updatedAt: now, updatedBy: `${s.profile.name} (KD)` } } }] };
+    });
+    return id;
+  },
+  /** Submits a step, or saves changes to one already submitted. */
+  saveStep: (cycleId: string, step: StepKey, entries: Entry[]) =>
+    set((s) => ({
+      ...s,
+      collection: s.collection.map((c) => {
+        if (c.id !== cycleId) return c;
+        const now = new Date().toISOString();
+        const prev = c.steps[step];
+        return { ...c, steps: { ...c.steps, [step]: { entries, submittedAt: prev?.submittedAt ?? now, updatedAt: now, updatedBy: `${s.profile.name} (KD)` } } };
+      }),
+    })),
 
   /* ---------- Farmer verification ---------- */
   submitFarmerVerification: (id: string, v: { docType: string; idLast4: string }) =>

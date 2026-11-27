@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, ChevronRight, Circle, MapPin, MapPinOff, MessageCircle, Phone, Sprout, Tractor } from 'lucide-react';
+import { Check, ChevronRight, ClipboardList, Circle, MapPin, MapPinOff, MessageCircle, Phone, Sprout, Tractor } from 'lucide-react';
 import { formatDate, formatPhone, initials } from '@/lib/format';
 import { SectionTabs } from '@/d3/ui/Controls';
 import { SWAP } from '@/d3/motion/tokens';
@@ -10,7 +10,10 @@ import { EmptyState, ErrorState, Skel, StatusTag } from '../../ui/Blocks';
 import { Facts, Ring, Section, useLoad } from '../../ui/Kit';
 import { PROFILE_STEPS, VERIFY_LABEL, VERIFY_TONE, completion, farmerById, type FarmerLand } from '../../data/farmers';
 import { BOOKING_LABEL, BOOKING_TONE, bookingsFor } from '../../data/bookings';
-import { useFarmerVerification } from '../../store';
+import { useDidi, useFarmerVerification } from '../../store';
+import { STEPS, isComplete, submittedCount } from '../../data/collection';
+import { CycleProgress, StepGrid } from '../collection/parts';
+import cs from '../collection/Collection.module.css';
 import { to } from '../../paths';
 import { VerifyCard } from './VerifyCard';
 import s from './Farmers.module.css';
@@ -71,6 +74,7 @@ export default function FarmerDetail() {
   const tab = (['overview', 'land', 'address'].includes(params.get('tab') ?? '') ? params.get('tab') : 'overview') as Tab;
   const load = useLoad(`farmer-${id}`);
   const verification = useFarmerVerification(f);
+  const allCycles = useDidi((st) => st.collection);
 
   if (!f)
     return (
@@ -82,10 +86,20 @@ export default function FarmerDetail() {
   const crops = f.lands.filter((l) => l.crop).map((l) => ({ ...l.crop!, land: l.name, acres: l.areaAcres }));
   const acres = f.lands.reduce((a, l) => a + l.areaAcres, 0);
   const bookings = bookingsFor(f.id);
+  const cycles = allCycles.filter((c) => c.farmerId === f.id).sort((a, b) => b.no - a.no);
+  const current = cycles.find((c) => !isComplete(c)) ?? cycles[0];
   const tagged = f.lands.filter((l) => l.geo);
 
   return (
-    <Screen title={f.name} backTo="/farmers">
+    <Screen
+      title={f.name}
+      backTo="/farmers"
+      footer={
+        <Button size="lg" block icon={<ClipboardList aria-hidden />} to={`/farmers/${f.id}/collection`}>
+          Data collection forms
+        </Button>
+      }
+    >
       {load.status === 'loading' ? (
         <div className={s.detail} aria-busy="true" aria-label="Loading farmer">
           <Skel h={168} r="var(--r-xl)" />
@@ -136,6 +150,19 @@ export default function FarmerDetail() {
               {tab === 'overview' && (
                 <>
                   <VerifyCard f={f} />
+                  <Section title="Data collection" id="dc">
+                    {current ? (
+                      <Link to={to(`/farmers/${f.id}/collection/${current.id}`)} className={cs.cycle} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <CycleProgress cycle={current} />
+                        <StepGrid cycle={current} />
+                        <span className={cs.stepMeta}>
+                          {cycles.length} {cycles.length === 1 ? 'cycle' : 'cycles'} · {submittedCount(current)} of {STEPS.length} forms in cycle {current.no}
+                        </span>
+                      </Link>
+                    ) : (
+                      <EmptyState animation="records" title="No form cycles yet" body="Use Data collection forms below to start the first one." compact />
+                    )}
+                  </Section>
                   <Section title="Profile completion" id="pc">
                     <div className={s.completion}>
                       <Ring value={pct} size={76} stroke={7} label={`Profile ${pct}% complete`} tone={pct === 100 ? 'green' : 'clay'} />
@@ -194,8 +221,10 @@ export default function FarmerDetail() {
                                   #{b.id} · {b.landName}
                                 </strong>
                                 <small>Visit {formatDate(b.date, 'medium')}</small>
+                                <span>
+                                  <StatusTag tone={BOOKING_TONE[b.status]}>{BOOKING_LABEL[b.status]}</StatusTag>
+                                </span>
                               </span>
-                              <StatusTag tone={BOOKING_TONE[b.status]}>{BOOKING_LABEL[b.status]}</StatusTag>
                               <ChevronRight aria-hidden className={s.rowChev} />
                             </Link>
                           </li>

@@ -1,0 +1,118 @@
+.trigger {
+  width: 100%;
+  padding: 0 44px 0 16px;
+  text-align: left;
+  cursor: pointer;
+}
+.trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 560 1.0625rem/1.2 var(--font);
+  color: var(--fj3-fg);
+}
+.placeholder {
+  color: var(--fj3-fg-3);
+  font-weight: 500;
+}
+.computed {
+  padding: 0 16px;
+}
+.info {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -6px -6px -6px 0;
+  border-radius: 50%;
+  color: var(--fj3-fg-2);
+}
+.info svg {
+  width: 18px;
+  height: 18px;
+}
+.sheet {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1.5px var(--fj3-line-strong);
+}
+.search svg {
+  width: 18px;
+  height: 18px;
+  color: var(--fj3-fg-3);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: var(--fj3-body);
+  outline: none;
+}
+.list {
+  display: grid;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 12px 18px;
+  border-bottom: 1px solid var(--fj3-line);
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.rowText strong {
+  font: var(--fj3-label);
+}
+.rowText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.pick {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 0 0 1.5px var(--fj3-primary);
+  color: var(--fj3-primary);
+  font: var(--fj3-label);
+}
+.pick svg {
+  width: 16px;
+  height: 16px;
+}
+.pickOn {
+  background: var(--fj3-primary);
+  color: var(--fj3-on-primary);
+  box-shadow: none;
+}
