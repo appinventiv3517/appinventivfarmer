@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Camera, LogIn, LogOut, MapPin, MapPinOff, RefreshCw, RotateCcw } from 'lucide-react';
 import { formatTime } from '@/lib/format';
 import { Sheet } from '@/d3/ui/Sheet';
-import { useToast } from '@/d3/ui/Toast';
 import { FjLottie } from '@/d3/lottie/Lottie';
 import { Button } from '../../ui/Button';
 import { didi, getDidi } from '../../store';
@@ -76,18 +75,17 @@ async function shrinkSelfie(file: File, px = 320): Promise<string> {
  * the record. Used on Home and Attendance.
  */
 export function CheckSheet({ kind, open, onClose }: { kind: 'in' | 'out'; open: boolean; onClose: () => void }) {
-  const toast = useToast();
   const { loc, retry, useSample } = useLocation(open);
   const [selfie, setSelfie] = useState<string | null>(null);
   const [selfieErr, setSelfieErr] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
   const input = useRef<HTMLInputElement>(null);
   const action = kind === 'in' ? 'check-in' : 'check-out';
 
   useEffect(() => {
     if (!open) return;
-    setDone(false);
+    setDone(null);
     setSelfie(null);
     setSelfieErr(null);
     setNow(new Date());
@@ -114,12 +112,11 @@ export function CheckSheet({ kind, open, onClose }: { kind: 'in' | 'out'; open: 
     const proof: CheckProof = { selfie, lat: loc.lat, lng: loc.lng, ...(loc.sample ? { sampleLocation: true } : {}) };
     if (kind === 'in') didi.checkIn(getDidi().profile.village, proof);
     else didi.checkOut(proof);
-    setDone(true);
-    setTimeout(() => {
-      onClose();
-      const today = getDidi().attendance.find((d) => d.date === isoDay(new Date()));
-      toast({ message: kind === 'in' ? `Checked in at ${formatTime(new Date())}` : `Checked out · ${hoursLabel(today ? workedMinutes(today) : 0)} today`, tone: 'success' });
-    }, 1300);
+    // The sheet itself confirms (no separate toast, which would land on top of the closing sheet).
+    const today = getDidi().attendance.find((d) => d.date === isoDay(new Date()));
+    const at = formatTime(new Date());
+    setDone(kind === 'in' ? `Checked in at ${at}` : `Checked out at ${at} · ${hoursLabel(today ? workedMinutes(today) : 0)} worked today`);
+    setTimeout(onClose, 1800);
   };
 
   const hint = !selfie ? 'Take a selfie to continue.' : loc.state === 'finding' ? 'Waiting for your location…' : loc.state === 'none' ? 'Your location is needed to continue.' : null;
@@ -151,6 +148,7 @@ export function CheckSheet({ kind, open, onClose }: { kind: 'in' | 'out'; open: 
       {done ? (
         <motion.div className={s.done} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
           <FjLottie name="success" size={120} loop={false} label="Done" />
+          <p className={s.doneText}>{done}</p>
         </motion.div>
       ) : (
         <div className={s.proof}>

@@ -391,3 +391,9 @@
   font-weight: 500;
   color: var(--fj3-fg-2);
 }
+.doneText {
+  margin-top: 8px;
+  font: var(--fj3-label);
+  color: var(--fj3-fg-2);
+  text-align: center;
+}
