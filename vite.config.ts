@@ -14,6 +14,8 @@ const STANDALONE = process.env.STANDALONE === '1';
 // and app-like head tags added by make-standalone.mjs. See npm run build:mobile.
 const MOBILE = process.env.VITE_MOBILE === '1';
 const ONLY_D3 = process.env.VITE_ONLY_D3 === '1';
+// VITE_APP=didi builds the Kisani Didi app on its own shell (src/app/AppDidi.tsx).
+const DIDI = process.env.VITE_APP === 'didi';
 
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -21,19 +23,20 @@ export default defineConfig(({ mode }) => ({
     {
       name: 'direction-title',
       transformIndexHtml: (html) =>
-        mode === 'demo2' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Field Journal</title>') : mode === 'demo3' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Ver 3</title>') : html,
+        mode === 'demo2' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Field Journal</title>') : mode === 'demo3' ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa Ver 3</title>') : DIDI ? html.replace('<title>Kisani Urjaa</title>', '<title>Kisani Urjaa – Kisani Didi App</title>') : html,
     },
   ],
   base: './',
   resolve: {
     alias: [
       // Ver 3-only builds (VITE_ONLY_D3=1) use their own shell, so Directions 01 and 02 are not bundled.
-      ...(ONLY_D3 ? [{ find: /^\.\/app\/App$/, replacement: fileURLToPath(new URL('./src/app/AppV3.tsx', import.meta.url)) }] : []),
+      ...(DIDI ? [{ find: /^\.\/app\/App$/, replacement: fileURLToPath(new URL('./src/app/AppDidi.tsx', import.meta.url)) }] : []),
+      ...(ONLY_D3 && !DIDI ? [{ find: /^\.\/app\/App$/, replacement: fileURLToPath(new URL('./src/app/AppV3.tsx', import.meta.url)) }] : []),
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
     ],
   },
   build: {
-    outDir: STANDALONE ? (MOBILE ? 'dist-mobile/build' : 'dist-standalone') : mode === 'demo' ? 'dist-demo' : mode === 'demo2' ? 'dist-demo2' : mode === 'demo3' ? 'dist-demo3' : 'dist',
+    outDir: STANDALONE ? (MOBILE ? 'dist-mobile/build' : 'dist-standalone') : DIDI ? 'dist-didi' : mode === 'demo' ? 'dist-demo' : mode === 'demo2' ? 'dist-demo2' : mode === 'demo3' ? 'dist-demo3' : 'dist',
     target: 'es2020',
     assetsInlineLimit: STANDALONE ? 100_000_000 : mode.startsWith('demo') ? 160_000 : 4096,
     cssCodeSplit: !STANDALONE,

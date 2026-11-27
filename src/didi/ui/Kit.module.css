@@ -1,0 +1,113 @@
+/* Shared Kisani Didi pieces, drawn with the Ver 3 tokens. */
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+.ring svg {
+  position: absolute;
+  inset: 0;
+}
+.ringTrack {
+  stroke: var(--fj3-surface-3);
+}
+.ringFill {
+  stroke: var(--fj3-primary);
+}
+.ring_green .ringFill {
+  stroke: var(--fj3-success-solid);
+}
+.ring_light .ringTrack {
+  stroke: rgba(255, 255, 255, 0.28);
+}
+.ring_light .ringFill {
+  stroke: var(--fj3-apricot);
+}
+.ring_light .ringValue {
+  color: #fff;
+}
+.ringValue {
+  position: relative;
+  font: 760 0.8125rem/1 var(--font);
+  font-variant-numeric: tabular-nums;
+  color: var(--fj3-fg);
+}
+
+.bar {
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-surface-3);
+  overflow: hidden;
+}
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: left;
+  background: var(--fj3-primary);
+}
+.bar_green {
+  background: var(--fj3-success-solid);
+}
+.bar_warn {
+  background: var(--fj3-warning-solid);
+}
+
+.section {
+  display: grid;
+  gap: 12px;
+  padding-inline: var(--fj3-gutter);
+}
+.section + .section {
+  margin-top: var(--fj3-group);
+}
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sectionTitle {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+
+.card {
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1);
+  padding: 18px;
+}
+
+.facts {
+  display: grid;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1);
+  padding: 4px 18px;
+}
+.fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--fj3-line);
+}
+.fact:last-child {
+  border-bottom: 0;
+}
+.fact dt {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+  flex: none;
+}
+.fact dd {
+  font: var(--fj3-label);
+  color: var(--fj3-fg);
+  text-align: right;
+  overflow-wrap: anywhere;
+}

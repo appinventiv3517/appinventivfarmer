@@ -17,6 +17,10 @@
     "build:standalone3": "tsc --noEmit && STANDALONE=1 VITE_ONLY_D3=1 vite build --mode demo3 && SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-app-v3.html",
     "build:mobile": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-01-illustrated.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo2 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-02-field-journal.html && STANDALONE=1 VITE_MOBILE=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-mobile-03-field-journal-v3.html",
     "build:mobile3": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 VITE_ONLY_D3=1 vite build --mode demo3 && STANDALONE_DIST=dist-mobile/build MOBILE=1 SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-ver3.html",
+    "dev:didi": "VITE_APP=didi vite",
+    "build:didi": "tsc --noEmit && VITE_APP=didi vite build --mode demodidi",
+    "build:standalone-didi": "tsc --noEmit && STANDALONE=1 VITE_APP=didi vite build --mode demodidi && SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-standalone/kisani-urjaa-didi-app.html",
+    "build:mobile-didi": "tsc --noEmit && STANDALONE=1 VITE_MOBILE=1 VITE_APP=didi vite build --mode demodidi && STANDALONE_DIST=dist-mobile/build MOBILE=1 SHRINK_MEDIA=1 node scripts/make-standalone.mjs dist-mobile/kisani-urjaa-didi-app.html",
     "build:android-web": "tsc --noEmit && VITE_ONLY_D3=1 VITE_MOBILE=1 vite build --mode demo3 --outDir dist-android-web --emptyOutDir",
     "build:android": "npm run build:android-web && npx cap sync android && cd android && ./gradlew assembleDebug assembleRelease && cd .. && mkdir -p dist-mobile/android && cp android/app/build/outputs/apk/debug/app-debug.apk dist-mobile/android/kisani-urjaa-ver3-debug.apk && cp android/app/build/outputs/apk/release/app-release.apk dist-mobile/android/kisani-urjaa-ver3-test.apk"
   },

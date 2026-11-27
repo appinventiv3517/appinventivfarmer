@@ -1,0 +1,223 @@
+.page {
+  padding-bottom: var(--fj3-dock-clearance);
+}
+.tools {
+  display: grid;
+  gap: 12px;
+  padding: 0 var(--fj3-gutter) 8px;
+}
+.chips {
+  margin-inline: calc(var(--fj3-gutter) * -1);
+  padding-inline: var(--fj3-gutter);
+}
+.count {
+  padding: 8px var(--fj3-gutter) 10px;
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-3);
+}
+.list {
+  display: grid;
+  gap: 10px;
+  padding: 0 var(--fj3-gutter);
+}
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line), 0 1px 2px rgba(58, 46, 40, 0.05);
+  color: inherit;
+  text-decoration: none;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+  font: 760 1.0625rem/1 var(--font);
+}
+.text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.name {
+  font: var(--fj3-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.meta svg {
+  width: 13px;
+  height: 13px;
+}
+.id {
+  font: 700 0.75rem/1.2 var(--font);
+  letter-spacing: 0.02em;
+  color: var(--fj3-hl-ink);
+}
+
+/* ---------- Detail ---------- */
+.detail {
+  display: grid;
+  gap: 18px;
+  padding: 8px var(--fj3-gutter) 40px;
+}
+.detail section {
+  padding-inline: 0;
+}
+.head {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 14px 16px;
+  padding: 18px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-night);
+}
+.bigAvatar {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+  font: 780 1.5rem/1 var(--font);
+}
+.headText {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  min-width: 0;
+}
+.headText h2 {
+  font: var(--fj3-headline);
+  letter-spacing: -0.02em;
+}
+.headActions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.phone {
+  margin-left: auto;
+  font: var(--fj3-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--fj3-fg-2);
+}
+.tabBody {
+  display: grid;
+  gap: var(--fj3-group);
+}
+.completion {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1);
+}
+.steps {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 10px;
+}
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--fj3-caption);
+  font-weight: 550;
+  color: var(--fj3-fg-3);
+}
+.steps svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+}
+.stepDone {
+  color: var(--fj3-fg) !important;
+}
+.stepDone svg {
+  color: var(--fj3-success-solid);
+}
+.crops {
+  display: grid;
+  gap: 8px;
+}
+.crops li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-success-bg);
+}
+.crops svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--fj3-success-fg);
+}
+.crops span {
+  display: grid;
+  gap: 2px;
+}
+.crops strong {
+  font: var(--fj3-label);
+}
+.crops small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.land {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
+}
+.plot {
+  background: var(--fj3-surface-2);
+  padding: 10px;
+  display: block;
+  width: 100%;
+  height: 150px;
+}
+.landBody {
+  display: grid;
+  gap: 4px;
+  padding: 14px 4px 4px;
+}
+.landTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 14px;
+}
+.landTop strong {
+  font: var(--fj3-sub);
+}
+.landBody > dl {
+  box-shadow: none;
+}

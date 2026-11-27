@@ -1,0 +1,485 @@
+/* Kisani Didi Home: the Farmer App hero and cards, reordered for a Didi's day. */
+.home {
+  padding-bottom: var(--fj3-dock-clearance);
+}
+.hero {
+  height: 380px;
+}
+.hello {
+  font-size: 2.5rem;
+}
+.role {
+  margin-top: 10px;
+  font: var(--fj3-caption);
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+.me {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+  font: 760 0.9375rem/1 var(--font);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+.me img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.kicker {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+.gutter {
+  padding-inline: var(--fj3-gutter);
+}
+.gutterCard {
+  margin-inline: var(--fj3-gutter);
+}
+.section {
+  margin-top: var(--fj3-section);
+}
+.card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  min-height: 36px;
+  font: var(--fj3-label);
+  color: var(--fj3-link);
+  text-decoration: none;
+}
+.cardLink svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Attendance: overlaps the hero ---------- */
+.overlap {
+  position: relative;
+  z-index: 4;
+  margin: -64px 12px 0;
+}
+.attend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 16px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-2);
+}
+.attendInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  color: inherit;
+}
+.attendDot {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--fj3-warning-solid);
+  box-shadow: 0 0 0 4px var(--fj3-warning-bg);
+}
+.dot_working {
+  background: var(--fj3-success-solid);
+  box-shadow: 0 0 0 4px var(--fj3-success-bg);
+  animation: fj3-pulse 1.6s var(--fj3-ease) infinite;
+}
+.dot_done {
+  background: var(--fj3-success-solid);
+  box-shadow: 0 0 0 4px var(--fj3-success-bg);
+}
+.attendText {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.attendText strong {
+  font: var(--fj3-sub);
+}
+.attendText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+
+/* ---------- Scan QR: the one dark key on the page ---------- */
+.scanWrap {
+  margin: 16px var(--fj3-gutter) 0;
+}
+.scan {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-espresso);
+  color: #fff;
+  text-align: left;
+  box-shadow: var(--fj3-shadow-2);
+}
+.scanIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+}
+.scanIcon svg {
+  width: 28px;
+  height: 28px;
+}
+.scanText {
+  flex: 1;
+  display: grid;
+  gap: 4px;
+}
+.scanText strong {
+  font: var(--fj3-sub);
+}
+.scanText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+}
+.scanArrow {
+  width: 22px;
+  height: 22px;
+  color: var(--fj3-apricot);
+}
+
+/* ---------- Tasks ---------- */
+.alert {
+  display: grid;
+  gap: 4px;
+  margin: 4px var(--fj3-gutter) 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-danger-bg);
+  color: var(--fj3-danger-fg);
+  font: var(--fj3-small);
+  text-decoration: none;
+}
+.alert strong {
+  font: var(--fj3-label);
+}
+.alert span {
+  color: var(--fj3-fg);
+}
+.taskList {
+  display: grid;
+  gap: 10px;
+  padding: 0 var(--fj3-gutter);
+}
+.task {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line), 0 1px 2px rgba(58, 46, 40, 0.05);
+  color: inherit;
+  text-decoration: none;
+}
+.taskTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.taskTitle {
+  font: var(--fj3-sub);
+}
+.taskMeta {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.due {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-2);
+}
+.due svg {
+  width: 15px;
+  height: 15px;
+}
+.dueSoon {
+  color: var(--fj3-danger-fg);
+}
+
+/* ---------- Farmers: a 2 × 2 grid ---------- */
+.farmers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 var(--fj3-gutter);
+}
+.farmer {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  grid-template-areas: 'av name' 'av village' 'pct pct';
+  column-gap: 10px;
+  row-gap: 2px;
+  padding: 12px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface);
+  box-shadow: inset 0 0 0 1px var(--fj3-line);
+  color: inherit;
+  text-decoration: none;
+}
+.farmerAvatar {
+  grid-area: av;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+  font: 760 0.875rem/1 var(--font);
+}
+.farmerName {
+  grid-area: name;
+  font: var(--fj3-label);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.farmerVillage {
+  grid-area: village;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.farmerPct {
+  grid-area: pct;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.farmerPct small {
+  font: 700 0.75rem/1 var(--font);
+  font-variant-numeric: tabular-nums;
+  color: var(--fj3-fg-2);
+}
+
+/* ---------- Weather ---------- */
+.wxTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.wxPlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--fj3-label);
+}
+.wxPlace svg {
+  width: 16px;
+  height: 16px;
+  color: var(--fj3-primary);
+}
+.sample {
+  padding: 4px 8px;
+  border-radius: var(--r-xs);
+  background: var(--fj3-surface-2);
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-2);
+}
+.wxMain {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.temp {
+  font: var(--fj3-numeral);
+  font-size: 3.25rem;
+  letter-spacing: -0.04em;
+}
+.wxText {
+  flex: 1;
+  display: grid;
+  gap: 4px;
+}
+.wxText strong {
+  font: var(--fj3-sub);
+}
+.wxText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.wxIcon {
+  width: 34px;
+  height: 34px;
+  color: var(--fj3-warning-solid);
+}
+.tip {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  font: var(--fj3-small);
+}
+.tip strong {
+  font: var(--fj3-caption);
+}
+.tip_good {
+  background: var(--fj3-success-bg);
+  color: var(--fj3-success-fg);
+}
+.tip_caution {
+  background: var(--fj3-warning-bg);
+  color: var(--fj3-warning-fg);
+}
+.tip_warning {
+  background: var(--fj3-danger-bg);
+  color: var(--fj3-danger-fg);
+}
+
+/* ---------- Money ---------- */
+.money {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.moneyIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: var(--fj3-success-bg);
+  color: var(--fj3-success-fg);
+}
+.moneyIcon svg {
+  width: 22px;
+  height: 22px;
+}
+.moneyMain,
+.moneySide {
+  display: grid;
+  gap: 4px;
+}
+.moneyMain {
+  flex: 1;
+}
+.moneyMain strong {
+  font: var(--fj3-headline);
+  letter-spacing: -0.02em;
+}
+.moneySide {
+  text-align: right;
+}
+.moneySide strong {
+  font: var(--fj3-sub);
+  color: var(--fj3-warning-fg);
+}
+
+/* ---------- Leaderboard ---------- */
+.rankTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rank {
+  margin-top: 6px;
+  font: var(--fj3-title);
+  letter-spacing: var(--fj3-track-title);
+}
+.rank small {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+  letter-spacing: 0;
+}
+.trophy {
+  width: 40px;
+  height: 40px;
+  color: var(--fj3-warning-solid);
+}
+.podium {
+  display: grid;
+  gap: 2px;
+}
+.podiumRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--fj3-line);
+}
+.podiumRow:last-child {
+  border-bottom: 0;
+}
+.medal {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font: 780 0.875rem/1 var(--font);
+  color: var(--fj3-espresso);
+}
+.medal1 {
+  background: #f2c55c;
+}
+.medal2 {
+  background: #dcd6ce;
+}
+.medal3 {
+  background: #e2a77b;
+}
+.podiumName {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  font: var(--fj3-label);
+}
+.podiumName small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.podiumScore {
+  font: 740 0.9375rem/1 var(--font);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,4 @@
+/* Kisani Didi app: global additions on top of the Ver 3 tokens and base styles. */
+.fj3 .didi-num {
+  font-variant-numeric: tabular-nums;
+}

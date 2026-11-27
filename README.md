@@ -87,3 +87,15 @@ FOM = fermented organic manure at ₹100/kg + ₹100 shipping (from the designs)
 ## Credits
 
 Plus Jakarta Sans (SIL OFL), Lucide icons (ISC), lottie-web (MIT), Framer Motion (MIT), React Router (MIT).
+
+
+## Kisani Didi App
+
+A second app for Kisani Didi partners, built on the Ver 3 design system. The code is in `src/didi` and the app opens at `/#/didi`. The Farmer App is unchanged. See `docs/kisani-didi-app.md` for what was kept, removed and added.
+
+- `npm run dev:didi`: development server for the Kisani Didi App
+- `npm run build:didi`: hosted build in `dist-didi`
+- `npm run build:standalone-didi`: one-file app at `dist-standalone/kisani-urjaa-didi-app.html`
+- `npm run build:mobile-didi`: phone version at `dist-mobile/kisani-urjaa-didi-app.html`
+
+Demo login: Partner ID `KD00001` with password `didi1234`, or mobile `90000 00001` with OTP `123456`.

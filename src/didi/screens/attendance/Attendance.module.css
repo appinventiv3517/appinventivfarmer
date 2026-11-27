@@ -1,0 +1,318 @@
+.page {
+  display: grid;
+  gap: var(--fj3-group);
+  padding-bottom: var(--fj3-dock-clearance);
+}
+.gutter {
+  padding-inline: var(--fj3-gutter);
+}
+.kicker {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+.today {
+  display: grid;
+  gap: 14px;
+  margin: 0 var(--fj3-gutter);
+  padding: 20px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-night);
+}
+.today_working {
+  background: linear-gradient(160deg, #eef3e6, var(--fj3-success-bg));
+}
+.todayTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.clock {
+  font: var(--fj3-numeral);
+  font-size: 3.5rem;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.times {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.times span {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.7);
+}
+.times small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.times strong {
+  font: var(--fj3-label);
+  font-variant-numeric: tabular-nums;
+}
+.place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.place svg {
+  width: 16px;
+  height: 16px;
+  color: var(--fj3-primary);
+}
+.doneLine {
+  font: var(--fj3-label);
+  color: var(--fj3-success-fg);
+  text-align: center;
+  padding: 6px 0;
+}
+
+/* ---------- Calendar ---------- */
+.calendar {
+  padding: 14px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
+}
+.calHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.calHead strong {
+  font: var(--fj3-sub);
+}
+.calNav {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--fj3-surface-2);
+}
+.calNav:disabled {
+  opacity: 0.35;
+}
+.calNav svg {
+  width: 20px;
+  height: 20px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+.wd {
+  padding: 4px 0 6px;
+  font: var(--fj3-kicker);
+  color: var(--fj3-fg-3);
+  text-align: center;
+}
+.day {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: var(--r-sm);
+  font: 650 0.875rem/1 var(--font);
+  font-variant-numeric: tabular-nums;
+  color: var(--fj3-fg);
+  transition: transform var(--fj3-dur-1);
+}
+.day:active {
+  transform: scale(0.92);
+}
+.m_present {
+  background: var(--fj3-success-bg);
+  color: var(--fj3-success-fg);
+}
+.m_absent {
+  background: var(--fj3-danger-bg);
+  color: var(--fj3-danger-fg);
+}
+.m_off {
+  color: var(--fj3-fg-3);
+  background: repeating-linear-gradient(135deg, var(--fj3-surface-2) 0 4px, transparent 4px 8px);
+}
+.m_today {
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+  font-weight: 800;
+}
+.m_future {
+  color: var(--fj3-fg-3);
+  opacity: 0.55;
+}
+.picked {
+  box-shadow: 0 0 0 2px var(--fj3-espresso);
+}
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+.lgPresent {
+  background: var(--fj3-success-solid);
+}
+.lgAbsent {
+  background: var(--fj3-danger-solid);
+}
+.lgOff {
+  background: var(--fj3-surface-3);
+}
+.pick {
+  overflow: hidden;
+}
+.pickInner {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: var(--fj3-surface-2);
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.pickInner strong {
+  font: var(--fj3-label);
+  color: var(--fj3-fg);
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.stats span {
+  display: grid;
+  gap: 2px;
+  padding: 12px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+  text-align: center;
+}
+.stats strong {
+  font: var(--fj3-heading);
+  font-variant-numeric: tabular-nums;
+}
+.stats small {
+  font: var(--fj3-caption);
+  color: var(--fj3-fg-2);
+}
+.history {
+  display: grid;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-1);
+  padding: 4px 16px;
+}
+.history li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--fj3-line);
+}
+.history li:last-child {
+  border-bottom: 0;
+}
+.hDate {
+  display: grid;
+  justify-items: center;
+  width: 40px;
+}
+.hDate strong {
+  font: var(--fj3-heading);
+  font-variant-numeric: tabular-nums;
+}
+.hDate small {
+  font: var(--fj3-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+.hText {
+  flex: 1;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.hText strong {
+  font: var(--fj3-label);
+}
+.hText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+
+/* ---------- Check sheet ---------- */
+.locBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+}
+.locBox > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+.locBox strong {
+  font: var(--fj3-label);
+}
+.locBox small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.locIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+}
+.locIcon svg {
+  width: 22px;
+  height: 22px;
+}
+.locPulse {
+  animation: fj3-pulse 1.4s var(--fj3-ease) infinite;
+}
+.locOk {
+  background: var(--fj3-success-bg);
+  color: var(--fj3-success-fg);
+}
+.locOff {
+  background: var(--fj3-warning-bg);
+  color: var(--fj3-warning-fg);
+}
+.done {
+  display: grid;
+  place-items: center;
+  padding: 8px 0 16px;
+}
