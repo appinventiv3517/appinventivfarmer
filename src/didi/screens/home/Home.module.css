@@ -45,12 +45,12 @@
   margin-inline: var(--fj3-gutter);
 }
 .section {
-  margin-top: var(--fj3-section);
+  margin-top: 40px;
 }
 .card {
   display: grid;
   gap: 14px;
-  padding: 18px;
+  padding: 20px;
   border-radius: var(--r-xl);
   background: var(--fj3-surface);
   box-shadow: var(--fj3-shadow-1), inset 0 0 0 1px var(--fj3-line);
@@ -76,13 +76,13 @@
 .overlap {
   position: relative;
   z-index: 4;
-  margin: -64px 12px 0;
+  margin: -64px var(--fj3-gutter) 0;
 }
 .attend {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 14px 14px 16px;
+  gap: 10px;
+  padding: 16px;
   border-radius: var(--r-xl);
   background: var(--fj3-surface);
   box-shadow: var(--fj3-shadow-2);
@@ -92,7 +92,7 @@
   min-width: 0;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
   text-align: left;
   color: inherit;
 }
@@ -121,6 +121,13 @@
 }
 .attendText strong {
   font: var(--fj3-sub);
+}
+/* Compact action so the status line stays on one line inside the gutter; still 48px tall to tap. */
+.attendBtn {
+  flex: none;
+  min-height: 48px;
+  padding-inline: 16px;
+  gap: 8px;
 }
 .attendText small {
   font: var(--fj3-caption);
@@ -181,8 +188,8 @@
 .alert {
   display: grid;
   gap: 4px;
-  margin: 4px var(--fj3-gutter) 12px;
-  padding: 14px 16px;
+  margin: 0 var(--fj3-gutter) 12px;
+  padding: 16px;
   border-radius: var(--r-lg);
   background: var(--fj3-danger-bg);
   color: var(--fj3-danger-fg);
@@ -197,12 +204,12 @@
 }
 .taskList {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   padding: 0 var(--fj3-gutter);
 }
 .task {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   padding: 16px;
   border-radius: var(--r-lg);
   background: var(--fj3-surface);
@@ -243,7 +250,7 @@
 .farmers {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
   padding: 0 var(--fj3-gutter);
 }
 .farmer {
@@ -252,7 +259,7 @@
   grid-template-areas: 'av name' 'av village' 'pct pct';
   column-gap: 10px;
   row-gap: 2px;
-  padding: 12px;
+  padding: 14px;
   border-radius: var(--r-lg);
   background: var(--fj3-surface);
   box-shadow: inset 0 0 0 1px var(--fj3-line);
@@ -289,7 +296,7 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 .farmerPct small {
   font: 700 0.75rem/1 var(--font);

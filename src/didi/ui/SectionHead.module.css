@@ -1,0 +1,106 @@
+/*
+ * Kisani Didi section head. Same look as the Ver 3 one, with set spacing:
+ * the link is centred on the title block, and every head keeps the same
+ * gap before its content.
+ */
+.sh {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.shInset {
+  padding: 0 var(--fj3-gutter);
+}
+.shRule {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--fj3-line-strong);
+}
+.shRule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 32px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--fj3-primary);
+}
+.shRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.shText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.shTitle {
+  font: 720 1.625rem/1.15 var(--font);
+  letter-spacing: -0.032em;
+  color: var(--fj3-fg);
+}
+.shMeta {
+  font: var(--fj3-small);
+  color: var(--fj3-fg-2);
+}
+.shLink {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font: 650 0.9375rem/1.2 var(--font);
+  color: var(--fj3-fg);
+  text-decoration: none;
+}
+.shArrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--fj3-line-strong);
+  color: var(--fj3-primary);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+.shArrow svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 180ms ease;
+}
+.shLink:hover .shArrow,
+.shLink:active .shArrow {
+  background: var(--fj3-primary);
+  color: var(--fj3-on-primary);
+  box-shadow: none;
+}
+.shLink:hover .shArrow svg {
+  transform: translate(1px, -1px);
+}
+.shLink:focus-visible {
+  outline: 3px solid var(--fj3-focus);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+.shNight .shRule {
+  background: var(--fj3-night-line);
+}
+.shNight .shRule::before {
+  background: var(--fj3-hl-ink);
+}
+.shNight .shTitle,
+.shNight .shLink {
+  color: var(--fj3-on-night);
+}
+.shNight .shMeta {
+  color: var(--fj3-on-night-2);
+}

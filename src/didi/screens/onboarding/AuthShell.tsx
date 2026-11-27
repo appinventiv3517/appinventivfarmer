@@ -27,7 +27,7 @@ export function AuthShell({ title, text, photo = 'kisani-didi-meeting', back, on
         </div>
       </div>
       <Body className={s.splitPanel} {...(onSubmit ? { onSubmit, noValidate: true } : {})}>
-        <div className={s.panelBody}>
+        <div className={`${s.panelBody} didi-auth-body`}>
           <div>
             <h1 className={s.panelTitle}>{title}</h1>
             {text && <p className={s.panelText}>{text}</p>}

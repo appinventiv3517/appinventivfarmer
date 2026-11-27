@@ -2,7 +2,7 @@
   padding-bottom: var(--fj3-dock-clearance);
 }
 .tabs {
-  padding: 4px var(--fj3-gutter) 16px;
+  padding: 8px var(--fj3-gutter) 20px;
 }
 .list {
   display: grid;
@@ -363,4 +363,8 @@
 }
 .score {
   font-weight: 700;
+}
+/* The tab row already sits inside the page gutter: drop its own side padding so "New" lines up with the title. */
+.tabs > [role='tablist'] {
+  padding-inline: 0;
 }

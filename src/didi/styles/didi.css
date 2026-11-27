@@ -2,3 +2,7 @@
 .fj3 .didi-num {
   font-variant-numeric: tabular-nums;
 }
+/* Login tabs sit inside the padded auth panel: drop the tab row's own gutter so it lines up with the title. */
+.fj3 .didi-auth-body > [role='tablist'] {
+  padding-inline: 0;
+}

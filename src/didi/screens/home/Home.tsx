@@ -80,12 +80,12 @@ function AttendanceCard() {
         </span>
       </button>
       {state === 'none' && (
-        <Button icon={<LogIn aria-hidden />} onClick={() => setSheet('in')}>
+        <Button className={s.attendBtn} icon={<LogIn aria-hidden />} onClick={() => setSheet('in')}>
           Check in
         </Button>
       )}
       {state === 'working' && (
-        <Button variant="secondary" icon={<LogOut aria-hidden />} onClick={() => setSheet('out')}>
+        <Button className={s.attendBtn} variant="secondary" icon={<LogOut aria-hidden />} onClick={() => setSheet('out')}>
           Check out
         </Button>
       )}
@@ -202,7 +202,7 @@ export default function Home() {
         </InView>
 
         <section className={s.section} aria-labelledby="tasks-h">
-          <SectionHead id="tasks-h" title="My tasks" meta={`${plural(fresh, 'new task')} · ${ongoing} ongoing`} to="/tasks" action="My tasks" />
+          <SectionHead id="tasks-h" title="My tasks" meta={`${plural(fresh, 'new task')} · ${ongoing} ongoing`} to="/tasks" action="See all" />
           {needsAction && (
             <Link to={to(`/tasks/${needsAction.id}`)} className={s.alert}>
               <strong>Needs your action</strong>

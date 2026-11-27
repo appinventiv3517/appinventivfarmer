@@ -10,6 +10,7 @@ import type { AnimationName } from '@/d3/lottie/animations';
 import { Button } from './Button';
 import { SPRING_SOFT } from '@/d3/motion/tokens';
 import s from '@/d3/ui/Blocks.module.css';
+import sh from './SectionHead.module.css';
 
 export type Tone = 'success' | 'warning' | 'danger' | 'info' | 'live' | 'neutral';
 
@@ -327,19 +328,19 @@ export function RowGroup({ title, children }: { title?: string; children: ReactN
 
 export function SectionHead({ title, meta, to, action = 'See all', aside, night, id, inset = true, className }: { title: string; meta?: ReactNode; to?: string; action?: string; aside?: ReactNode; night?: boolean; id?: string; inset?: boolean; className?: string }) {
   return (
-    <div className={`${s.sh} ${inset ? s.shInset : s.shFlush} ${night ? s.shNight : ''} ${className ?? ''}`}>
-      <span className={s.shRule} aria-hidden />
-      <div className={s.shRow}>
-        <div className={s.shText}>
-          <h2 className={s.shTitle} id={id}>
+    <div className={`${sh.sh} ${inset ? sh.shInset : ''} ${night ? sh.shNight : ''} ${className ?? ''}`}>
+      <span className={sh.shRule} aria-hidden />
+      <div className={sh.shRow}>
+        <div className={sh.shText}>
+          <h2 className={sh.shTitle} id={id}>
             {title}
           </h2>
-          {meta && <p className={s.shMeta}>{meta}</p>}
+          {meta && <p className={sh.shMeta}>{meta}</p>}
         </div>
         {to && (
-          <Link to={d3(to)} className={s.shLink}>
+          <Link to={d3(to)} className={sh.shLink}>
             <span>{action}</span>
-            <span className={s.shArrow} aria-hidden>
+            <span className={sh.shArrow} aria-hidden>
               <ArrowUpRight />
             </span>
           </Link>

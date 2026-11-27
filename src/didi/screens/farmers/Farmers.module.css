@@ -75,7 +75,7 @@
 /* ---------- Detail ---------- */
 .detail {
   display: grid;
-  gap: 18px;
+  gap: 20px;
   padding: 8px var(--fj3-gutter) 40px;
 }
 .detail section {
@@ -220,4 +220,8 @@
 }
 .landBody > dl {
   box-shadow: none;
+}
+/* The tab row already sits inside the page gutter: drop its own side padding so it lines up with the content. */
+.detail > [role='tablist'] {
+  padding-inline: 0;
 }
