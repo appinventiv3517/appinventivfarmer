@@ -15,7 +15,7 @@ export function RevealText({ text, as: Tag = 'h1', className, delay = 0, stagger
   return (
     <Tag className={className} style={style} aria-label={text}>
       {words.map((w, i) => (
-        <span key={i} aria-hidden style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'top', paddingBottom: '0.08em', marginBottom: '-0.08em' }}>
+        <span key={i} aria-hidden style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'top', paddingBottom: '0.22em', marginBottom: '-0.22em' }}>
           <motion.span style={{ display: 'inline-block' }} initial={{ y: '105%' }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: EXPO, delay: delay + i * stagger }}>
             {w}
             {i < words.length - 1 ? ' ' : ''}
