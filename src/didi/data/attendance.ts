@@ -6,6 +6,17 @@ export interface AttendanceDay {
   in?: string;
   out?: string;
   place?: string;
+  /** Selfie and location captured with the check-in and check-out (small JPEG data URLs). */
+  inProof?: CheckProof;
+  outProof?: CheckProof;
+}
+
+export interface CheckProof {
+  selfie: string;
+  lat: number;
+  lng: number;
+  /** True when the demo's sample location stood in for the phone's (prototype only). */
+  sampleLocation?: boolean;
 }
 
 const PLACES = ['Ratanpur', 'Dhad', 'Chikhli', 'Mehkar', 'Sakharkherda', 'Lonar'];

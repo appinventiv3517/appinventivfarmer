@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useTransform } from 'framer-motion';
-import { ArrowUpRight, Bell, CalendarClock, ChevronRight, CloudSun, LogIn, LogOut, MapPin, QrCode, Trophy, Wallet } from 'lucide-react';
+import { ArrowUpRight, Bell, CalendarClock, ChevronDown, ChevronRight, CloudSun, Languages, LogIn, LogOut, MapPin, QrCode, Trophy, Wallet } from 'lucide-react';
 import { formatCurrency, formatTime, greeting, initials, plural } from '@/lib/format';
+import { LANGUAGE_CATALOG } from '@/services/store';
+import { Sheet } from '@/d3/ui/Sheet';
+import { useToast } from '@/d3/ui/Toast';
 import { conditionLabel, sprayAdvisory } from '@/lib/weather';
 import markUrl from '@/assets/brand/kisani-urjaa-mark.webp';
 import { Photo } from '@/d3/photo/Photo';
@@ -14,7 +17,8 @@ import { Screen, useScreenScroll } from '../../layout/Screen';
 import { IconButton, Button } from '../../ui/Button';
 import { SectionHead, Skel, StatusTag } from '../../ui/Blocks';
 import { Bar } from '../../ui/Kit';
-import { useDidi, useToday } from '../../store';
+import { didi, useDidi, useToday } from '../../store';
+import { LanguageList } from '../profile/LanguageList';
 import { FARMERS, completion } from '../../data/farmers';
 import { STATUS_LABEL, STATUS_TONE, progressOf, tabOf } from '../../data/tasks';
 import { TRANSACTIONS, filterTxns, totals } from '../../data/money';
@@ -28,7 +32,34 @@ import { to } from '../../paths';
 import { dueLabel } from '../tasks/TaskCard';
 import s from './Home.module.css';
 
-function Hero({ name, photo, unread }: { name: string; photo?: string; unread: number }) {
+/** Language switch in the hero: opens the language list and applies the choice at once. */
+function LanguageButton() {
+  const toast = useToast();
+  const lang = useDidi((st) => st.session.language);
+  const [open, setOpen] = useState(false);
+  const current = LANGUAGE_CATALOG.find((l) => l.code === lang) ?? LANGUAGE_CATALOG[0];
+  const pick = (code: string) => {
+    setOpen(false);
+    if (code === lang) return;
+    didi.setLanguage(code);
+    toast({ message: `Language set to ${LANGUAGE_CATALOG.find((l) => l.code === code)?.english}`, tone: 'success' });
+  };
+  return (
+    <>
+      <button type="button" className={s.langBtn} onClick={() => setOpen(true)} aria-label={`Change language. Current: ${current.english}`} aria-haspopup="dialog">
+        <Languages aria-hidden />
+        <span lang={current.code}>{current.native}</span>
+        <ChevronDown aria-hidden className={s.langChev} />
+      </button>
+      <Sheet open={open} onClose={() => setOpen(false)} kicker="App language" title="Choose your language">
+        <LanguageList value={lang} onChange={pick} />
+        <p className={s.langNote}>Screens are in English in this prototype. Your choice is saved, and screens will switch once translations are reviewed by native speakers.</p>
+      </Sheet>
+    </>
+  );
+}
+
+function Hero({ name, unread }: { name: string; unread: number }) {
   const scrollY = useScreenScroll();
   const y = useTransform(scrollY, [0, 380], [0, 120]);
   const textY = useTransform(scrollY, [0, 240], [0, -36]);
@@ -48,9 +79,7 @@ function Hero({ name, photo, unread }: { name: string; photo?: string; unread: n
           <IconButton label="Notifications" variant="glass" to="/notifications" badge={unread}>
             <Bell />
           </IconButton>
-          <Link to={to('/profile')} className={s.me} aria-label={`Profile: ${name}`}>
-            {photo ? <img src={photo} alt="" /> : <span>{initials(name)}</span>}
-          </Link>
+          <LanguageButton />
         </div>
       </div>
       <motion.div className={hs.heroText} style={{ y: textY, opacity: fade }}>
@@ -76,7 +105,7 @@ function AttendanceCard() {
         <span className={s.attendText}>
           <span className={s.kicker}>Attendance</span>
           <strong>{state === 'none' ? 'Not checked in yet' : state === 'working' ? `Checked in at ${formatTime(today!.in!)}` : 'Day complete'}</strong>
-          <small>{state === 'none' ? 'Check in when you start your field work.' : state === 'working' ? `${hoursLabel(workedMinutes(today!))} so far · ${today!.place}` : `${formatTime(today!.in!)} – ${formatTime(today!.out!)} · ${hoursLabel(workedMinutes(today!))}`}</small>
+          <small>{state === 'none' ? 'Take a selfie and share your location to check in.' : state === 'working' ? `${hoursLabel(workedMinutes(today!))} so far · ${today!.place}` : `${formatTime(today!.in!)} – ${formatTime(today!.out!)} · ${hoursLabel(workedMinutes(today!))}`}</small>
         </span>
       </button>
       {state === 'none' && (
@@ -183,19 +212,19 @@ export default function Home() {
   return (
     <Screen title="Home" variant="bare" tabRoot lightTop heroHeight={380}>
       <div className={s.home}>
-        <Hero name={profile.name} photo={profile.photo} unread={unread} />
+        <Hero name={profile.name} unread={unread} />
         <div className={s.overlap}>
           <AttendanceCard />
         </div>
 
         <InView className={s.scanWrap}>
-          <motion.button type="button" whileTap={TAP} className={s.scan} onClick={() => nav('/scan')}>
+          <motion.button type="button" whileTap={TAP} className={s.scan} onClick={() => nav('/qr')}>
             <span className={s.scanIcon}>
               <QrCode aria-hidden />
             </span>
             <span className={s.scanText}>
-              <strong>Scan farmer QR</strong>
-              <small>Open a farmer’s profile from their Kisani Urjaa card</small>
+              <strong>My QR code</strong>
+              <small>Show your Kisani Didi ID · {profile.partnerId}</small>
             </span>
             <ChevronRight aria-hidden className={s.scanArrow} />
           </motion.button>

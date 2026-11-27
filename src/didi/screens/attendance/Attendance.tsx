@@ -74,7 +74,7 @@ export default function Attendance() {
   const canPrev = offset > -1;
 
   return (
-    <Screen title="Attendance" variant="masthead" tabRoot kicker={formatDate(now, 'weekday')} deck="Check in when you start field work and check out when you finish.">
+    <Screen title="Attendance" variant="masthead" tabRoot kicker={formatDate(now, 'weekday')} deck="Check in with a selfie and your location when you start field work, and check out when you finish.">
       <div className={s.page}>
         <motion.div className={`${s.today} ${s[`today_${state}`]}`} layout>
           <div className={s.todayTop}>
@@ -99,7 +99,19 @@ export default function Attendance() {
           {today?.place && (
             <p className={s.place}>
               <MapPin aria-hidden /> {today.place}
+              {today.inProof && (
+                <span className="didi-num">
+                  · {today.inProof.lat.toFixed(4)}° N, {today.inProof.lng.toFixed(4)}° E{today.inProof.sampleLocation ? ' (sample)' : ''}
+                </span>
+              )}
             </p>
+          )}
+          {(today?.inProof || today?.outProof) && (
+            <div className={s.selfies}>
+              {today.inProof && <img src={today.inProof.selfie} alt="Check-in selfie" />}
+              {today.outProof && <img src={today.outProof.selfie} alt="Check-out selfie" />}
+              <small>{today.outProof ? 'Check-in and check-out selfies' : 'Check-in selfie'}</small>
+            </div>
           )}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={state} {...SWAP}>

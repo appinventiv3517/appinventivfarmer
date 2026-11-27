@@ -64,7 +64,7 @@ const TABS: { path: string; label: string; glyph: GlyphName }[] = [
 
 /**
  * Kisani Didi navigation: the Farmer App's floating dock with five labelled
- * destinations. Scan QR, Transactions, Leaderboard and Notifications open from
+ * destinations. My QR code, Transactions, Leaderboard and Notifications open from
  * Home, so the dock stays calm.
  */
 export function Dock() {

@@ -26,7 +26,7 @@ const TaskHistory = page(() => import('./screens/tasks/TaskHistory'));
 const Farmers = page(() => import('./screens/farmers/Farmers'));
 const FarmerDetail = page(() => import('./screens/farmers/FarmerDetail'));
 const Attendance = page(() => import('./screens/attendance/Attendance'));
-const Scan = page(() => import('./screens/scan/Scan'));
+const MyQr = page(() => import('./screens/myqr/MyQr'));
 const Transactions = page(() => import('./screens/transactions/Transactions'));
 const TransactionDetail = page(() => import('./screens/transactions/TransactionDetail'));
 const Leaderboard = page(() => import('./screens/leaderboard/Leaderboard'));
@@ -72,7 +72,7 @@ export function DidiRoutes({ location }: { location: Location }) {
         <Route path="farmers" element={authed(<Farmers />)} />
         <Route path="farmers/:id" element={authed(<FarmerDetail />)} />
         <Route path="attendance" element={authed(<Attendance />)} />
-        <Route path="scan" element={authed(<Scan />)} />
+        <Route path="qr" element={authed(<MyQr />)} />
         <Route path="transactions" element={authed(<Transactions />)} />
         <Route path="transactions/:id" element={authed(<TransactionDetail />)} />
         <Route path="leaderboard" element={authed(<Leaderboard />)} />

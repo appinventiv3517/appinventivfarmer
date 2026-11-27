@@ -1,0 +1,78 @@
+.page {
+  display: grid;
+  gap: 20px;
+  padding: 8px var(--fj3-gutter) 40px;
+}
+.card {
+  display: grid;
+  gap: 20px;
+  padding: 24px 20px;
+  border-radius: var(--r-xl);
+  background: var(--fj3-surface);
+  box-shadow: var(--fj3-shadow-2), inset 0 0 0 1px var(--fj3-line);
+}
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--fj3-apricot);
+  color: var(--fj3-espresso);
+  font: 760 1rem/1 var(--font);
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.whoText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.whoText strong {
+  font: var(--fj3-sub);
+}
+.whoText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.qr {
+  justify-self: center;
+  width: min(100%, 260px);
+  padding: 8px;
+  border-radius: var(--r-lg);
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--fj3-line);
+}
+.qr svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.id {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--fj3-line);
+}
+.id small {
+  font: var(--fj3-kicker);
+  letter-spacing: var(--fj3-track-kicker);
+  text-transform: uppercase;
+  color: var(--fj3-fg-3);
+}
+.id strong {
+  font: 740 1.5rem/1.1 var(--font);
+  letter-spacing: 0.04em;
+}

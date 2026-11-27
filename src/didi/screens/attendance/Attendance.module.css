@@ -266,26 +266,6 @@
 }
 
 /* ---------- Check sheet ---------- */
-.locBox {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border-radius: var(--r-lg);
-  background: var(--fj3-surface-2);
-}
-.locBox > span:last-child {
-  display: grid;
-  gap: 3px;
-}
-.locBox strong {
-  font: var(--fj3-label);
-}
-.locBox small {
-  font: var(--fj3-caption);
-  font-weight: 500;
-  color: var(--fj3-fg-2);
-}
 .locIcon {
   display: grid;
   place-items: center;
@@ -315,4 +295,99 @@
   display: grid;
   place-items: center;
   padding: 8px 0 16px;
+}
+
+/* ---------- Check in / out: selfie and location ---------- */
+.proof {
+  display: grid;
+  gap: 12px;
+}
+.proofRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  background: var(--fj3-surface-2);
+}
+.proofRow + .proofRow,
+.proof > button + .proofRow {
+  margin-top: 8px;
+}
+.proofStep {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--fj3-espresso);
+  color: #fff;
+  font: 740 0.75rem/1 var(--font);
+}
+.selfie {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--fj3-surface), 0 0 0 4px var(--fj3-success-solid);
+}
+.selfieEmpty {
+  display: grid;
+  place-items: center;
+  background: var(--fj3-clay-100);
+  color: var(--fj3-clay-700);
+  box-shadow: inset 0 0 0 2px var(--fj3-line-strong);
+}
+.selfieEmpty svg {
+  width: 24px;
+  height: 24px;
+}
+.proofRow .locIcon {
+  width: 56px;
+  height: 56px;
+}
+.proofText {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.proofText strong {
+  font: var(--fj3-label);
+}
+.proofText small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+}
+.proofActions {
+  display: grid;
+  gap: 8px;
+}
+.sheetHint {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
+  text-align: center;
+}
+
+/* Today card: the selfies saved with today's check-in and check-out. */
+.selfies {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.selfies img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--fj3-surface);
+}
+.selfies small {
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
 }

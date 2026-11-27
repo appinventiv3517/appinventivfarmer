@@ -14,23 +14,39 @@
   color: rgba(255, 255, 255, 0.86);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
-.me {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--fj3-apricot);
-  color: var(--fj3-espresso);
-  font: 760 0.9375rem/1 var(--font);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
-  text-decoration: none;
+/* Language switch: a glass pill, same height as the notification button. */
+.langBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px 0 14px;
+  border-radius: var(--r-pill);
+  background: var(--fj3-glass);
+  -webkit-backdrop-filter: var(--fj3-glass-blur);
+  backdrop-filter: var(--fj3-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--fj3-glass-line);
+  color: #fff;
+  font: var(--fj3-label);
 }
-.me img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.langBtn svg {
+  width: 18px;
+  height: 18px;
+}
+.langBtn .langChev {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+}
+.langBtn:focus-visible {
+  outline: 3px solid var(--fj3-focus);
+  outline-offset: 2px;
+}
+.langNote {
+  margin-top: 16px;
+  font: var(--fj3-caption);
+  font-weight: 500;
+  color: var(--fj3-fg-2);
 }
 .kicker {
   font: var(--fj3-kicker);

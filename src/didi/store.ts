@@ -4,7 +4,7 @@ import { DIDI_PROFILE, type DidiProfile } from './data/didi';
 import { SAMPLE_TASKS, type Proof, type Task } from './data/tasks';
 import { INITIALLY_UNREAD } from './data/notifications';
 import { isoDay } from './data/dates';
-import type { AttendanceDay } from './data/attendance';
+import type { AttendanceDay, CheckProof } from './data/attendance';
 
 /*
  * Kisani Didi app state. Kept on this device only (localStorage), separate
@@ -121,16 +121,16 @@ export const didi = {
     updateTask(id, (t) => ({ ...t, done, draftNote: '', status: 'in_review', submissions: [...t.submissions, { id: stamp(), at: new Date().toISOString(), count: done, note, proofs, kind: 'review' }] })),
 
   /* ---------- Attendance ---------- */
-  checkIn: (place: string) =>
+  checkIn: (place: string, proof: CheckProof) =>
     set((s) => {
       const date = isoDay(new Date());
       if (s.attendance.some((d) => d.date === date && d.in)) return s;
-      return { ...s, attendance: [...s.attendance.filter((d) => d.date !== date), { date, in: new Date().toISOString(), place }] };
+      return { ...s, attendance: [...s.attendance.filter((d) => d.date !== date), { date, in: new Date().toISOString(), place, inProof: proof }] };
     }),
-  checkOut: () =>
+  checkOut: (proof: CheckProof) =>
     set((s) => {
       const date = isoDay(new Date());
-      return { ...s, attendance: s.attendance.map((d) => (d.date === date && d.in && !d.out ? { ...d, out: new Date().toISOString() } : d)) };
+      return { ...s, attendance: s.attendance.map((d) => (d.date === date && d.in && !d.out ? { ...d, out: new Date().toISOString(), outProof: proof } : d)) };
     }),
 
   /* ---------- Notifications ---------- */

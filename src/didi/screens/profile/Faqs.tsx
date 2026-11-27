@@ -10,7 +10,8 @@ const FAQS = [
   { q: 'What counts as proof?', a: 'A clear photo, a short video or a file that shows the work, such as a photo of the farmer at the visit. Each file can be up to 10 MB.' },
   { q: 'My task was rejected. What now?', a: 'Open the task to read the reviewer’s comment, fix what they asked for, add new proof and tap Resubmit.' },
   { q: 'I forgot to check out. What happens?', a: 'You’ll see a notification. If your times are wrong, contact support with the date.' },
-  { q: 'The QR code won’t scan.', a: 'Clean the camera lens, move into better light and hold the phone a hand’s length away. You can also tap the keyboard button to type the farmer ID.' },
+  { q: 'My QR code won’t scan.', a: 'Turn up your screen brightness and hold the phone steady. You can also read out your Partner ID, shown under the code.' },
+  { q: 'How do I mark attendance?', a: 'Tap Check in on Home or Attendance, take a selfie and let the app capture your location. Do the same with Check out when you finish.' },
   { q: 'When are payments credited?', a: 'Kisani Urjaa makes and records payments. Each one shows as Pending until the transfer is confirmed. For a question, contact support with the reference number.' },
   { q: 'How is the leaderboard decided?', a: 'Kisani Urjaa sets points from reviewed tasks. The app shows the ranks it receives.' },
 ];

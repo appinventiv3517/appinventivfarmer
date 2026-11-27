@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { FARMERS, completion, filterFarmers, farmerById } from '../data/farmers';
+import { FARMERS, completion, filterFarmers } from '../data/farmers';
 import { SAMPLE_TASKS, progressOf, tabOf, tasksIn } from '../data/tasks';
 import { TRANSACTIONS, filterTxns, totals } from '../data/money';
 import { board } from '../data/leaderboard';
 import { sampleAttendance, workedMinutes } from '../data/attendance';
 import { isDidiPath, to } from '../paths';
-import { parseFarmerQr } from '../screens/scan/Scan';
+import { didiQrText, qrMatrix } from '../lib/qr';
 
 describe('Kisani Didi paths', () => {
   it('prefixes app paths with /didi', () => {
@@ -50,11 +50,21 @@ describe('farmers', () => {
     expect(filterFarmers(FARMERS, '', 'incomplete').every((f) => completion(f) < 100)).toBe(true);
     expect(filterFarmers(FARMERS, '', 'geo').every((f) => f.lands.length === 0 || f.lands.some((l) => !l.geo))).toBe(true);
   });
-  it('reads farmer IDs from QR text', () => {
-    expect(parseFarmerQr('kisaniurjaa:farmer:KU-F-10231')?.id).toBe('KU-F-10231');
-    expect(parseFarmerQr('ku-f-10244')?.name).toBe(farmerById('KU-F-10244')?.name);
-    expect(parseFarmerQr('upi://pay?pa=shop@upi')).toBeNull();
-    expect(parseFarmerQr('KU-F-99999')).toBeNull();
+});
+
+describe('my QR code', () => {
+  it('holds the partner ID', () => {
+    expect(didiQrText('KD00001')).toBe('kisaniurjaa:didi:KD00001');
+  });
+  it('draws a square code with the three finder patterns', () => {
+    const m = qrMatrix(didiQrText('KD00001'));
+    expect(m.length).toBe(25);
+    m.forEach((row) => expect(row.length).toBe(25));
+    const finderAt = (x: number, y: number) => [0, 6].every((d) => m[y][x + d] && m[y + d][x]) && m[y + 3][x + 3] && !m[y + 1][x + 1];
+    expect(finderAt(0, 0) && finderAt(18, 0) && finderAt(0, 18)).toBe(true);
+  });
+  it('picks a larger version for longer text', () => {
+    expect(qrMatrix('x'.repeat(100)).length).toBeGreaterThan(25);
   });
 });
 

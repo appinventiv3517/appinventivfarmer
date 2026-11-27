@@ -21,7 +21,7 @@ const DOCS: Record<string, { title: string; kicker: string; sections: { h: strin
     sections: [
       { h: 'What the app stores', p: 'Your profile, attendance times and location at check-in, task updates and the photos or files you upload as proof, and the farmer records you work with.' },
       { h: 'Farmers’ information', p: 'Farmer details are visible to you only for farmers in your cluster. Share them only for Kisani Urjaa work.' },
-      { h: 'Camera and location', p: 'The camera is used only for QR scanning, proof photos and ID documents. Location is captured only when you check in or out.' },
+      { h: 'Camera and location', p: 'The camera is used only for your check-in and check-out selfies, proof photos and ID documents. Location is captured only when you check in or out.' },
     ],
   },
   terms: {
