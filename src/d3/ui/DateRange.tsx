@@ -177,7 +177,7 @@ export function DateRangeSheet({ open, onClose, value, onApply, title = 'Filter 
                   aria-label={formatDate(d, 'long')}
                   onClick={() => pick(d)}
                 >
-                  {(isStart || isEnd) && <motion.span layoutId="fj3-cal-pick" className={s.pickBg} transition={SPRING} />}
+                  {(isStart || isEnd) && <motion.span layoutId={isEnd && !isStart ? 'fj3-cal-end' : 'fj3-cal-start'} className={s.pickBg} transition={SPRING} />}
                   <span className={s.dayNum}>{d.getDate()}</span>
                 </button>
               );

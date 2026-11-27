@@ -73,7 +73,7 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   row-gap: 4px;
 }
 .wd {
@@ -84,6 +84,10 @@
 }
 .day {
   position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
   height: 44px;
   font: 600 0.9375rem/1 var(--font);
   color: var(--fj3-on-night);
@@ -126,9 +130,13 @@
 }
 .pickBg {
   position: absolute;
-  inset: 2px;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  right: 0;
   margin: 0 auto;
   width: 40px;
+  max-width: calc(100% - 4px);
   border-radius: var(--r-sm);
   background: var(--fj3-lime-400);
 }
