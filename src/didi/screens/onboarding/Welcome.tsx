@@ -80,7 +80,7 @@ export default function Welcome() {
             <motion.p className={s.section} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
               {slide.section}
             </motion.p>
-            <RevealText text={slide.title} className={s.coverTitle} delay={0.15} />
+            <RevealText text={slide.title} className={`${s.coverTitle} didi-reveal`} delay={0.15} />
             <motion.p className={s.coverLede} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: DUR.base, ease: EASE }}>
               {slide.text}
             </motion.p>

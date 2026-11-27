@@ -6,3 +6,15 @@
 .fj3 .didi-auth-body > [role='tablist'] {
   padding-inline: 0;
 }
+/*
+ * RevealText (from Ver 3) masks each word with only 0.08em below the line, which
+ * clips descenders (g, y, p). Give the moving word itself room for them, so it
+ * still starts fully hidden, and pull the line back so spacing doesn't change.
+ */
+.fj3 .didi-reveal > span {
+  padding-bottom: 0 !important;
+  margin-bottom: -0.25em !important;
+}
+.fj3 .didi-reveal > span > span {
+  padding-bottom: 0.25em;
+}

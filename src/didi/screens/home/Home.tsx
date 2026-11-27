@@ -84,7 +84,7 @@ function Hero({ name, unread }: { name: string; unread: number }) {
         <p className={hs.dateline}>
           <span>Today</span> {date}
         </p>
-        <RevealText text={`${greeting()}, ${first}`} className={`${hs.hello} ${s.hello}`} delay={0.25} />
+        <RevealText text={`${greeting()}, ${first}`} className={`${hs.hello} ${s.hello} didi-reveal`} delay={0.25} />
         <p className={s.role}>Kisani Didi · {useDidi((st) => st.profile.cluster)}</p>
       </motion.div>
     </header>
