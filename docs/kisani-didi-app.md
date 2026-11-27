@@ -29,14 +29,14 @@ It reuses Ver 3's design system and leaves the Farmer App (`src/d3`) untouched.
 
 | Module | Screens and states |
 | --- | --- |
-| Home | Greeting by time of day, name, date, notifications with unread count, language switch (replaces the profile initials; Profile stays in the dock). Attendance card with Check in and Check out. My QR code. Tasks overview with a "needs your action" alert. Farmers preview. Weather and tip. Transactions summary. Leaderboard (state or national) |
+| Home | Greeting by time of day, name, date, notifications with unread count, language switch (replaces the profile initials; Profile stays in the dock). Attendance card with Check in and Check out. My QR code. Tasks overview with a "needs your action" alert. Farmers preview. Weather and tip. Transactions summary. Leaderboard (mandal, state or national) |
 | My Tasks | New, Ongoing and Closed tabs. Statuses: Pending, In progress, In review, Approved, Rejected, Lapsed. Details: target and completed counter, notes, photo, video and file proof, save progress, submit with confirmation, resubmit after rejection. History: submissions, proofs (tap to view), score, reviewer comments |
 | Farmers | Search by name, ID, village or phone. Filters for profile status, geo-tag and village. Cards with ID, phone, village and completion ring. Details in Overview, Land & crops and Address tabs: completion steps, personal details, active crops, land with a geo-tag outline and coordinates, full address. Loading, empty, error and not-found states |
 | Attendance | Live clock. Check in and out with location capture, or a "no location" path. Worked hours. Month calendar marking present, absent, off and today, with day details and two months of history. Monthly stats. Recent days |
 | My QR code | The Didi's own QR code (holds `kisaniurjaa:didi:<Partner ID>`), name, cluster and Partner ID, shown large to be scanned. Drawn by a small built-in encoder (`src/didi/lib/qr.ts`), no extra package |
 | Check in / Check out | A selfie (front camera) and the phone's location are both required before confirming, and are saved with the day's record. If location is off: Try again; the demo build also offers a clearly labelled sample location |
 | Transactions | Totals for the chosen range. Filters by range and status. List and detail with reference copy and a link to support |
-| Leaderboard | Maharashtra or National, and This month or All time. Podium for the top three. Her own row highlighted, or pinned below the list when she isn't in it |
+| Leaderboard | Mandal (her own, Buldhana), State (Maharashtra) or National, and This month or All time. Sample ranks stand in for Kisani Urjaa records. Podium for the top three. Her own row highlighted, or pinned below the list when she isn't in it |
 | Notifications | Categories: new task, deadline, review, farmers, attendance, payments, announcements. Read and unread, mark all read, filters, and tapping opens the related screen |
 | Profile | Profile card with verification status and completion. My Profile (view, edit, photo). Verification in three steps (document scan or upload, details, review), then In review and Verified. Language, password, text size, About, Privacy, Terms, FAQs, Contact, Prototype controls, Log out |
 

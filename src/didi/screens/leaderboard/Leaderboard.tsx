@@ -7,7 +7,14 @@ import { SPRING_SOFT, SWAP } from '@/d3/motion/tokens';
 import { Screen, PageTitle } from '../../layout/Screen';
 import { ErrorState, Note, Skel } from '../../ui/Blocks';
 import { useLoad } from '../../ui/Kit';
-import { board, type Period, type Scope } from '../../data/leaderboard';
+import { board, MY_MANDAL, type Leader, type Period, type Scope } from '../../data/leaderboard';
+
+const SCOPE_TABS: { value: Scope; label: string }[] = [
+  { value: 'mandal', label: 'Mandal' },
+  { value: 'state', label: 'State' },
+  { value: 'national', label: 'National' },
+];
+const SCOPE_PLACE: Record<Scope, string> = { mandal: `${MY_MANDAL} mandal`, state: 'Maharashtra', national: 'India' };
 import s from './Leaderboard.module.css';
 
 export default function Leaderboard() {
@@ -18,13 +25,14 @@ export default function Leaderboard() {
   const top = list.slice(0, 3);
   const rest = list.slice(3);
   const meListed = list.some((l) => l.me);
-  const where = (l: { district: string; state: string }) => (scope === 'state' ? l.district : `${l.district}, ${l.state}`);
+  const where = (l: Pick<Leader, 'district' | 'state' | 'village'>) => (scope === 'mandal' ? l.village ?? l.district : scope === 'state' ? l.district : `${l.district}, ${l.state}`);
+  const podiumWhere = (l: Pick<Leader, 'district' | 'state' | 'village'>) => (scope === 'mandal' ? l.village ?? l.district : scope === 'state' ? l.district : l.state);
   return (
     <Screen title="Leaderboard" backTo="/home">
       <PageTitle kicker="Kisani Didis" title="Leaderboard" />
       <div className={s.page}>
         <div className={s.controls}>
-          <SectionTabs label="Leaderboard scope" size="md" value={scope} onChange={setScope} items={[{ value: 'state', label: 'Maharashtra' }, { value: 'national', label: 'National' }]} />
+          <SectionTabs label="Leaderboard scope" size="md" value={scope} onChange={setScope} items={SCOPE_TABS} />
           <Toggle label="Period" value={period} onChange={setPeriod} options={[{ value: 'month', label: 'This month' }, { value: 'all', label: 'All time' }]} />
         </div>
 
@@ -33,7 +41,7 @@ export default function Leaderboard() {
           <span className={s.mineText}>
             <strong>Your rank</strong>
             <small>
-              of {me.of.toLocaleString('en-IN')} Kisani Didis {scope === 'state' ? 'in Maharashtra' : 'in India'}
+              of {me.of.toLocaleString('en-IN')} Kisani Didis in {SCOPE_PLACE[scope]}
             </small>
           </span>
           <span className={s.mineScore}>
@@ -59,7 +67,7 @@ export default function Leaderboard() {
                       {l.rank === 1 && <Crown className={s.crown} aria-hidden />}
                       <span className={s.pAvatar}>{initials(l.name)}</span>
                       <strong className={s.pName}>{l.me ? 'You' : l.name.split(' ')[0]}</strong>
-                      <small className={s.pWhere}>{scope === 'state' ? l.district : l.state}</small>
+                      <small className={s.pWhere}>{podiumWhere(l)}</small>
                       <span className={s.pBlock}>
                         <span className={s.pRank}>{l.rank}</span>
                         <span className={s.pScore}>{l.score.toLocaleString('en-IN')}</span>

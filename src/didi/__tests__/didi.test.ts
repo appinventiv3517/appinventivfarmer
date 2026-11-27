@@ -83,13 +83,14 @@ describe('transactions', () => {
 
 describe('leaderboard and attendance', () => {
   it('always gives the Didi her own rank', () => {
-    for (const scope of ['state', 'national'] as const)
+    for (const scope of ['mandal', 'state', 'national'] as const)
       for (const period of ['month', 'all'] as const) {
         const { list, me } = board(scope, period);
         expect(me.rank).toBeGreaterThan(0);
         expect(list[0].rank).toBe(1);
         const listed = list.find((l) => l.me);
         if (listed) expect(listed.rank).toBe(me.rank);
+        expect(list.every((l, i) => i === 0 || l.score <= list[i - 1].score)).toBe(true);
       }
   });
   it('keeps Sundays off and works out hours', () => {

@@ -22,7 +22,7 @@ import { LanguageList } from '../profile/LanguageList';
 import { FARMERS, completion } from '../../data/farmers';
 import { STATUS_LABEL, STATUS_TONE, progressOf, tabOf } from '../../data/tasks';
 import { TRANSACTIONS, filterTxns, totals } from '../../data/money';
-import { board, type Scope } from '../../data/leaderboard';
+import { board, MY_MANDAL, type Scope } from '../../data/leaderboard';
 import { hoursLabel, workedMinutes } from '../../data/attendance';
 import { dayDiff } from '../../data/dates';
 import { useWeather } from '../../data/useWeather';
@@ -170,19 +170,19 @@ function LeaderCard() {
         <div>
           <span className={s.kicker}>Your rank this month</span>
           <p className={s.rank}>
-            #{me.rank} <small>of {me.of.toLocaleString('en-IN')}</small>
+            #{me.rank} <small>of {me.of.toLocaleString('en-IN')} in {scope === 'mandal' ? `${MY_MANDAL} mandal` : scope === 'state' ? 'Maharashtra' : 'India'}</small>
           </p>
         </div>
         <Trophy className={s.trophy} aria-hidden />
       </div>
-      <Toggle label="Leaderboard" value={scope} onChange={setScope} options={[{ value: 'state', label: 'Maharashtra' }, { value: 'national', label: 'India' }]} />
+      <Toggle label="Leaderboard" value={scope} onChange={setScope} options={[{ value: 'mandal', label: 'Mandal' }, { value: 'state', label: 'State' }, { value: 'national', label: 'National' }]} />
       <ol className={s.podium}>
         {list.slice(0, 3).map((l) => (
           <li key={l.id} className={s.podiumRow}>
             <span className={`${s.medal} ${s[`medal${l.rank}`]}`}>{l.rank}</span>
             <span className={s.podiumName}>
-              {l.name}
-              <small>{scope === 'state' ? l.district : l.state}</small>
+              {l.me ? `${l.name} (you)` : l.name}
+              <small>{scope === 'mandal' ? l.village ?? l.district : scope === 'state' ? l.district : l.state}</small>
             </span>
             <span className={s.podiumScore}>{l.score.toLocaleString('en-IN')}</span>
           </li>
