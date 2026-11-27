@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useTransform } from 'framer-motion';
-import { ArrowUpRight, Bell, CalendarClock, ChevronDown, ChevronRight, CloudSun, Languages, LogIn, LogOut, MapPin, QrCode, Trophy, Wallet } from 'lucide-react';
+import { ArrowUpRight, Bell, CalendarClock, ChevronRight, CloudSun, Languages, LogIn, LogOut, MapPin, QrCode, Trophy, Wallet } from 'lucide-react';
 import { formatCurrency, formatTime, greeting, initials, plural } from '@/lib/format';
 import { LANGUAGE_CATALOG } from '@/services/store';
 import { Sheet } from '@/d3/ui/Sheet';
@@ -46,11 +46,9 @@ function LanguageButton() {
   };
   return (
     <>
-      <button type="button" className={s.langBtn} onClick={() => setOpen(true)} aria-label={`Change language. Current: ${current.english}`} aria-haspopup="dialog">
+      <IconButton label={`Change language (now ${current.english})`} variant="glass" onClick={() => setOpen(true)} aria-haspopup="dialog">
         <Languages aria-hidden />
-        <span lang={current.code}>{current.native}</span>
-        <ChevronDown aria-hidden className={s.langChev} />
-      </button>
+      </IconButton>
       <Sheet open={open} onClose={() => setOpen(false)} kicker="App language" title="Choose your language">
         <LanguageList value={lang} onChange={pick} />
         <p className={s.langNote}>Screens are in English in this prototype. Your choice is saved, and screens will switch once translations are reviewed by native speakers.</p>
